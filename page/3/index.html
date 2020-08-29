@@ -1,0 +1,2041 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-tw">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Full Stack JS #FRP #RxJS #Redux #React">
+<meta property="og:type" content="website">
+<meta property="og:title" content="SOVMedCare Tech">
+<meta property="og:url" content="http://sovmedcare.github.io/page/3/index.html">
+<meta property="og:site_name" content="SOVMedCare Tech">
+<meta property="og:description" content="Full Stack JS #FRP #RxJS #Redux #React">
+<meta property="og:locale" content="zh-tw">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SOVMedCare Tech">
+<meta name="twitter:description" content="Full Stack JS #FRP #RxJS #Redux #React">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://sovmedcare.github.io/page/3/"/>
+
+
+
+
+
+  <title>SOVMedCare Tech</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+  page-home">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SOVMedCare Tech</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">@sovmedcare</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-authors">
+          <a href="/authors/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            作者群
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2017/09/21/webpack-migration/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/21/webpack-migration/" itemprop="url">Webpack Migration 從 v1 到 v3</a></h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/jackypan1989/" itemprop="url" rel="index">
+              <span itemprop="name">jackypan1989</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-09-21T15:43:08+08:00">
+                2017-09-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>之前幾個專案都已經直接使用 webpack v2 以上, 但剛好這次手邊有一個專案還在使用 v1, 所以這邊就一起跟大家介紹如何無痛升級到最新版 (v3.6), 包括 loader / plugin 的一些改變，其實大部分都沒變，只有一些關鍵字跟配置調整。</p>
+<h1 id="更新方式"><a href="#更新方式" class="headerlink" title="更新方式"></a>更新方式</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yarn add --dev babel-core babel-loader babel-preset-env webpack webpack-dev-server</div></pre></td></tr></table></figure>
+<h1 id="版本差異"><a href="#版本差異" class="headerlink" title="版本差異"></a>版本差異</h1><h2 id="1-resolve-一律用-modules-來設定"><a href="#1-resolve-一律用-modules-來設定" class="headerlink" title="1. resolve 一律用 modules 來設定"></a>1. resolve 一律用 modules 來設定</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// v1</span></div><div class="line">resolve: &#123;</div><div class="line">  root: path.join(__dirname, <span class="string">"src"</span>),</div><div class="line">  modulesDirectories: ...,</div><div class="line">  extensions: ...,</div><div class="line">  fallback: ...</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// v3</span></div><div class="line">resolve: &#123;</div><div class="line">  modules: [</div><div class="line">    path.join(__dirname, <span class="string">'src'</span>),</div><div class="line">    <span class="string">'node_modules'</span></div><div class="line">  ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="2-module-loaders-改成用-module-rules-以及-use-關鍵字"><a href="#2-module-loaders-改成用-module-rules-以及-use-關鍵字" class="headerlink" title="2. module.loaders 改成用 module.rules 以及 use 關鍵字"></a>2. module.loaders 改成用 module.rules 以及 use 關鍵字</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// v1</span></div><div class="line"><span class="built_in">module</span>: &#123;</div><div class="line">  loaders: [</div><div class="line">    &#123;</div><div class="line">      test: <span class="regexp">/\.css$/</span>,</div><div class="line">      loader: <span class="string">"style!css"</span></div><div class="line">    &#125;</div><div class="line">  ]</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// v3</span></div><div class="line"><span class="built_in">module</span>: &#123;</div><div class="line">  rules: [</div><div class="line">    &#123;</div><div class="line">      test: <span class="regexp">/\.css$/</span>,</div><div class="line">      use: [<span class="string">"style-loader"</span>, <span class="string">"css-loader"</span>]</div><div class="line">    &#125;</div><div class="line">  ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="3-利用-webpack-merge"><a href="#3-利用-webpack-merge" class="headerlink" title="3. 利用 webpack-merge"></a>3. 利用 webpack-merge</h2><p>如果你有 prod / dev / test / electron 各種 config<br>那我會建議使用 webpack-merge 把重要部份抽出來方便管理</p>
+<h2 id="4-其他我覺得重要的改動"><a href="#4-其他我覺得重要的改動" class="headerlink" title="4. 其他我覺得重要的改動"></a>4. 其他我覺得重要的改動</h2><ul>
+<li>loader name 要寫完整，不能簡寫，除非還要另外使用 resolveLoader (舊選項)</li>
+<li>不用裝 json-loader / UglifyJsPlugin(免另外安裝) / OccurrenceOrderPlugin(直接內建) / DedupePlugin(已移除)</li>
+<li>loader option 一律放在 rules 的每個 loader 下面</li>
+<li>babel-preset 一律改用 env 不用使用 es201x</li>
+</ul>
+<h1 id="效率比較-未優化前"><a href="#效率比較-未優化前" class="headerlink" title="效率比較(未優化前)"></a>效率比較(未優化前)</h1><ul>
+<li><p>v1.14.0</p>
+<p>build time: 39.517s<br>size: 2.29MB</p>
+</li>
+<li><p>v3.6.0</p>
+<p>build time: 32.028s<br>size: 2.54MB</p>
+</li>
+</ul>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://gist.github.com/jackypan1989/a832db223a8d4a24d2edd9b6cde83da3" target="_blank" rel="external">實際範例</a></li>
+<li><a href="https://webpack.js.org/" target="_blank" rel="external">webpack 官方</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2017/09/21/redux-single-line-of-rxjs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/21/redux-single-line-of-rxjs/" itemprop="url">RxJs實現Redux功能</a></h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/Tu-Szu-Chi/" itemprop="url" rel="index">
+              <span itemprop="name">Tu-Szu-Chi</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-09-21T11:47:06+08:00">
+                2017-09-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>Redux</strong>的出現是為了解決數據的管理方式，而RxJS是更進階地解決異步<em>(Async)</em>操作的困擾<br>關於上述兩者的文章已有相當多的資源可以參考，在此分享一個很不錯的<a href="https://www.youtube.com/watch?v=AslncyG8whg" target="_blank" rel="external">演講</a>，是由Netflix的資深工程師-<strong><em>Jay Phelps</em></strong>，對RxJs應用在React以及之於Redux的關係有很好的解釋<em>(redux-observable)</em></p>
+<h1 id="開始"><a href="#開始" class="headerlink" title="開始"></a>開始</h1><p>原本的React &amp; Redux，我們會<strong>dispatch(action)</strong>去改變state，在Observable來看可以這樣表示：</p>
+<blockquote>
+<p>state·····state··state-··········state·····&gt;</p>
+</blockquote>
+<p>當action被觸發都會回傳一個新的state，並且React會依照這新的state來決定是否re-render<br>在React中，<em>Store</em>即state儲存的地方，state又是由諸多的child-state<em>(Component)</em>組成，Component底下又會有自己的<em>actions</em>，action是經由<em>reducer</em>來回傳新的state….<br>以上看起來一層又一層的連帶關係其實沒那麼複雜，在Observable看來，每一個行為(action)都是一條流，我們可以這樣表示：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> store$ = action$</div><div class="line">  .startWith(initState)</div><div class="line">  .scan(reducer)</div></pre></td></tr></table></figure>
+<p>store$開始先有startWith初始化狀態，scan功能就是Rx版的Array.protype.reduce，這使我們每當有action發生，經過reducer後會回傳一個新的state<br>實際上我們的action$不會只有一種，可以試著用<a href="http://reactivex.io/documentation/operators/merge.html" target="_blank" rel="external">Merge</a>來統合全部的action-stream到store裡；這部分的Design pattern有許多種，redux概念也沒有想像中複雜，可以動手試試，例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> store$ = initState$.merge(reducer$) <span class="comment">// reducer$也是由好幾個reducer$合成</span></div><div class="line">  .scan(<span class="function">(<span class="params">state, reducer</span>) =&gt;</span> state.merge(reducer(state)))</div><div class="line">  .publishReplay(<span class="number">1</span>)</div><div class="line">  .refCount()</div></pre></td></tr></table></figure>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>Rx’Library真的是項很高效的工具，尤其有諸多語言版本，理解概念&amp;熟悉操作可以用在許多平台上，在我看來是值得投資的<br>當然它和redux一樣都實踐了Flux style的管理方式，只是學習成本似乎更高，所以也不用盲目地一概都用RxJs，簡單的專案用redux或許是更高效開發的選擇</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<li><a href="http://rudiyardley.com/redux-single-line-of-code-rxjs/" target="_blank" rel="external">Redux in a single line of code with RxJS</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2017/09/15/rx-js-funny-examples/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/15/rx-js-funny-examples/" itemprop="url">5個RxJs有趣範例</a></h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/Tu-Szu-Chi/" itemprop="url" rel="index">
+              <span itemprop="name">Tu-Szu-Chi</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-09-15T11:24:30+08:00">
+                2017-09-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>之前提到過RxJs，這篇文章主要是從Rx’Library官方的練習題挑出5個來介紹，都蠻好理解的<br>有興趣的朋友也可以直接<a href="http://reactivex.io/learnrx/" target="_blank" rel="external">試試看</a>，run起來對了才能解鎖下一題，挺有趣的</p>
+<hr>
+<h1 id="Retrieve-id-title-and-a-150x200-box-art-url-for-every-video"><a href="#Retrieve-id-title-and-a-150x200-box-art-url-for-every-video" class="headerlink" title="Retrieve id, title, and a 150x200 box art url for every video"></a>Retrieve id, title, and a 150x200 box art url for every video</h1><p>首先要先介紹一下Function Programming編程精神，data的結構大概是以下這樣的Array</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> movieLists = [</div><div class="line">  &#123;</div><div class="line">    name: <span class="string">"Instant Queue"</span>,</div><div class="line">    videos: [</div><div class="line">      &#123;</div><div class="line">        <span class="string">"id"</span>: <span class="number">70111470</span>,</div><div class="line">        <span class="string">"title"</span>: <span class="string">"Die Hard"</span>,</div><div class="line">        <span class="string">"boxarts"</span>: [</div><div class="line">          &#123; <span class="attr">width</span>: <span class="number">150</span>, <span class="attr">height</span>: <span class="number">200</span>, <span class="attr">url</span>: <span class="string">"http://cdn-0.nflximg.com/images/2891/DieHard150.jpg"</span> &#125;,</div><div class="line">          &#123; <span class="attr">width</span>: <span class="number">200</span>, <span class="attr">height</span>: <span class="number">200</span>, <span class="attr">url</span>: <span class="string">"http://cdn-0.nflximg.com/images/2891/DieHard200.jpg"</span> &#125;</div><div class="line">        ],</div><div class="line">        <span class="string">"url"</span>: <span class="string">"http://api.netflix.com/catalog/titles/movies/70111470"</span>,</div><div class="line">        <span class="string">"rating"</span>: <span class="number">4.0</span>,</div><div class="line">        <span class="string">"bookmark"</span>: []</div><div class="line">      &#125;,</div><div class="line">    &#123;</div><div class="line">      <span class="string">"id"</span>: <span class="number">654356453</span>,</div><div class="line">      <span class="string">"title"</span>: <span class="string">"Bad Boys"</span>,</div><div class="line">      <span class="string">"boxarts"</span>: [</div><div class="line">        &#123; <span class="attr">width</span>: <span class="number">200</span>, <span class="attr">height</span>: <span class="number">200</span>, <span class="attr">url</span>: <span class="string">"http://cdn-0.nflximg.com/images/2891/BadBoys200.jpg"</span> &#125;,</div><div class="line">        &#123; <span class="attr">width</span>: <span class="number">150</span>, <span class="attr">height</span>: <span class="number">200</span>, <span class="attr">url</span>: <span class="string">"http://cdn-0.nflximg.com/images/2891/BadBoys150.jpg"</span> &#125;</div><div class="line">      ],</div><div class="line">      <span class="string">"url"</span>: <span class="string">"http://api.netflix.com/catalog/titles/movies/70111470"</span>,</div><div class="line">      <span class="string">"rating"</span>: <span class="number">5.0</span>,</div><div class="line">      <span class="string">"bookmark"</span>: [&#123; <span class="attr">id</span>: <span class="number">432534</span>, <span class="attr">time</span>: <span class="number">65876586</span> &#125;]</div><div class="line">    &#125;</div><div class="line">    ]</div><div class="line">  &#125;</div><div class="line">  <span class="comment">// ...</span></div></pre></td></tr></table></figure>
+<p>因要針對每一筆videos做檢索，所以先</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">movieLists.map(<span class="function"><span class="params">obj</span> =&gt;</span></div><div class="line">  obj.videos.map(<span class="function"><span class="params">video</span> =&gt;</span></div><div class="line">    <span class="comment">// ...</span></div><div class="line">  )</div><div class="line">)</div></pre></td></tr></table></figure>
+<p>到這一部已經可以拿到id,title了，接著要過濾width !== 150的boxarts</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">movieLists.map(<span class="function"><span class="params">obj</span> =&gt;</span></div><div class="line">  obj.videos.map(<span class="function"><span class="params">video</span> =&gt;</span></div><div class="line">    video.boxarts.filter(<span class="function"><span class="params">image</span> =&gt;</span> image.width === <span class="number">150</span>)</div><div class="line">    <span class="comment">// ...</span></div><div class="line">  )</div><div class="line">)</div></pre></td></tr></table></figure>
+<p>最後直接回傳我們要的Object形式</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">movieLists.map(<span class="function"><span class="params">obj</span> =&gt;</span></div><div class="line">  obj.videos.map(<span class="function"><span class="params">video</span> =&gt;</span></div><div class="line">    video.boxarts</div><div class="line">          .filter(<span class="function"><span class="params">image</span> =&gt;</span> image.width === <span class="number">150</span>)</div><div class="line">          .map(<span class="function"><span class="params">boxart</span> =&gt;</span> &#123; <span class="keyword">return</span> &#123;<span class="attr">id</span>:video.id, <span class="attr">title</span>:video.title, <span class="attr">boxart</span>:boxart.url&#125;&#125;)</div><div class="line">  )</div><div class="line">)</div></pre></td></tr></table></figure>
+<p>到此階段回傳的Array會多了兩層</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[[&#123;<span class="string">"boxart"</span>: <span class="string">'...'</span>, <span class="string">"id"</span>: <span class="number">70111470</span>, <span class="string">"title"</span>: <span class="string">"Die Hard"</span>&#125;], ...]]]</div></pre></td></tr></table></figure>
+<p>可以在外層兩個map各補上降維的Method</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">movieLists.map(<span class="function"><span class="params">obj</span> =&gt;</span></div><div class="line">  obj.videos.map(<span class="function"><span class="params">video</span> =&gt;</span></div><div class="line">    video.boxarts</div><div class="line">          .filter(<span class="function"><span class="params">image</span> =&gt;</span> image.width === <span class="number">150</span>)</div><div class="line">          .map(<span class="function"><span class="params">boxart</span> =&gt;</span> &#123; <span class="keyword">return</span> &#123;<span class="attr">id</span>:video.id, <span class="attr">title</span>:video.title, <span class="attr">boxart</span>:boxart.url&#125;&#125;)</div><div class="line">  ).concatAll()</div><div class="line">).concatAll()</div></pre></td></tr></table></figure>
+<p>雖然這是個簡單的FP範例，但可以感受出每個步驟都具有語意化</p>
+<h1 id="Retrieve-url-of-the-largest-boxart"><a href="#Retrieve-url-of-the-largest-boxart" class="headerlink" title="Retrieve url of the largest boxart"></a>Retrieve url of the largest boxart</h1><p>再來也是要介紹FP核心之一的<strong>reduce</strong><br>data結構如下，要做比較的動作，找出Size最大的圖片<em>(width * height)</em></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> boxarts = [</div><div class="line">  &#123; <span class="attr">width</span>: <span class="number">200</span>, <span class="attr">height</span>: <span class="number">200</span>, <span class="attr">url</span>: <span class="string">"http://cdn-0.nflximg.com/images/2891/Fracture200.jpg"</span> &#125;,</div><div class="line">  &#123; <span class="attr">width</span>: <span class="number">150</span>, <span class="attr">height</span>: <span class="number">200</span>, <span class="attr">url</span>: <span class="string">"http://cdn-0.nflximg.com/images/2891/Fracture150.jpg"</span> &#125;,</div><div class="line">  &#123; <span class="attr">width</span>: <span class="number">300</span>, <span class="attr">height</span>: <span class="number">200</span>, <span class="attr">url</span>: <span class="string">"http://cdn-0.nflximg.com/images/2891/Fracture300.jpg"</span> &#125;,</div><div class="line">  &#123; <span class="attr">width</span>: <span class="number">425</span>, <span class="attr">height</span>: <span class="number">150</span>, <span class="attr">url</span>: <span class="string">"http://cdn-0.nflximg.com/images/2891/Fracture425.jpg"</span> &#125;</div><div class="line">]</div></pre></td></tr></table></figure>
+<p>reduce第一個參數要傳入處理動作的Function，第二個參數是初始值，預設為Array中第一個元素，所以我們不用特別傳入</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">boxarts.reduce(<span class="function">(<span class="params">currentImg, current</span>) =&gt;</span></div><div class="line">  (currentImg.width * currentImg.height &gt; current)</div><div class="line">  ? currentImg.width * currentImg.height &gt; current</div><div class="line">  : current)</div><div class="line">  .map(<span class="function"><span class="params">item</span> =&gt;</span> item.url)</div></pre></td></tr></table></figure>
+<p>以上為簡單的「比較」邏輯，reduce第一個參數中的Function會帶有兩個參數，第一個為當前的元素，第二個為當前的值<br>因reduce會回傳一個Array，而在這裡我們的Array中只會有一個元素，即Size最大的boxart<br>map同樣會回傳一個Array，裡面也只有一個url字串</p>
+<h1 id="Completing-sequences-with-takeUntil"><a href="#Completing-sequences-with-takeUntil" class="headerlink" title="Completing sequences with takeUntil()"></a>Completing sequences with takeUntil()</h1><p><strong>takeUntil()</strong> 我覺得是個很好用的功能，可以預先註冊好什麼時候停止取資料</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> stopButtonClicks = Observable.fromEvent(stopButton,<span class="string">'click'</span>)</div><div class="line">  microsoftPrices = pricesNASDAQ</div><div class="line">    .filter(<span class="function"><span class="params">priceRecord</span> =&gt;</span> priceRecord.name === <span class="string">"MSFT"</span>)</div><div class="line">    .takeUntil(stopButtonClicks)</div></pre></td></tr></table></figure>
+<p>我們假設pricesNASDAQ是一個NASDAQ股市報價的stream，而我們想從中取得微軟的報價所以利用了<strong>filter</strong><br>並註冊了當<strong>stopButton</strong>按下時就停止取stream資料，可以在這<a href="https://jsbin.com/zuvavetuno/1/edit?js,console,output" target="_blank" rel="external">JS Bin</a>試試<br>會發現當stopButton按下後，會觸發Observer中的complete，其餘還有<strong>takeLast</strong>、<strong>takeWhile</strong>可以試試</p>
+<h1 id="Throttle-Input"><a href="#Throttle-Input" class="headerlink" title="Throttle Input"></a>Throttle Input</h1><p>接下來要介紹Rx’Library中非常實用的功能之一 - <strong>throttleTime</strong><br>我們可以設定一段時間，例如<em>throttleTime(1000)</em>，表示一秒內所有的數據，我們只截取第一筆<br>這剛好可以解決我們針對某些API或DOM Event要避免短時間內重複觸發的問題，最典型的就是搜尋框(search box)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> input = Rx.Observable</div><div class="line">  .fromEvent(<span class="built_in">document</span>.getElementById(<span class="string">'input'</span>),<span class="string">'keydown'</span>)</div><div class="line">  .throttleTime(<span class="number">1000</span>)</div></pre></td></tr></table></figure>
+<p>與之相對的是<strong>debounceTime</strong>，可以在<a href="https://jsbin.com/zuvavetuno/1/edit?js,console,output" target="_blank" rel="external">JS Bin</a>試試</p>
+<h1 id="Distinct-Until-Changed-Input"><a href="#Distinct-Until-Changed-Input" class="headerlink" title="Distinct Until Changed Input"></a>Distinct Until Changed Input</h1><p>這是最後一個要介紹的Method，只取和前一個相比有變化的值，這概念是否有點熟悉？<br>在React中我們也是希望Component要有改變到state才render，故有了<em>shouldcomponentupdate</em>這生命週期<br>那如果有方法能幫我們確保拿到的一定是有變化的數據，是否就能少寫這<em>shouldcomponentupdate</em>了呢<br>一樣附上<a href="https://jsbin.com/zuvavetuno/1/edit?js,console,output" target="_blank" rel="external">JS Bin</a>給大家試試</p>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>Rx’Library是個功能很實用的工具，也因為功能很多，所以需要花時間去摸索，當碰到問題時才會發現可以用幾個Method輕鬆的解決<br>Rx實做多了，也會發現自己Function Programming精進了不少</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2017/09/13/Observable-HOT-COLD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/13/Observable-HOT-COLD/" itemprop="url">RxJs Observable - HOT & COLD</a></h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/Tu-Szu-Chi/" itemprop="url" rel="index">
+              <span itemprop="name">Tu-Szu-Chi</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-09-13T12:15:25+08:00">
+                2017-09-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><img src="https://image.slidesharecdn.com/untitled-150216041015-conversion-gate02/95/reactive-programming-with-rx-22-638.jpg?cb=1424081878" alt="Observable Hot &amp; Cold" title="截自Google Image"></p>
+<p>Rx’Library Observable可大致分為兩種類型 - <em>Hot</em> &amp; <em>Cold</em><br>在往下介紹前，可以先將<em>Hot</em>想成廣播電台(Radio)，<em>Cold</em>是CD<br>Hot Observable的訂閱者，會讀取同樣的source；Cold Observable則每個訂閱者的source都是獨立的</p>
+<hr>
+<h1 id="Cold-Observable"><a href="#Cold-Observable" class="headerlink" title="Cold Observable"></a>Cold Observable</h1><p>只有當訂閱者訂閱的時候，Cold Observable才會推送資料，且每個訂閱者都是獨立的流，就像是CD只有當你放進去按播放後才會有音樂<br>Observable.interval就是種Cold類型的流</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> source = <span class="keyword">new</span> Observable.interval(<span class="number">100</span>).take(<span class="number">3</span>)</div></pre></td></tr></table></figure>
+<p>可以在這<a href="https://jsbin.com/kiwitozejo/1/edit?js,console" target="_blank" rel="external">JS Bin</a>看到observerA &amp; observerB是各自的數據流</p>
+<h1 id="Hot-Observable"><a href="#Hot-Observable" class="headerlink" title="Hot Observable"></a>Hot Observable</h1><p>不管有沒有被訂閱，只要創建後就開始有數據流，Mouse Click Event就是最清楚的範例<br>Click事件一直在發生，但只有當你訂閱時你才收得到，且收到的是訂閱後的「觸發事件」，之前的不會收到<br>當然，如果你取消訂閱了，數據流依然會持續產生<br>這類的情境像是「股市最新報價」，你只會收到最新的那一個報價，不會收到五分鐘前的那筆<br>Hot Observable原理其實是我們和數據流間還有一個「<strong>中間人</strong>」，會一直監聽數據流，我們再跟他取資訊就好(真是忙碌的傢伙)<br><strong>中間人</strong>會有一份訂閱者的清單，這樣才知道推播時要推送給哪些人</p>
+<h2 id="Subject"><a href="#Subject" class="headerlink" title="Subject"></a>Subject</h2><p>先附上<a href="https://jsbin.com/fumakubupa/1/edit?js,console" target="_blank" rel="external">JS Bin</a>的Code<br>之前有提到訂閱者(Observer)會有三個Method - next、error、complete，理所當然Subject作為中間人他也該具備這些特質<br>並且有一份訂閱者的清單，有興趣的可以看官方的<a href="https://github.com/ReactiveX/rxjs/blob/master/src/Subject.ts#L22" target="_blank" rel="external">Source Code</a><br>Subject可以訂閱也可以被訂閱，他既是Observable也是Observer<br>他還有其他三個變形 - BehaviorSubject、ReplaySubject、AsyncSubject，能在我們訂閱時有不同效果</p>
+<h2 id="Operator"><a href="#Operator" class="headerlink" title="Operator"></a>Operator</h2><p>上一段的Code中，我們先新建Subject，再一一訂閱，這讓程式碼變的冗長，Rx’Library有提供些Operator讓我們寫的更簡潔點</p>
+<h3 id="multicast"><a href="#multicast" class="headerlink" title="multicast"></a>multicast</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> source = <span class="keyword">new</span> Observable</div><div class="line">                    .interval(<span class="number">300</span>)</div><div class="line">                    .take(<span class="number">3</span>)</div><div class="line">                    .multicast(<span class="keyword">new</span> Rx.Subject())</div></pre></td></tr></table></figure>
+<p>multicast會回傳可連結(connect)的Observable，要真的執行connect後，Subject才會去訂閱source，且開始推送數據</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> realObserver = source.connect()</div></pre></td></tr></table></figure>
+<p>connect會回傳subscription，將此unsubscribe才會真正退掉Observable，將observerA/observerB退訂中間人還是會收到數據流</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">realObserver.unsubscribe()</div></pre></td></tr></table></figure>
+<p>以下這種寫法可以更簡潔</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> source = <span class="keyword">new</span> Observable</div><div class="line">                    .interval(<span class="number">300</span>)</div><div class="line">                    .take(<span class="number">3</span>)</div><div class="line">                    .publish()</div></pre></td></tr></table></figure>
+<h3 id="refCount"><a href="#refCount" class="headerlink" title="refCount"></a>refCount</h3><p>但要多寫一段connect也是很麻煩，我們希望一有人訂閱就開始推送(observers.length &gt; 0)，refCount可幫助我們</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> source = <span class="keyword">new</span> Observable</div><div class="line">                    .interval(<span class="number">300</span>)</div><div class="line">                    .take(<span class="number">3</span>)</div><div class="line">                    .publish()</div><div class="line">                    .refCount()</div></pre></td></tr></table></figure>
+<p>要退訂不讓數據流推送的話，只要讓訂閱人數變成0即可(範例中就是讓observerA &amp; observerB unsubscribe即可)</p>
+<p>再給一個簡潔的寫法，refCount + publish</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> source = <span class="keyword">new</span> Observable</div><div class="line">                    .interval(<span class="number">300</span>)</div><div class="line">                    .take(<span class="number">3</span>)</div><div class="line">                    .share()</div></pre></td></tr></table></figure>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>Rx’Library是一個很實用但也相對需要花時間學習的工具，畢竟要去習慣「Everything is stream」的思維<br>在此附上RxJs的核心開發者之一 - <em>Andre Staltz</em>所寫的<a href="http://jsfiddle.net/staltz/8jFJH/48/" target="_blank" rel="external">應用範例</a>，推薦大家去看看</p>
+<hr>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="http://ithelp.ithome.com.tw/articles/10188633" target="_blank" rel="external">30 天精通 RxJS(22): 什麼是 Subject？</a><br><a href="https://medium.com/@benlesh/hot-vs-cold-observables-f8094ed53339" target="_blank" rel="external">Hot vs Cold Observables</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2017/09/13/Rx-js-Observable/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/13/Rx-js-Observable/" itemprop="url">RxJs Observable 介紹</a></h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/Tu-Szu-Chi/" itemprop="url" rel="index">
+              <span itemprop="name">Tu-Szu-Chi</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-09-13T10:32:21+08:00">
+                2017-09-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><img src="https://cdn-images-1.medium.com/max/1600/1*j-SOtxql-Sqmvj0i0TWqMg.jpeg" alt="Everthing is stream" title="截自Medium"></p>
+<h1 id="關於RxJs"><a href="#關於RxJs" class="headerlink" title="關於RxJs"></a>關於RxJs</h1><p><strong>RxJs</strong>是<strong>ReactiveX</strong>的一個JS Library(還有其他平台 ex.RxJava、RxSwift…)</p>
+<blockquote>
+<p>「An API for asynchronous programming with observable streams」</p>
+</blockquote>
+<p>以上是ReactiveX官網標題，也響應了文章頂部的圖片，將任何動作、事件都看成是「流」，我們去監聽、觀察，經過轉換、合併、過濾，再給予對應的Callback</p>
+<h2 id="Observable"><a href="#Observable" class="headerlink" title="Observable"></a>Observable</h2><p>Observable是Rx’Library的核心，它的概念是由兩個Design Pattern融合起來 - <em>Observer</em> &amp; <em>Iterator</em></p>
+<h3 id="Observer"><a href="#Observer" class="headerlink" title="Observer"></a>Observer</h3><p>其實跟我們平常用到的<strong>addEventListener</strong>概念一樣，註冊一個監聽事件，當觸發時執行<strong>clickHandler</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">document.body.addEventListener(&apos;click&apos;, clickHandler)</div></pre></td></tr></table></figure>
+<pre><code>當然，一個事件可以有多個Listener，這在後續會解釋
+</code></pre><h3 id="Iterator"><a href="#Iterator" class="headerlink" title="Iterator"></a>Iterator</h3><p>想像成有一個<strong>指針</strong>指向一個資料序列(ex.Array)，我們想要得到這序列的資料必須透過Iterator的方法 - next()<br>當我們呼叫next()後，Iterator才會丟出一筆資料出來</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">arr = [1,2,3,4] //假設arr是Iterator</div><div class="line">arr.next() // 1</div><div class="line">arr.next() // 2</div><div class="line">// ...</div></pre></td></tr></table></figure>
+<p>總結來說Observable這個可觀察的流(stream)，上面會有資料隨著時間推送，它可以經過序列的方式處理資料(map、filter、reduce…)，甚至也可以合併兩個不同的流，來讓Listener得到資料</p>
+<h2 id="Observer-1"><a href="#Observer-1" class="headerlink" title="Observer"></a>Observer</h2><p>Observer是較會頻繁用到的功能(其餘還有Subject、Schedulers…)，他也是之前比喻的Listener<br>我們用實例來講解這些，首先建立一個要觀察的流(Observable)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">let observable = Rx.Observable</div><div class="line">    .create(observer =&gt; &#123;</div><div class="line">        observer.next(&apos;S&apos;);</div><div class="line">        observer.next(&apos;O&apos;);</div><div class="line">        observer.next(&apos;V&apos;);</div><div class="line">        observer.complete();</div><div class="line">    &#125;)</div></pre></td></tr></table></figure>
+<blockquote>
+<p>實務上我們的Observable比較不會這樣建立，通常會直接用fromEvent、fromPromise之類的，而不是create，針對某個事件來做<br>在此只是範例演練而已</p>
+</blockquote>
+<p>這個observable會依序推送S-&gt;O-&gt;V給observer，接著我們要有一個Observer來監聽這個流</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">observable.subscribe(&#123;</div><div class="line">    next: (val) =&gt; console.log(val),</div><div class="line">    error: (err) =&gt; console.log(err),</div><div class="line">    complete: () =&gt; console.log(&apos;Complete !&apos;)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<blockquote>
+<p>.subscribe(next, error, complete)，Observer就是由三個Method組成，負責處理接收到資料後、發生錯誤後和整個observable結束後</p>
+</blockquote>
+<p>當這個流被訂閱後馬上就會送出資訊給監聽的人，可以在這個<a href="https://jsbin.com/ceragiwogo/edit?js,console" target="_blank" rel="external">JS Bin</a>試試</p>
+<h2 id="Operator"><a href="#Operator" class="headerlink" title="Operator"></a>Operator</h2><p>有了流&amp;監聽者後，之前也有提到Observable可以像序列一樣處理資料，所以這裡加上Function Programming的核心進去</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">const observable = Rx.Observable</div><div class="line">    .create(observer =&gt; &#123;</div><div class="line">        observer.next(&apos;S&apos;)</div><div class="line">        observer.next(&apos;O&apos;)</div><div class="line">        observer.next(&apos;V&apos;)</div><div class="line">    &#125;)</div><div class="line">    .map(str =&gt; str + &apos;!&apos;)</div><div class="line">// ...subscribe</div><div class="line">// &apos;S!&apos;</div><div class="line">// &apos;O!&apos;</div><div class="line">// &apos;V!&apos;</div></pre></td></tr></table></figure>
+<p>再舉一個例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">javascript</div><div class="line">const observable = Rx.Observable</div><div class="line">    .create(observer =&gt; &#123;</div><div class="line">        observer.next(&apos;S&apos;)</div><div class="line">        observer.next(&apos;O&apos;)</div><div class="line">        observer.next(&apos;V&apos;)</div><div class="line">    &#125;)</div><div class="line">    .scan((x, y) =&gt; x + y);</div><div class="line">// ...subscribe</div><div class="line">// &apos;S&apos;</div><div class="line">// &apos;SO&apos;</div><div class="line">// &apos;SOV&apos;</div></pre></td></tr></table></figure>
+<p>其實scan就是Observable版的reduce，兩者的差別，前者必會回傳一個Observable物件，後者就是回傳Value(Int、Array、Function…)<br>所以讀者可以把observable印出來，就可以看見滿滿的Observable Method</p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>這篇文章只概述了Rx’Library核心，其餘還有很多強大的功能，能幫助我們寫出漂亮的Function Reactive Programming<br>有興趣的讀者可以去<a href="http://rxmarbles.com" target="_blank" rel="external">RxJS Marbles</a>自己拖拉體驗一下</p>
+<hr>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="http://ithelp.ithome.com.tw/articles/10186104" target="_blank" rel="external">30天精通Rx JS</a><br><a href="http://blog.techbridge.cc/2016/05/28/reactive-programming-intro-by-rxjs/" target="_blank" rel="external">TB-Reactive Programming 簡介與教學(以 RxJS 為例)</a><br><a href="http://rxmarbles.com" target="_blank" rel="external">Rx JS Marbles</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2017/09/08/frp-reactjs-vs-cyclejs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/08/frp-reactjs-vs-cyclejs/" itemprop="url">漫談 FRP - ReactJS vs CycleJS</a></h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/jackypan1989/" itemprop="url" rel="index">
+              <span itemprop="name">jackypan1989</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-09-08T15:43:08+08:00">
+                2017-09-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>2014年，CycleJS 作者 André Staltz 寫了一篇 Don’t React ，大力批評 ReactJS 並不 reactive。這篇文章在當時引起軒然大波，雖然在三年後的今天已經被移除，但我們依然可以在 youtube 上面看到古老的戰神影片 <a href="https://www.youtube.com/watch?v=9QObt0SGriI" target="_blank" rel="external">André Medeiros: Don’t React (Webbisauna 2014)</a>。這三年期間，我們都可以看到兩個 lib 的變化，還有社群推行方向，以下會針對兩個 lib，並討論 FRP (響應風格的函數式編程)。</p>
+<h1 id="FRP-響應風格的函數式編程"><a href="#FRP-響應風格的函數式編程" class="headerlink" title="FRP (響應風格的函數式編程)"></a>FRP (響應風格的函數式編程)</h1><ul>
+<li><p>FP (函數式編程)<br>所有東西都是函數，在語言中是第一公民，函數可以當作參數外 <code>(x, func) =&gt; func(x)</code>，而函數也可以回傳另一個函數 <code>x =&gt; y =&gt; x + y</code>，因此可以創造出各種高階函數(Higher Order Function)，也可以進行各種合成 (compose) 來完成各式各樣的功能，不用像物件導向，必須用很多種設計模式去優化代碼，我必須說，整個開發者世代花了好多時間導入物件導向，最後得到『多用合成，少用繼承』的結論，但其實在函數式編程中，合成是多麼渾然天成，一招就能打天下 :p</p>
+</li>
+<li><p>Reactive (響應風格)<br>函數中不會直接去操作外部的函數，取而代之的是都是去反應外部函數(參數)做了什麼事，而去改變，在物件導向風格常見於觀察者模式 (Observer pattern)，好處是分工非常明確，也容易追蹤代碼潛在問題。</p>
+</li>
+</ul>
+<h1 id="兩者比較"><a href="#兩者比較" class="headerlink" title="兩者比較"></a>兩者比較</h1><ul>
+<li><p>CycleJS<br>Cycle 更強調 reactive，因此你不會在裡面看到 this 關鍵字，但因為你不可能全部都沒有 side effect。所以這部份 cycle 利用 driver，把他認為髒的 side effect 抽出來處理。另一方面 Cycle 本身全部都是使用 RxJS / xstream，去管理所有的資料流，user input 會轉換成流，state 與 state 改變也會轉變成流，甚至連 render dom 也是流，因此整個架構就是多個流的合成與串接，action -&gt; state -&gt; render -&gt; action 形成一個超級流的大循環，我想這也是為什麼叫做 Cycle 的原因。</p>
+</li>
+<li><p>ReactJS<br>原本 lib 本身其實談不上太多 reactive，因為 reactive 的部分只有 <code>render()</code> 這個函數，Component 內的其他函數都是 active，因此會看到 this &amp; this.setState 這種東西，反觀 CycleJS 就不會看到 this 這個 JS 一直以來常常會出包的關鍵字，當然在 redux 出來後，以及 rx-react, redux-rx, 甚至 redux-observable 引進後，user input 與 state 改變才開始真正一步步 reactive 化 / stream 化。</p>
+</li>
+</ul>
+<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p>我個人覺得之所以 fb 會大力推動 react 的原因，有一個很大重點在於想要推函數式編程 (functional programming)，但不可能一開始就推個 Haskell 大家都嚇死，等到大家慢慢熟悉這個體系，開始 componenet base programming，寫一段時間後，就會開始寫高階元件 (High Order Component，也就是一個函數會傳進一個 component 再吐一個 component) ，然後又開始學習 render 永遠只根據 prop 改變的 stateless component (pure functional component)。你就會發現你入坑了(你也可以看到 fb 釋出這些想法的進程)，開始感受 FP 的奧妙，原來 component 的各種組成合成，就跟 FP 中的函數合成一樣。</p>
+<p>Cycle: 天生全部 reactive，架構上更好更美<br>React: 需要第三方協助(rx-react…)，但有大量社群支持</p>
+<p>總歸一句，在前端這麼吃重 ui 操作與呈現的情況下，社群發展到最後一定是慢慢往類似或是相同方向前進。<br>至少三年前的爭議已經平息，接下來就看社群是不是可以往更函數式編程前進了(ELM, Purescript … etc)。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://github.com/cyclejs/cyclejs" target="_blank" rel="external">CycleJS</a></li>
+<li><a href="https://github.com/fdecampredon/rx-react" target="_blank" rel="external">rx-react</a></li>
+<li><a href="https://github.com/acdlite/redux-rx" target="_blank" rel="external">redux-rx</a></li>
+<li><a href="https://github.com/redux-observable/redux-observable" target="_blank" rel="external">redux-observable</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2017/09/08/Immutable-js/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/08/Immutable-js/" itemprop="url">Immutable.js 簡介</a></h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/Tu-Szu-Chi/" itemprop="url" rel="index">
+              <span itemprop="name">Tu-Szu-Chi</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-09-08T15:15:02+08:00">
+                2017-09-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Javascript中的對象是可變的(Mutable)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> task = &#123; <span class="attr">id</span> : <span class="number">1</span>, <span class="attr">status</span> : <span class="string">"Load"</span> &#125;;</div><div class="line"><span class="keyword">let</span> task2 = task</div><div class="line">task2.id = <span class="number">2</span> <span class="comment">// task.id 也是 2</span></div></pre></td></tr></table></figure>
+<p>我們可以輕易地修改對象，這在專案複雜後是種隱患<br>雖然可以用Object.assign()來解決，但當assign的對象比數不小時，效能會變差<br>Immutable.js很好的解決這些問題</p>
+<hr>
+<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>Immutable.js背後有兩個重要的原理</p>
+<ul>
+<li><strong>Persistent Data Structure</strong></li>
+</ul>
+<p>經由old-data創建new-data時，old-data可用且不可變，這也是<strong>Functional Programming</strong>重要概念-沒有副作用(Side Effect)</p>
+<ul>
+<li><strong>Structural Sharing</strong></li>
+</ul>
+<p>當有某個節點Update時，不會整個Copy一份，只會新建需要的變動的部分，其餘參照原本的<br>這大幅的優化效能且也節省了記憶體<br><img src="https://goo.gl/BdnHfB" alt="Sharing" title="取自「Immutable详解及React中实践」"></p>
+<h2 id="優點"><a href="#優點" class="headerlink" title="優點"></a>優點</h2><h3 id="降低Mutable帶來的複雜度"><a href="#降低Mutable帶來的複雜度" class="headerlink" title="降低Mutable帶來的複雜度"></a>降低Mutable帶來的複雜度</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> mutableFn = <span class="function"><span class="params">data</span> =&gt;</span> &#123;</div><div class="line">    doSomething(data); <span class="comment">// data = &#123;id:1,value:2&#125;</span></div><div class="line">    <span class="built_in">console</span>.log(data.value) <span class="comment">// data.value is ?</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在有Mutable的可能時，我們無法保證data不變，但用Immutable的話就可以確認依然為2了</p>
+<h3 id="節省記憶體"><a href="#節省記憶體" class="headerlink" title="節省記憶體"></a>節省記憶體</h3><p>因為有Structural Sharing，許多對象可以被重複使用，沒用到的也會自動回收<br>以下截選<a href="https://github.com/camsong/blog/issues/3" target="_blank" rel="external">camsong的文章</a>中的一段Code，能清楚表達Structural Sharing優點</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> &#123; <span class="built_in">Map</span> &#125; <span class="keyword">from</span> <span class="string">'immutable'</span>;</div><div class="line"><span class="keyword">let</span> a = <span class="built_in">Map</span>(&#123;</div><div class="line">  select: <span class="string">'users'</span>,</div><div class="line">  filter: <span class="built_in">Map</span>(&#123; <span class="attr">name</span>: <span class="string">'Cam'</span> &#125;)</div><div class="line">&#125;)</div><div class="line"><span class="keyword">let</span> b = a.set(<span class="string">'select'</span>, <span class="string">'people'</span>);</div><div class="line"></div><div class="line">a === b; <span class="comment">// false</span></div><div class="line">a.get(<span class="string">'filter'</span>) === b.get(<span class="string">'filter'</span>); <span class="comment">// true</span></div></pre></td></tr></table></figure>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>在專案日漸複雜龐大時，Immutable.js能有效地提升效能和維護性，但專案較小且不複雜時或許就不一定要用它了<br>經由Immutable.js建的對象並不是原生Javascript對象，要特別注意，所以要操作幾乎都是要用Immutable.js的Method</p>
+<hr>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://medium.com/@dtinth/immutable-js-persistent-data-structures-and-structural-sharing-6d163fbd73d2" target="_blank" rel="external">Immutable.js, persistent data structures and structural sharing</a><br><a href="https://github.com/camsong/blog/issues/3" target="_blank" rel="external">Immutable詳解及React中實踐</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2017/09/08/Function-Currying/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/08/Function-Currying/" itemprop="url">Function Currying</a></h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/Tu-Szu-Chi/" itemprop="url" rel="index">
+              <span itemprop="name">Tu-Szu-Chi</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-09-08T13:48:30+08:00">
+                2017-09-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><img src="https://camo.githubusercontent.com/b51957f9615c4df77574d0bb393ac6fbce50acd7/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6c7961682f63757272792e706e67" alt="Haskell Curry" title="Haskell Curry (Google Image)"><br>函數「柯里化」這單看字面上意思真的猜不出想表達什麼，因為Curry一詞其實是取自人名<br><strong><a href="https://en.wikipedia.org/wiki/Haskell_Curry" target="_blank" rel="external">Haskell Curry</a></strong>-偉大的邏輯學家，Haskell這語言命名也是取自於他<br>名字有了含意後我們來瞭解其中</p>
+<hr>
+<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>經過柯里化的Function會回傳 <strong>Function</strong>||<strong>Value</strong><br><a href="https://zh.wikipedia.org/wiki/柯里化" target="_blank" rel="external">維基百科</a>是這麼解釋</p>
+<blockquote>
+<p>如果你固定某些參數，你將得到接受餘下參數的一個函數</p>
+</blockquote>
+<p>解釋的有點饒口，所以我們往下來看點範例</p>
+<h1 id="範例"><a href="#範例" class="headerlink" title="範例"></a>範例</h1><p>接下來會使用到<a href="http://ramdajs.com" target="_blank" rel="external">Ramda</a>來協助我們進行Curry</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> addNumber = <span class="function">(<span class="params">x,y</span>) =&gt;</span> x + y;</div><div class="line">addNumber(<span class="number">1</span>,<span class="number">2</span>) <span class="comment">// 3</span></div></pre></td></tr></table></figure>
+<p>我們要呼叫addNumber就是傳入兩個參數進去，那如果想要一個Function固定會將傳進來的值加100呢？以下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> addNumber = R.curry( <span class="function">(<span class="params">x,y</span>) =&gt;</span> x + y ); <span class="comment">// 柯里化</span></div><div class="line"><span class="keyword">const</span> add100 = addNumber(<span class="number">100</span>)</div><div class="line">add100(<span class="number">1</span>) <span class="comment">// 101</span></div></pre></td></tr></table></figure>
+<p>那如果參數不只兩個呢？</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> addNumber = R.curry( <span class="function">(<span class="params">x,y,z</span>) =&gt;</span> x + y + z ); </div><div class="line"><span class="keyword">const</span> add100 = addNumber(<span class="number">100</span>)</div><div class="line">add100(<span class="number">1</span>)(<span class="number">2</span>) <span class="comment">// 103</span></div></pre></td></tr></table></figure>
+<p>以上是比較簡單的應用，我從<a href="http://fr.umio.us/favoring-curry/" target="_blank" rel="external">ScottSauyet的文章</a>截選幾段程式來演示Curry的好處</p>
+<h2 id="原始"><a href="#原始" class="headerlink" title="原始"></a>原始</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">getIncompleteTaskSummaries = <span class="function"><span class="keyword">function</span>(<span class="params">membername</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> fetchData()</div><div class="line">        .then(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</div><div class="line">            <span class="keyword">return</span> data.tasks;</div><div class="line">        &#125;)</div><div class="line">        .then(<span class="function"><span class="keyword">function</span>(<span class="params">tasks</span>) </span>&#123;</div><div class="line">            <span class="keyword">var</span> results = [];</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = tasks.length; i &lt; len; i++) &#123;</div><div class="line">                <span class="keyword">if</span> (tasks[i].username == membername) &#123;</div><div class="line">                    results.push(tasks[i]);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> results;</div><div class="line">        &#125;)</div><div class="line">        .then(<span class="function"><span class="keyword">function</span>(<span class="params">tasks</span>) </span>&#123;</div><div class="line">            <span class="keyword">var</span> results = [];</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = tasks.length; i &lt; len; i++) &#123;</div><div class="line">                <span class="keyword">if</span> (!tasks[i].complete) &#123;</div><div class="line">                    results.push(tasks[i]);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> results;</div><div class="line">        &#125;)</div><div class="line">        .then(<span class="function"><span class="keyword">function</span>(<span class="params">tasks</span>) </span>&#123;</div><div class="line">            <span class="keyword">var</span> results = [], task;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = tasks.length; i &lt; len; i++) &#123;</div><div class="line">                task = tasks[i];</div><div class="line">                results.push(&#123;</div><div class="line">                    id: task.id,</div><div class="line">                    dueDate: task.dueDate,</div><div class="line">                    title: task.title,</div><div class="line">                    priority: task.priority</div><div class="line">                &#125;)</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> results;</div><div class="line">        &#125;)</div><div class="line">        .then(<span class="function"><span class="keyword">function</span>(<span class="params">tasks</span>) </span>&#123;</div><div class="line">            tasks.sort(<span class="function"><span class="keyword">function</span>(<span class="params">first, second</span>) </span>&#123;</div><div class="line">                <span class="keyword">var</span> a = first.dueDate, b = second.dueDate;</div><div class="line">                <span class="keyword">return</span> a &lt; b ? <span class="number">-1</span> : a &gt; b ? <span class="number">1</span> : <span class="number">0</span>;</div><div class="line">            &#125;);</div><div class="line">            <span class="keyword">return</span> tasks;</div><div class="line">        &#125;);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="處理後"><a href="#處理後" class="headerlink" title="處理後"></a>處理後</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> getIncompleteTaskSummaries = <span class="function"><span class="keyword">function</span>(<span class="params">membername</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> fetchData()</div><div class="line">        .then(R.get(<span class="string">'tasks'</span>))</div><div class="line">        .then(R.filter(R.propEq(<span class="string">'username'</span>, membername)))</div><div class="line">        .then(R.reject(R.propEq(<span class="string">'complete'</span>, <span class="literal">true</span>)))</div><div class="line">        .then(R.map(R.pick([<span class="string">'id'</span>, <span class="string">'dueDate'</span>, <span class="string">'title'</span>, <span class="string">'priority'</span>])))</div><div class="line">        .then(R.sortBy(R.get(<span class="string">'dueDate'</span>)));</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>這差異就很明顯了，這也是為何柯里化在Function Programming如此重要</p>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>Currying是促使Function Programming簡潔的原因之一<br>我們也可以經由上面「處理後」的程式碼發現這樣更語意化，明白每一步在做的事情</p>
+<hr>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="http://fr.umio.us/favoring-curry/" target="_blank" rel="external">Favoring Curry</a><br><a href="https://jigsawye.gitbooks.io/mostly-adequate-guide/content/ch4.html" target="_blank" rel="external">Curry化 - Javascript Functional Programming 指南</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2017/09/08/Pointfree-Javascript/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/08/Pointfree-Javascript/" itemprop="url">Pointfree Javascript</a></h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/Tu-Szu-Chi/" itemprop="url" rel="index">
+              <span itemprop="name">Tu-Szu-Chi</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-09-08T10:46:00+08:00">
+                2017-09-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>截自<a href="https://wiki.haskell.org/Pointfree" target="_blank" rel="external">Haskell wiki</a></p>
+<blockquote>
+<p><strong>Pointfree Style</strong><br>It is very common for functional programmers to write functions as a composition of other functions, never mentioning the actual arguments they will be applied to</p>
+</blockquote>
+<p>Pointfree這種風格在中文也譯作「無值」、「隱含式」<br>以下範例多會使用 <strong><a href="http://ramdajs.com" target="_blank" rel="external">Ramda</a></strong> 這函式庫來協助我們寫成Functional Programming<br>p.s. Ramda中的方法多是Curry化，還不懂Curry化的可以參考<a href="https://jigsawye.gitbooks.io/mostly-adequate-guide/content/ch4.html" target="_blank" rel="external">這篇文章</a></p>
+<hr>
+<h1 id="程式的本質"><a href="#程式的本質" class="headerlink" title="程式的本質"></a>程式的本質</h1><p>即是在解決問題，而最常碰到的問題形式多為<br><strong>–&gt;輸入–&gt;運算–&gt;輸出–&gt;</strong><br>運算我們可以先看作是個fn(Function)<br><strong>–&gt;a–&gt;fn–&gt;b–&gt;</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fn = <span class="function"><span class="params">a</span> =&gt;</span> b</div></pre></td></tr></table></figure>
+<p>fn這Function接收一個a參數(Input)，並回傳b(Output)<br>當運算可能比較複雜時，流程會變成<br><strong>–&gt;a–&gt;fn1–&gt;(m)–&gt;fn2–&gt;(n)–&gt;fn3–&gt;b</strong><br>m,n分別表示經過fn1,fn2出來的結果，我們可以用Ramda來寫成</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fn = R.pipe(fn1, fn2, fn3)</div></pre></td></tr></table></figure>
+<p>R.pipe會將參數先傳入到fn1，得出的Output在傳入fn2依序下去，與之相對的是R.compose</p>
+<h1 id="Pointfree概念"><a href="#Pointfree概念" class="headerlink" title="Pointfree概念"></a>Pointfree概念</h1><p>經過以上例子的演示，我們可以用更語意化的例子會比較清楚</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> addOne = <span class="function"><span class="params">x</span> =&gt;</span> x + <span class="number">1</span>;</div><div class="line"><span class="keyword">const</span> square = <span class="function"><span class="params">x</span> =&gt;</span> x * x;</div><div class="line"><span class="keyword">const</span> addOneThenSquare = R.pipe(addOne,square);</div><div class="line">addOneThenSquare(<span class="number">2</span>) <span class="comment">// 9</span></div></pre></td></tr></table></figure>
+<p>先將要處理的流程拆解出來，並先定義好，再組合起來，這就是<strong>Pointfree</strong>的核心概念</p>
+<blockquote>
+<p>定義的時候不使用所要處理的值，只合成運算過程</p>
+</blockquote>
+<p>addOneThenSquare也可以寫成這樣，但就是不是Pointfree Style且也沒那麼簡潔&amp;易讀</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> addOneThenSquare = <span class="function"><span class="params">x</span> =&gt;</span> R.pipe(addOne,square)(x);</div><div class="line"><span class="comment">// 或是</span></div><div class="line"><span class="keyword">const</span> addOneThenSquare = <span class="function"><span class="params">x</span> =&gt;</span> square(addOne(x));</div></pre></td></tr></table></figure>
+<p>更多的範例可以參考<a href="http://www.ruanyifeng.com/blog/2017/03/pointfree.html" target="_blank" rel="external">阮一峰老師的文章</a></p>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p><strong>Pointfree</strong>這種風格剛開始會不太習慣，無法直接看到Function本身的參數，但大部分情況可以通過註解來輔佐<br>畢竟<strong>Pointfree</strong>不單只是讓我們的Code更簡潔、語意化<br>我們會從原本的「面向對象」(data.id,data.name…)轉而更專注於「處理」的動作(map,reduce,filter)<br>這樣會更瞭解整個流程在做什麼，取代用許多for-loop,if-else的嵌套<br>而且拆成各個「單一職責」的Function也較好做Testing &amp; Debug</p>
+<hr>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="http://www.ruanyifeng.com/blog/2017/03/pointfree.html" target="_blank" rel="external">Pointfree編成風格指南 by 阮一峰</a><br><a href="https://zhuanlan.zhihu.com/p/27626482" target="_blank" rel="external">Thinking in Ramda (Pointfree Style)</a><br><a href="http://lucasmreis.github.io/blog/pointfree-javascript/" target="_blank" rel="external">Pointfree Javascript</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2017/09/06/High-Order-Component/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/06/High-Order-Component/" itemprop="url">什麼是 High Order Component</a></h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/Tu-Szu-Chi/" itemprop="url" rel="index">
+              <span itemprop="name">Tu-Szu-Chi</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-09-06T09:39:43+08:00">
+                2017-09-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="title">hoc</span> :: <span class="type">ReactComponent</span> -&gt; <span class="type">ReactComponent</span></div></pre></td></tr></table></figure>
+<p><strong>HOC</strong>(High Order Component)帶有點Function Programming概念<br>它本質上就是一個Function，傳入一個(或多個)React.Component，再回傳新的React.Component</p>
+<h1 id="HOC在做什麼"><a href="#HOC在做什麼" class="headerlink" title="HOC在做什麼"></a>HOC在做什麼</h1><p>如果有接觸過<strong>Redux</strong>應該有聽過<strong>Presentational / Container Component</strong><br>Container Component主要負責<strong>「怎麼做事情」</strong><br><img src="https://cdn-images-1.medium.com/max/1600/1*tIdBW-TqotpALD3b2xk3SA.gif" alt="Presentational / Container Component" title="截自Tom Coleman:Understanding Higher Order Components"><br><a href="https://medium.freecodecamp.org/understanding-higher-order-components-6ce359d761b" target="_blank" rel="external">Tom Coleman</a>提到一項Container Component很重要的職責<br>就是<strong>負責將Global State分派給底下的Child Component</strong><br>而Redux中的<strong>connect()</strong>就是HOC的一種，通常我們都會用</p>
+<ul>
+<li>mapStateToProps 將需要的state轉換成Presentational的props</li>
+<li>mapDispatchToProps 注入需要的callback行為(ex. onClick、onHover時)</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> mapStateToProps = <span class="function">(<span class="params">state, ownProps</span>) =&gt;</span> &#123;</div><div class="line">&#125;</div><div class="line"><span class="keyword">const</span> mapDispatchToProps = <span class="function">(<span class="params">dispatch, ownProps</span>) =&gt;</span> &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>當各個Container都負責整個Application的一塊，大家有各自的職責並做好本份就會讓整個架構很有效率</p>
+<h1 id="HOC為何特別"><a href="#HOC為何特別" class="headerlink" title="HOC為何特別"></a>HOC為何特別</h1><blockquote>
+<p>A recent trend in React is towards <strong>functional stateless components</strong>.<br>These simplest “pure” components only ever transform their props into HTML and call callback props on user interaction.</p>
+</blockquote>
+<p>以上截自<em>Tom Coleman</em>文章中的一段話，可表達出為何要分出Presentational / Container<br>當將「複雜的活兒」交給特定的Container做，Presentational只管「顯示」&amp;「拿取」，這樣碰上Bug時我們就知道該<del>解決誰</del>找誰來解決了</p>
+<p>Component幾乎都需要存取Global State中的某一部分，但不能隨意地讓每個Component都可以調用，所以HOC形成了一種<strong>約束</strong>，由它來分配</p>
+<p>而Container也取代了原生的mixins，可在網路上找到許多比較兩者的文章</p>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p><strong>High Order Component</strong>的出現也間接表明React團隊往<strong>Functional Programming</strong>靠攏<br>Javascript也有些Library可幫我們的Code更Functional <strong>ex.</strong><a href="http://ramdajs.com" target="_blank" rel="external">Ramda.js</a><br>搞懂<strong>Functional Programming</strong>的思維，以現在來看是件值得投資的事</p>
+<hr>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><em><a href="https://medium.freecodecamp.org/understanding-higher-order-components-6ce359d761b" target="_blank" rel="external">Understanding Higher Order Components</a></em><br><em><a href="https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0" target="_blank" rel="external">Presentational and Container Components</a></em><br><em><a href="https://leozdgao.me/chushi-hoc/" target="_blank" rel="external">初識React中的High Order Component</a></em></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="https://avatars1.githubusercontent.com/u/31230110"
+              alt="SOVMedCare" />
+          
+            <p class="site-author-name" itemprop="name">SOVMedCare</p>
+            <p class="site-description motion-element" itemprop="description">Full Stack JS #FRP #RxJS #Redux #React</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">文章</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">標籤</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/sovmedcare" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:jackypan1989@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/sovtw" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.instagram.com/sovmedtw/" target="_blank" title="Instagram">
+                  
+                    <i class="fa fa-fw fa-instagram"></i>Instagram</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SOVMedCare</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

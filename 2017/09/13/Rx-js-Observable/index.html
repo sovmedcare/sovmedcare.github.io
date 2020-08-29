@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-tw">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="FP,RxJS," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="關於RxJsRxJs是ReactiveX的一個JS Library(還有其他平台 ex.RxJava、RxSwift…)  「An API for asynchronous programming with observable streams」  以上是ReactiveX官網標題，也響應了文章頂部的圖片，將任何動作、事件都看成是「流」，我們去監聽、觀察，經過轉換、合併、過濾，再給予對應的Cal">
+<meta name="keywords" content="FP,RxJS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RxJs Observable 介紹">
+<meta property="og:url" content="http://sovmedcare.github.io/2017/09/13/Rx-js-Observable/index.html">
+<meta property="og:site_name" content="SOVMedCare Tech">
+<meta property="og:description" content="關於RxJsRxJs是ReactiveX的一個JS Library(還有其他平台 ex.RxJava、RxSwift…)  「An API for asynchronous programming with observable streams」  以上是ReactiveX官網標題，也響應了文章頂部的圖片，將任何動作、事件都看成是「流」，我們去監聽、觀察，經過轉換、合併、過濾，再給予對應的Cal">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:image" content="https://cdn-images-1.medium.com/max/1600/1*j-SOtxql-Sqmvj0i0TWqMg.jpeg">
+<meta property="og:updated_time" content="2020-07-31T10:42:01.093Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RxJs Observable 介紹">
+<meta name="twitter:description" content="關於RxJsRxJs是ReactiveX的一個JS Library(還有其他平台 ex.RxJava、RxSwift…)  「An API for asynchronous programming with observable streams」  以上是ReactiveX官網標題，也響應了文章頂部的圖片，將任何動作、事件都看成是「流」，我們去監聽、觀察，經過轉換、合併、過濾，再給予對應的Cal">
+<meta name="twitter:image" content="https://cdn-images-1.medium.com/max/1600/1*j-SOtxql-Sqmvj0i0TWqMg.jpeg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://sovmedcare.github.io/2017/09/13/Rx-js-Observable/"/>
+
+
+
+
+
+  <title>RxJs Observable 介紹 | SOVMedCare Tech</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SOVMedCare Tech</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">@sovmedcare</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-authors">
+          <a href="/authors/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            作者群
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2017/09/13/Rx-js-Observable/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">RxJs Observable 介紹</h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/Tu-Szu-Chi/" itemprop="url" rel="index">
+              <span itemprop="name">Tu-Szu-Chi</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-09-13T10:32:21+08:00">
+                2017-09-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://cdn-images-1.medium.com/max/1600/1*j-SOtxql-Sqmvj0i0TWqMg.jpeg" alt="Everthing is stream" title="截自Medium"></p>
+<h1 id="關於RxJs"><a href="#關於RxJs" class="headerlink" title="關於RxJs"></a>關於RxJs</h1><p><strong>RxJs</strong>是<strong>ReactiveX</strong>的一個JS Library(還有其他平台 ex.RxJava、RxSwift…)</p>
+<blockquote>
+<p>「An API for asynchronous programming with observable streams」</p>
+</blockquote>
+<p>以上是ReactiveX官網標題，也響應了文章頂部的圖片，將任何動作、事件都看成是「流」，我們去監聽、觀察，經過轉換、合併、過濾，再給予對應的Callback</p>
+<h2 id="Observable"><a href="#Observable" class="headerlink" title="Observable"></a>Observable</h2><p>Observable是Rx’Library的核心，它的概念是由兩個Design Pattern融合起來 - <em>Observer</em> &amp; <em>Iterator</em></p>
+<h3 id="Observer"><a href="#Observer" class="headerlink" title="Observer"></a>Observer</h3><p>其實跟我們平常用到的<strong>addEventListener</strong>概念一樣，註冊一個監聽事件，當觸發時執行<strong>clickHandler</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">document.body.addEventListener(&apos;click&apos;, clickHandler)</div></pre></td></tr></table></figure>
+<pre><code>當然，一個事件可以有多個Listener，這在後續會解釋
+</code></pre><h3 id="Iterator"><a href="#Iterator" class="headerlink" title="Iterator"></a>Iterator</h3><p>想像成有一個<strong>指針</strong>指向一個資料序列(ex.Array)，我們想要得到這序列的資料必須透過Iterator的方法 - next()<br>當我們呼叫next()後，Iterator才會丟出一筆資料出來</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">arr = [1,2,3,4] //假設arr是Iterator</div><div class="line">arr.next() // 1</div><div class="line">arr.next() // 2</div><div class="line">// ...</div></pre></td></tr></table></figure>
+<p>總結來說Observable這個可觀察的流(stream)，上面會有資料隨著時間推送，它可以經過序列的方式處理資料(map、filter、reduce…)，甚至也可以合併兩個不同的流，來讓Listener得到資料</p>
+<h2 id="Observer-1"><a href="#Observer-1" class="headerlink" title="Observer"></a>Observer</h2><p>Observer是較會頻繁用到的功能(其餘還有Subject、Schedulers…)，他也是之前比喻的Listener<br>我們用實例來講解這些，首先建立一個要觀察的流(Observable)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">let observable = Rx.Observable</div><div class="line">    .create(observer =&gt; &#123;</div><div class="line">        observer.next(&apos;S&apos;);</div><div class="line">        observer.next(&apos;O&apos;);</div><div class="line">        observer.next(&apos;V&apos;);</div><div class="line">        observer.complete();</div><div class="line">    &#125;)</div></pre></td></tr></table></figure>
+<blockquote>
+<p>實務上我們的Observable比較不會這樣建立，通常會直接用fromEvent、fromPromise之類的，而不是create，針對某個事件來做<br>在此只是範例演練而已</p>
+</blockquote>
+<p>這個observable會依序推送S-&gt;O-&gt;V給observer，接著我們要有一個Observer來監聽這個流</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">observable.subscribe(&#123;</div><div class="line">    next: (val) =&gt; console.log(val),</div><div class="line">    error: (err) =&gt; console.log(err),</div><div class="line">    complete: () =&gt; console.log(&apos;Complete !&apos;)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<blockquote>
+<p>.subscribe(next, error, complete)，Observer就是由三個Method組成，負責處理接收到資料後、發生錯誤後和整個observable結束後</p>
+</blockquote>
+<p>當這個流被訂閱後馬上就會送出資訊給監聽的人，可以在這個<a href="https://jsbin.com/ceragiwogo/edit?js,console" target="_blank" rel="external">JS Bin</a>試試</p>
+<h2 id="Operator"><a href="#Operator" class="headerlink" title="Operator"></a>Operator</h2><p>有了流&amp;監聽者後，之前也有提到Observable可以像序列一樣處理資料，所以這裡加上Function Programming的核心進去</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">const observable = Rx.Observable</div><div class="line">    .create(observer =&gt; &#123;</div><div class="line">        observer.next(&apos;S&apos;)</div><div class="line">        observer.next(&apos;O&apos;)</div><div class="line">        observer.next(&apos;V&apos;)</div><div class="line">    &#125;)</div><div class="line">    .map(str =&gt; str + &apos;!&apos;)</div><div class="line">// ...subscribe</div><div class="line">// &apos;S!&apos;</div><div class="line">// &apos;O!&apos;</div><div class="line">// &apos;V!&apos;</div></pre></td></tr></table></figure>
+<p>再舉一個例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">javascript</div><div class="line">const observable = Rx.Observable</div><div class="line">    .create(observer =&gt; &#123;</div><div class="line">        observer.next(&apos;S&apos;)</div><div class="line">        observer.next(&apos;O&apos;)</div><div class="line">        observer.next(&apos;V&apos;)</div><div class="line">    &#125;)</div><div class="line">    .scan((x, y) =&gt; x + y);</div><div class="line">// ...subscribe</div><div class="line">// &apos;S&apos;</div><div class="line">// &apos;SO&apos;</div><div class="line">// &apos;SOV&apos;</div></pre></td></tr></table></figure>
+<p>其實scan就是Observable版的reduce，兩者的差別，前者必會回傳一個Observable物件，後者就是回傳Value(Int、Array、Function…)<br>所以讀者可以把observable印出來，就可以看見滿滿的Observable Method</p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>這篇文章只概述了Rx’Library核心，其餘還有很多強大的功能，能幫助我們寫出漂亮的Function Reactive Programming<br>有興趣的讀者可以去<a href="http://rxmarbles.com" target="_blank" rel="external">RxJS Marbles</a>自己拖拉體驗一下</p>
+<hr>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="http://ithelp.ithome.com.tw/articles/10186104" target="_blank" rel="external">30天精通Rx JS</a><br><a href="http://blog.techbridge.cc/2016/05/28/reactive-programming-intro-by-rxjs/" target="_blank" rel="external">TB-Reactive Programming 簡介與教學(以 RxJS 為例)</a><br><a href="http://rxmarbles.com" target="_blank" rel="external">Rx JS Marbles</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/FP/" rel="tag"># FP</a>
+          
+            <a href="/tags/RxJS/" rel="tag"># RxJS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/08/frp-reactjs-vs-cyclejs/" rel="next" title="漫談 FRP - ReactJS vs CycleJS">
+                <i class="fa fa-chevron-left"></i> 漫談 FRP - ReactJS vs CycleJS
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/13/Observable-HOT-COLD/" rel="prev" title="RxJs Observable - HOT & COLD">
+                RxJs Observable - HOT & COLD <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="https://avatars1.githubusercontent.com/u/31230110"
+              alt="SOVMedCare" />
+          
+            <p class="site-author-name" itemprop="name">SOVMedCare</p>
+            <p class="site-description motion-element" itemprop="description">Full Stack JS #FRP #RxJS #Redux #React</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">文章</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">標籤</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/sovmedcare" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:jackypan1989@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/sovtw" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.instagram.com/sovmedtw/" target="_blank" title="Instagram">
+                  
+                    <i class="fa fa-fw fa-instagram"></i>Instagram</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#關於RxJs"><span class="nav-number">1.</span> <span class="nav-text">關於RxJs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Observable"><span class="nav-number">1.1.</span> <span class="nav-text">Observable</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Observer"><span class="nav-number">1.1.1.</span> <span class="nav-text">Observer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Iterator"><span class="nav-number">1.1.2.</span> <span class="nav-text">Iterator</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Observer-1"><span class="nav-number">1.2.</span> <span class="nav-text">Observer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Operator"><span class="nav-number">1.3.</span> <span class="nav-text">Operator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#結語"><span class="nav-number">1.4.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">1.5.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SOVMedCare</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

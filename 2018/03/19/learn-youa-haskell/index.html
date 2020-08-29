@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-tw">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="FP,Haskell," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Haskell簡介在之前我們介紹了些Functional Programming的概念(ex. Currying/High-Order-Function…)Haskell就是最具有代表性的函數式語言，整個應用就是透過定義函數而組成，大致上函數皆沒有副作用(Haskell用特定類型表達副作用，後續會提及)不再像命令式語言命令電腦要做什麼，而是用函數來描述出問題是什麼其本身也有社群 - Hackage">
+<meta name="keywords" content="FP,Haskell">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初識Haskell">
+<meta property="og:url" content="http://sovmedcare.github.io/2018/03/19/learn-youa-haskell/index.html">
+<meta property="og:site_name" content="SOVMedCare Tech">
+<meta property="og:description" content="Haskell簡介在之前我們介紹了些Functional Programming的概念(ex. Currying/High-Order-Function…)Haskell就是最具有代表性的函數式語言，整個應用就是透過定義函數而組成，大致上函數皆沒有副作用(Haskell用特定類型表達副作用，後續會提及)不再像命令式語言命令電腦要做什麼，而是用函數來描述出問題是什麼其本身也有社群 - Hackage">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Haskell-Logo.svg/240px-Haskell-Logo.svg.png">
+<meta property="og:updated_time" content="2020-07-31T10:42:01.098Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="初識Haskell">
+<meta name="twitter:description" content="Haskell簡介在之前我們介紹了些Functional Programming的概念(ex. Currying/High-Order-Function…)Haskell就是最具有代表性的函數式語言，整個應用就是透過定義函數而組成，大致上函數皆沒有副作用(Haskell用特定類型表達副作用，後續會提及)不再像命令式語言命令電腦要做什麼，而是用函數來描述出問題是什麼其本身也有社群 - Hackage">
+<meta name="twitter:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Haskell-Logo.svg/240px-Haskell-Logo.svg.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://sovmedcare.github.io/2018/03/19/learn-youa-haskell/"/>
+
+
+
+
+
+  <title>初識Haskell | SOVMedCare Tech</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SOVMedCare Tech</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">@sovmedcare</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-authors">
+          <a href="/authors/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            作者群
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2018/03/19/learn-youa-haskell/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">初識Haskell</h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/Tu-Szu-Chi/" itemprop="url" rel="index">
+              <span itemprop="name">Tu-Szu-Chi</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-03-19T00:00:00+08:00">
+                2018-03-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Haskell"><a href="#Haskell" class="headerlink" title="Haskell"></a>Haskell</h1><h2 id="簡介"><a href="#簡介" class="headerlink" title="簡介"></a>簡介</h2><p>在之前我們介紹了些<strong>Functional Programming</strong>的概念<em>(ex. Currying/High-Order-Function…)</em><br><strong>Haskell</strong>就是最具有代表性的函數式語言，整個應用就是透過定義函數而組成，大致上函數皆沒有副作用<em>(Haskell用特定類型表達副作用，後續會提及)</em><br>不再像命令式語言命令電腦要做什麼，而是用函數來描述出問題是什麼<br>其本身也有社群 - <a href="https://goo.gl/UiG8eQ" target="_blank" rel="external">Hackage</a> 持續發佈許多工具讓我們更方便建立應用<br>而多數理工人都碰過的<strong>GHC</strong>編譯器其實就是<strong>Glasgow Haskell Compiler</strong>的縮寫<br>接着我會從安裝到語法來介紹這門特殊的程式語言<br><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Haskell-Logo.svg/240px-Haskell-Logo.svg.png" alt="logo" title="Haskell以「λ」作為自己的標誌，具有「證明即程式、命題為類型」的特徵"></p>
+<h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><p>在<a href="https://www.haskell.org/downloads" target="_blank" rel="external">Haskell官方</a>頁面中有三種方式讓我們建設基本環境，在此我選擇功能較齊全的<code>Haskell-Platform</code>來安裝，並用Docker新建了純淨的Ubuntu環境來操作<br>有碰上<em>ERROR: Unable to locate package</em>，先下一個<code>apt-get update</code>再<code>apt-get install haskell-platform</code>就可以了<br>安裝後如果發現<em>ERROR: stack command not found</em>，可參考<a href="https://github.com/commercialhaskell/stack/blob/master/doc/GUIDE.md#downloading-and-installation" target="_blank" rel="external">stack 官方</a>的步驟</p>
+<h3 id="ghci"><a href="#ghci" class="headerlink" title="ghci"></a>ghci</h3><p><code>ghci</code>這指令可讓我們直接進入終端機來嘗試Haskell，就像Python的<code>python</code>指令一樣</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">root@758b279035c4:~<span class="comment"># ghci</span></div><div class="line">GHCi, version 7.10.3: http://www.haskell.org/ghc/  :? <span class="keyword">for</span> <span class="built_in">help</span></div><div class="line">Prelude&gt; :q</div><div class="line">Leaving GHCi.</div><div class="line">root@758b279035c4:~<span class="comment">#</span></div></pre></td></tr></table></figure>
+<h3 id="stack"><a href="#stack" class="headerlink" title="stack"></a>stack</h3><p><code>stack</code>指令主要是用來管理Haskell Project，<code>stack new</code>可以快速地幫我們建立一個基礎的專案架構<br>在此用的版本是<code>1.6.5</code>，截至今日，建議升級到1.6以上</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># stack --version</span></div><div class="line"><span class="comment"># stack upgrade</span></div><div class="line">stack new my-project</div><div class="line"><span class="built_in">cd</span> my-project</div><div class="line">stack setup</div><div class="line">stack build</div><div class="line">stack <span class="built_in">exec</span> my-project-exe</div></pre></td></tr></table></figure>
+<h3 id="cabal"><a href="#cabal" class="headerlink" title="cabal"></a>cabal</h3><p><code>cabal</code>主要用來管理package，<code>stack</code>背後也就是cabal在運作</p>
+<h3 id="解釋"><a href="#解釋" class="headerlink" title="解釋"></a>解釋</h3><p>現在<em>/my-project</em>內會有<code>stack.yaml</code> &amp; <code>my-project.cabal</code>兩個檔案，在此要稍微解釋一下<br>這和我們在寫Javascript專案時不一樣，不單單只有一個<code>package.json</code>幫我們管理第三方套件<br>首先，打開<em>my-project.cabal</em>，會看到cabal定義的package主要會有:</p>
+<ul>
+<li>Name &amp; Version</li>
+<li>0 or 1 libraries</li>
+<li>0 or more executables</li>
+<li>A cabal file (在此是<em>my-project.cabal</em>)</li>
+</ul>
+<p>而打開<em>stack.yaml</em>，stack定義的project會有:</p>
+<ul>
+<li>A resolver</li>
+<li>Extra dependencies (extra-deps)</li>
+<li>0 or more local Cabal packages</li>
+</ul>
+<p><code>stack.yaml</code>中的<strong>resolver</strong>除了定義要用什麼來編譯外，也決定了<em>.cabal</em>中<strong>build-depends</strong>的package版本<br>各位可以試試看，當<code>resolver = lts-10.5</code> or <code>resolver = lts-9.4</code>兩種狀況時，當<code>stack build</code>過程，<strong>network</strong>的版本分別是多少</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="string">executable</span> <span class="string">my-project-exe</span></div><div class="line"><span class="attr">  hs-source-dirs:</span>      <span class="string">app</span></div><div class="line"><span class="attr">  main-is:</span>             <span class="string">Main.hs</span></div><div class="line"><span class="attr">  ghc-options:</span>         <span class="bullet">-threaded</span> <span class="bullet">-rtsopts</span> <span class="bullet">-with-rtsopts=-N</span></div><div class="line"><span class="attr">  build-depends:</span>       <span class="string">base</span> <span class="string">&gt;=</span> <span class="number">4.7</span> <span class="string">&amp;&amp;</span> <span class="string">&lt;</span> <span class="number">5</span></div><div class="line">                     <span class="string">,</span> <span class="string">network</span></div><div class="line">                     <span class="string">,</span> <span class="string">my-project</span></div><div class="line"><span class="attr">  default-language:</span>    <span class="string">Haskell2010</span></div></pre></td></tr></table></figure>
+<p>對於各個resolver對應的package version都可以在<a href="https://www.stackage.org/lts-10.5" target="_blank" rel="external">這網站</a>查到<br>那當你想用<a href="https://hackage.haskell.org/packages/browse" target="_blank" rel="external">Hackage</a>上的某個package，卻沒在當前的resolver找到呢？<br>這時只要在<strong>stack.yaml</strong>的<code>extra-deps</code>添加即可(版本號必備)</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="attr">extra-deps:</span></div><div class="line"><span class="bullet">-</span> <span class="string">accelerate-cublas-0.0</span></div></pre></td></tr></table></figure>
+<p>而專案的架構也可以從Github上發現，在package的<code>hs-source-dirs</code>資料夾，除了主要的Main檔外，不會有多餘的檔案<br>自行定義的諸多Function都整理爲<strong>Library</strong>，並在<strong>.cabal</strong>的<code>library: Exposed-Modules</code>載入<br>可以參考 <a href="https://github.com/begriffs/postgrest" target="_blank" rel="external">begriffs/postgrest</a> &amp; <a href="https://github.com/uber/queryparser" target="_blank" rel="external">uber/queryparser</a>這兩個repo</p>
+<h2 id="語法"><a href="#語法" class="headerlink" title="語法"></a>語法</h2><p>首先，有兩種方式可以讓我們進入<strong>GHC</strong>的互動模式</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 1</span></div><div class="line">stack ghci</div><div class="line"><span class="comment"># 2</span></div><div class="line"><span class="built_in">cd</span> app/</div><div class="line">ghci</div><div class="line">:l Main</div></pre></td></tr></table></figure>
+<p>第一種方式會幫我們自動載入所有檔案，不需要一個個引入；而第二種就要個別引入檔案，在此預設使用第一種方式<br>當指令下完後，你的終端機會出現這些文字</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">Loaded GHCi configuration from /private/tmp/ghci94387/ghci-script</div><div class="line">*Main Lib&gt;</div></pre></td></tr></table></figure>
+<p>但前綴有點長(引入的檔名都顯示出來)，我們再直接下個指令更改</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:set prompt &quot;ghci&gt;&quot;</div></pre></td></tr></table></figure>
+<p>然後跑stack project預設的程式試試</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ghci&gt; main</div><div class="line">someFunc</div><div class="line">ghci&gt;</div></pre></td></tr></table></figure>
+<h3 id="Operator"><a href="#Operator" class="headerlink" title="Operator"></a>Operator</h3><p>一般常用的數學運算符用法都差不多</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; <span class="number">1</span> + <span class="number">1</span></div><div class="line"><span class="number">2</span></div><div class="line"><span class="title">ghci</span>&gt; <span class="number">1</span> - <span class="number">1</span></div><div class="line"><span class="number">0</span></div><div class="line"><span class="title">ghci</span>&gt; <span class="number">2</span> * <span class="number">2</span></div><div class="line"><span class="number">4</span></div><div class="line"><span class="title">ghci</span>&gt; <span class="number">2</span> / <span class="number">2</span></div><div class="line"><span class="number">1.0</span></div><div class="line"><span class="title">ghci</span>&gt; <span class="number">1</span> == <span class="number">1</span></div><div class="line"><span class="type">True</span></div><div class="line"><span class="title">ghci</span>&gt; <span class="number">1</span> == <span class="number">2</span></div><div class="line"><span class="type">False</span></div><div class="line"><span class="title">ghci</span>&gt; <span class="number">1</span> /= <span class="number">1</span></div><div class="line"><span class="type">False</span></div><div class="line"><span class="title">ghci</span>&gt; <span class="number">1</span> /= <span class="number">2</span></div><div class="line"><span class="type">True</span></div></pre></td></tr></table></figure>
+<p>其實這每一個運算符也都是Function，這些被兩個參數夾在一起呼叫的我們稱爲<strong>中綴函數</strong>，其餘則是<strong>前綴函數</strong>(大部分皆這種)</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; max <span class="number">5</span> <span class="number">1</span></div><div class="line"><span class="number">5</span></div><div class="line"><span class="title">ghci</span>&gt; mod <span class="number">10</span> <span class="number">5</span></div><div class="line"><span class="number">0</span></div></pre></td></tr></table></figure>
+<p>Haskell的Function在傳遞參數並不用逗號、括號來分割，純粹用空格來表示；當然也有括號的優先順序</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; max <span class="number">5</span> (max <span class="number">10</span> <span class="number">1</span>)</div><div class="line"><span class="number">10</span></div><div class="line"><span class="title">ghci</span>&gt; (succ <span class="number">9</span>) + (max <span class="number">5</span> <span class="number">4</span>) + <span class="number">1</span></div><div class="line"><span class="number">16</span></div></pre></td></tr></table></figure>
+<p>但這些前綴函數有時會讓人覺得不易讀，所以我們也可以將它們改成用中綴的方式寫，只要這樣加上<strong>`</strong>即可</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; <span class="number">10</span> `mod` <span class="number">5</span></div><div class="line"><span class="number">0</span></div><div class="line"><span class="title">ghci</span>&gt; <span class="number">10</span> `div` <span class="number">5</span></div><div class="line"><span class="number">2</span></div></pre></td></tr></table></figure>
+<h3 id="函數"><a href="#函數" class="headerlink" title="函數"></a>函數</h3><p>接下來的Code會直接寫在Main.hs裡頭，每當存檔後，只要下<code>:r</code>這指令就會重新幫我們載入<br>來寫一個<code>addTwo</code>的Function</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="title">addTwo</span> :: <span class="type">Num</span> a =&gt; a -&gt; a</div><div class="line"><span class="title">addTwo</span> n = n + <span class="number">2</span></div></pre></td></tr></table></figure>
+<p>第一行是定義這個Function的Type，代表它接收一個型別爲<em>Num</em>的參數並同樣回傳<em>Num</em>(你也可以先不定義)；第二行就是這Function主要做的事情<br><code>:r</code>重新載入後，如果剛剛你沒定義這Function的Type，可以用<code>:t addTwo</code>看見Haskell自動幫你定義了，<code>:i addTwo</code>也可試試看</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="title">addBoth</span> :: <span class="type">Num</span> a =&gt; a -&gt; a -&gt; a</div><div class="line"><span class="title">addBoth</span> x y = x + y</div></pre></td></tr></table></figure>
+<h3 id="if-else"><a href="#if-else" class="headerlink" title="if/else"></a>if/else</h3><p>用法也大同小異，只是在Haskell中，<code>else</code>不可省略(爲了確保一定會回傳一個值)<br>不論是<code>5</code>/<code>x+y</code>/<code>if...then...else</code>都只是個表達式(就是返回一個值的程式碼)，所以可以輕鬆的在函數中使用</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="title">doubleSmallNumber</span> x = <span class="keyword">if</span> x &gt; <span class="number">100</span></div><div class="line">                      <span class="keyword">then</span> x</div><div class="line">                      <span class="keyword">else</span> x*<span class="number">2</span></div><div class="line"></div><div class="line"><span class="title">doubleSmallAndAddOne</span> x = (<span class="keyword">if</span> x &gt; <span class="number">100</span> <span class="keyword">then</span> x <span class="keyword">else</span> x*<span class="number">2</span>) + <span class="number">1</span></div></pre></td></tr></table></figure>
+<h3 id="List"><a href="#List" class="headerlink" title="List"></a>List</h3><p>這是我們很熟悉的資料結構，許多資料都用List來操作，但在Haskell中List是一種單型別資料結構，List內的元素皆要是同型別<br><code>GHCi模式中可以用 let a = [1,2,3] 定義常量</code></p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- let 定義</span></div><div class="line"><span class="title">ghci</span>&gt; <span class="keyword">let</span> temp = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</div><div class="line"><span class="title">ghci</span>&gt; temp</div><div class="line">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</div><div class="line"></div><div class="line"><span class="comment">-- 合併List</span></div><div class="line"><span class="title">ghci</span>&gt; [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>] ++ [<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</div><div class="line">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</div><div class="line"></div><div class="line"><span class="comment">-- String其實就是一組字元的List而已</span></div><div class="line"><span class="title">ghci</span>&gt; ['h','a'] ++ ['<span class="type">O'</span>,'<span class="type">O'</span>]</div><div class="line"><span class="string">"haOO"</span></div><div class="line"><span class="title">ghci</span>&gt; <span class="string">"ha"</span> ++ <span class="string">"OO"</span></div><div class="line"><span class="string">"haOO"</span></div></pre></td></tr></table></figure>
+<p>在用<code>++</code>要特別注意，Haskell會遍歷整個List(符號左邊那個)，如果List長度大時會跑一陣子<br>單單插入一個元素可以使用<code>:</code>往List前端插入，這樣較高效</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; <span class="number">1</span>:[<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line"><span class="title">ghci</span>&gt; <span class="number">1</span>:<span class="number">2</span>:[<span class="number">3</span>,<span class="number">4</span>]</div><div class="line">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div></pre></td></tr></table></figure>
+<p>一些List的函數</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 取List的值</span></div><div class="line"><span class="title">ghci</span>&gt; [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>] !! <span class="number">2</span></div><div class="line"><span class="number">3</span></div><div class="line"><span class="title">ghci</span>&gt; head [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line"><span class="number">1</span></div><div class="line"><span class="title">ghci</span>&gt; tail [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line">[<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line"><span class="title">ghci</span>&gt; last [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line"><span class="number">4</span></div><div class="line"><span class="title">ghci</span>&gt; init [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</div><div class="line"><span class="title">ghci</span>&gt; length [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line"><span class="number">4</span></div><div class="line"><span class="title">ghci</span>&gt; null [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line"><span class="type">False</span></div><div class="line"><span class="title">ghci</span>&gt; null []</div><div class="line"><span class="type">True</span></div><div class="line"><span class="title">ghci</span>&gt; reverse [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line">[<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>]</div><div class="line"><span class="title">ghci</span>&gt; take <span class="number">3</span> [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</div><div class="line"><span class="title">ghci</span>&gt; drop <span class="number">2</span> [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line">[<span class="number">3</span>,<span class="number">4</span>]</div><div class="line"><span class="title">ghci</span>&gt; minium [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line"><span class="number">1</span></div><div class="line"><span class="title">ghci</span>&gt; maximum [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line"><span class="number">4</span></div><div class="line"><span class="title">ghci</span>&gt; sum [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line"><span class="number">10</span></div><div class="line"><span class="title">ghci</span>&gt; product [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line"><span class="number">24</span></div><div class="line"><span class="comment">-- 檢查元素是否在List裡</span></div><div class="line"><span class="title">ghci</span>&gt; <span class="number">4</span> `elem` [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line"><span class="type">True</span></div><div class="line"><span class="title">ghci</span>&gt; <span class="number">5</span> `elem` [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div></pre></td></tr></table></figure>
+<p>再來介紹List中一個好用的功能 - <strong>Range</strong><br>欲表達一個1~20的List我們可以這樣做</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; [<span class="number">1.</span><span class="number">.20</span>]</div><div class="line">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">13</span>,<span class="number">14</span>,<span class="number">15</span>,<span class="number">16</span>,<span class="number">17</span>,<span class="number">18</span>,<span class="number">19</span>,<span class="number">20</span>]</div><div class="line"><span class="comment">-- 字元也行</span></div><div class="line"><span class="title">ghci</span>&gt; ['a'..'z']</div><div class="line"><span class="string">"abcdefghijklmnopqrstuvwxyz"</span></div><div class="line"><span class="comment">-- 也可以給它間距</span></div><div class="line"><span class="title">ghci</span>&gt; [<span class="number">1</span>,<span class="number">3.</span><span class="number">.20</span>]</div><div class="line">[<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">9</span>,<span class="number">11</span>,<span class="number">13</span>,<span class="number">15</span>,<span class="number">17</span>,<span class="number">19</span>]</div><div class="line"><span class="comment">-- 但間距只能給一次</span></div><div class="line"><span class="title">ghci</span>&gt; [<span class="number">1</span>,<span class="number">3</span>,<span class="number">5.</span><span class="number">.20</span>]</div><div class="line"><span class="title">error</span>: parse error on input ‘..’</div></pre></td></tr></table></figure>
+<p>我們也可以不標註界限，定義個無限長度的List - <code>[1,3..]</code><br>由於Haskell是惰性的，所以並不會去取一個無限長度的值，它會等到你真的要取的時候，看你要多少才給多少</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; take <span class="number">10</span> [<span class="number">1</span>,<span class="number">3.</span>.]</div><div class="line">[<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">9</span>,<span class="number">11</span>,<span class="number">13</span>,<span class="number">15</span>,<span class="number">17</span>,<span class="number">19</span>]</div><div class="line"><span class="title">ghci</span>&gt;  take <span class="number">14</span> (cycle <span class="string">"SOV! "</span>)</div><div class="line"><span class="string">"SOV! SOV! SOV!"</span></div><div class="line"><span class="title">ghci</span>&gt;  take <span class="number">10</span> (repeat <span class="number">5</span>)</div><div class="line">[<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>]</div></pre></td></tr></table></figure>
+<p>接着也是個厲害的語法 - <strong>List Comprehension</strong><br>這其實就是數學中<em>Set Comprehension</em>的概念，從既有的集合按照規則產生一個新集合</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; [x*<span class="number">2</span> | x &lt;- [<span class="number">1.</span><span class="number">.10</span>]]</div><div class="line">[<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>,<span class="number">10</span>,<span class="number">12</span>,<span class="number">14</span>,<span class="number">16</span>,<span class="number">18</span>,<span class="number">20</span>]</div><div class="line"><span class="title">ghci</span>&gt; [x + y | x &lt;- [<span class="number">1.</span><span class="number">.5</span>], y &lt;- [<span class="number">2</span>,<span class="number">3</span>]]</div><div class="line">[<span class="number">3</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">7</span>,<span class="number">8</span>]</div></pre></td></tr></table></figure>
+<p>如果我們自己動手實現一個<code>length&#39;</code>函數可以這樣</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="title">length'</span> xs = sum [<span class="number">1</span> | _ &lt;- xs]</div></pre></td></tr></table></figure>
+<p><code>_</code>代表我們不在乎它是什麼值</p>
+<h3 id="Tuple"><a href="#Tuple" class="headerlink" title="Tuple"></a>Tuple</h3><p><strong>Tuple</strong>很像<strong>List</strong> - 將多個值存入一個容器中，我們剛剛有提到，List內的元素皆是同型別，且它的Type不會因爲內部的元素數目而有異<br>可是<strong>Tuple</strong>要求明確的內部數據數目，它的Type會取決於內部數據的數目&amp;Type</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 可以發現Type的異處 --</span></div><div class="line"><span class="title">ghci</span>&gt; :t [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</div><div class="line">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>] :: <span class="type">Num</span> a =&gt; [a]</div><div class="line"><span class="title">ghci</span>&gt; :t (<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</div><div class="line">(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>) :: (<span class="type">Num</span> c, <span class="type">Num</span> b, <span class="type">Num</span> a) =&gt; (a, b, c)</div><div class="line"><span class="title">ghci</span>&gt; :t ([<span class="number">1</span>,<span class="number">2</span>], <span class="number">3</span>)</div><div class="line">([<span class="number">1</span>,<span class="number">2</span>], <span class="number">3</span>) :: (<span class="type">Num</span> b, <span class="type">Num</span> a) =&gt; ([a], b)</div><div class="line"><span class="comment">-- 不會有單元素的Tuple --</span></div><div class="line"><span class="title">ghci</span>&gt; :t (<span class="number">1</span>)</div><div class="line">(<span class="number">1</span>) :: <span class="type">Num</span> p =&gt; p</div></pre></td></tr></table></figure>
+<p>我們先介紹針對<em>序對</em>Tuple的Function(後續會提及其他長度的Tuple)</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; fst (<span class="number">1</span>,<span class="number">2</span>)</div><div class="line"><span class="number">1</span></div><div class="line"><span class="title">ghci</span>&gt; snd (<span class="number">1</span>,<span class="number">2</span>)</div><div class="line"><span class="number">2</span></div></pre></td></tr></table></figure>
+<p>用List產生Tuple</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; zip [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>] [<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>]</div><div class="line">[(<span class="number">1</span>,<span class="number">5</span>),(<span class="number">2</span>,<span class="number">5</span>),(<span class="number">3</span>,<span class="number">5</span>),(<span class="number">4</span>,<span class="number">5</span>),(<span class="number">5</span>,<span class="number">5</span>)]</div><div class="line"><span class="title">ghci</span>&gt; zip [<span class="number">1</span> .. <span class="number">5</span>] [<span class="string">"one"</span>, <span class="string">"two"</span>, <span class="string">"three"</span>, <span class="string">"four"</span>, <span class="string">"five"</span>]</div><div class="line">[(<span class="number">1</span>,<span class="string">"one"</span>),(<span class="number">2</span>,<span class="string">"two"</span>),(<span class="number">3</span>,<span class="string">"three"</span>),(<span class="number">4</span>,<span class="string">"four"</span>),(<span class="number">5</span>,<span class="string">"five"</span>)]</div><div class="line"><span class="comment">-- 如果兩個List長度不一，取小的</span></div><div class="line"><span class="title">ghci</span>&gt; zip [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>] [<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>]</div><div class="line">[(<span class="number">1</span>,<span class="number">4</span>),(<span class="number">2</span>,<span class="number">5</span>),(<span class="number">3</span>,<span class="number">6</span>)]</div><div class="line"><span class="comment">-- 所以也可以處理無限的List</span></div><div class="line"><span class="title">ghci</span>&gt;zip [<span class="number">1</span>,<span class="number">3.</span>.] [<span class="string">"one"</span>, <span class="string">"two"</span>]</div><div class="line">[(<span class="number">1</span>,<span class="string">"one"</span>),(<span class="number">3</span>,<span class="string">"two"</span>)]</div></pre></td></tr></table></figure>
+<p>實際的應用上，我們以三角形爲例</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="title">let</span> threeEdge = [ (a,b,c) | c &lt;- [<span class="number">1.</span><span class="number">.10</span>], b &lt;- [<span class="number">1.</span><span class="number">.10</span>], a &lt;- [<span class="number">1.</span><span class="number">.10</span>] ]</div></pre></td></tr></table></figure>
+<p>我們必須再多給些條件才能讓它是三角形的集合(假設我要直角三角形)</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- c是斜邊, b是長邊, a是短邊</span></div><div class="line"><span class="title">let</span> triangles = [ (a,b,c) | c &lt;- [<span class="number">1.</span><span class="number">.10</span>], b &lt;- [<span class="number">1.</span>.c], a &lt;- [<span class="number">1.</span>.b], a^<span class="number">2</span> + b^<span class="number">2</span> == c^<span class="number">2</span> ]</div></pre></td></tr></table></figure>
+<p>最後我只想要周長爲24的三角形，所以再修改一下</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="title">let</span> finalTriangle = [ (a,b,c) | c &lt;- [<span class="number">1.</span><span class="number">.10</span>], b &lt;- [<span class="number">1.</span>.c], a &lt;- [<span class="number">1.</span>.b], a^<span class="number">2</span> + b^<span class="number">2</span> == c^<span class="number">2</span>, a+b+c == <span class="number">24</span> ]</div></pre></td></tr></table></figure>
+<h2 id="進階函數"><a href="#進階函數" class="headerlink" title="進階函數"></a>進階函數</h2><p>語法提及的差不多，接着要持續深入Haskell中Function的精髓</p>
+<h3 id="模式匹配-Pattern-matching"><a href="#模式匹配-Pattern-matching" class="headerlink" title="模式匹配 (Pattern matching)"></a>模式匹配 (Pattern matching)</h3><p>這是一個很實用的功能，<del>真心推薦每個語言都帶有</del>除了能幫我們Code寫的更簡潔外，取參數也變得更加容易<br>來個簡單的範例</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="title">lucky</span> :: (<span class="type">Integral</span> a) =&gt; a -&gt; <span class="type">String</span></div><div class="line"><span class="title">lucky</span> <span class="number">7</span> = <span class="string">"LUCKY SEVEN!"</span></div><div class="line"><span class="title">lucky</span> x = <span class="string">"Sorry, you're out of luck..."</span></div></pre></td></tr></table></figure>
+<p><strong>Pattern Matching</strong>會從上到下開始匹配，如果把最後一個匹配一切的模式移到最前面，那永遠會回傳<em>Sorry, you’re out of luck…</em><br>我們來實作個階乘函數，可以計算<code>10!</code>,<code>7!</code>之類的，而條件就是<code>0!</code>回傳<strong>1</strong></p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 還結合了遞迴在裏頭~</span></div><div class="line"><span class="title">factorial</span> :: (<span class="type">Integral</span> a) =&gt; a -&gt; a</div><div class="line"><span class="title">factorial</span> <span class="number">0</span> = <span class="number">1</span></div><div class="line"><span class="title">factorial</span> n = n * factorial (n - <span class="number">1</span>)</div></pre></td></tr></table></figure>
+<p><strong>Pattern Matching</strong>的順序很重要，如果將兩個模式對調，那就是無窮盡的一直跑了…<br>我們再來把Tuple融合到模式匹配裡，以<code>相加兩個Vector向量</code>爲例</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">--- 一般Function寫法</span></div><div class="line"><span class="title">addVectors</span> :: (<span class="type">Num</span> a) =&gt; (a, a) -&gt; (a, a) -&gt; (a, a)</div><div class="line"><span class="title">addVectors</span> a b = (fst a + fst b, snd a + snd b)</div><div class="line"></div><div class="line"><span class="comment">-- Pattern Matching寫法</span></div><div class="line"><span class="title">addVectors'</span> :: (<span class="type">Num</span> a) =&gt; (a, a) -&gt; (a, a) -&gt; (a, a)</div><div class="line"><span class="title">addVectors'</span> (x1, y1) (x2, y2) = (x1 + x2, y1 + y2)</div></pre></td></tr></table></figure>
+<p>這跟Javascript的<em>解構賦值</em>有點像，我們再舉個三元組的Tuple來試試</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="title">first</span> :: (a, b, c) -&gt; a</div><div class="line"><span class="title">first</span> (x, _, _) = x</div><div class="line"></div><div class="line"><span class="title">second</span> :: (a, b, c) -&gt; b</div><div class="line"><span class="title">second</span> (_, y, _) = y</div><div class="line"></div><div class="line"><span class="title">third</span> :: (a, b, c) -&gt; c</div><div class="line"><span class="title">third</span> (_, _, z) = z</div></pre></td></tr></table></figure>
+<p><code>_</code>就跟剛剛一樣，我們不在乎它是什麼~<br>再來要以<strong>List</strong>爲例子，這也可能是往後很常用到的技巧<br><code>[1,2]</code>就是<code>1:2:[]</code>的結果，也可以是<code>1:[2]</code>，用變數表達來看即爲<code>a:b:c</code> or <code>x:xs</code>，這也是我們在模式匹配中針對List的寫法</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 改寫head，List的匹配至少要有一個元素，所以空的就拋出錯誤</span></div><div class="line"><span class="title">head'</span> :: [a] -&gt; a</div><div class="line"><span class="title">head'</span> [] = error <span class="string">"Empty !"</span></div><div class="line"><span class="title">head'</span> (x:_) = x</div></pre></td></tr></table></figure>
+<p>再來改寫<code>length</code>試試</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 遞迴又用上了</span></div><div class="line"><span class="title">length'</span> :: (<span class="type">Num</span> b) =&gt; [a] -&gt; b</div><div class="line"><span class="title">length'</span> [] = <span class="number">0</span></div><div class="line"><span class="title">length'</span> (_:xs) = <span class="number">1</span> + length' xs</div></pre></td></tr></table></figure>
+<p>總之在用Pattern Matching搭配遞迴的時後要記得給予邊界條件，就像我們針對空List或是值等於<strong>0</strong>那樣，避免無窮下去</p>
+<h3 id="Guards"><a href="#Guards" class="headerlink" title="Guards"></a>Guards</h3><p><strong>Pattern Matching</strong>用來檢查一個值是否適合從中取值，而<strong>guards</strong>是用來檢查一個值的某項屬性是否爲真<del>就是比較簡潔的if/else啦</del><br>先用個簡單的Bmi來試試</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="title">bmiTell</span> :: (<span class="type">RealFloat</span> a) =&gt; a -&gt; <span class="type">String</span></div><div class="line"><span class="title">bmiTell</span> bmi</div><div class="line">    | bmi &lt;= <span class="number">18.5</span> = <span class="string">"You're underweight"</span></div><div class="line">    | bmi &lt;= <span class="number">25.0</span> = <span class="string">"You're supposedly normal"</span></div><div class="line">    | bmi &lt;= <span class="number">30.0</span> = <span class="string">"You're fat!"</span></div><div class="line">    | otherwise   = <span class="string">"You're a whale, congratulations!"</span></div></pre></td></tr></table></figure>
+<p>guard利用豎線來表示，並且要記得縮排(不然會報錯)<br>他跟Pattern Matching一樣，由上到下開始撮合，最後要給一個<code>otherwise</code>來處理未列舉的狀況<br>Haskell定義Function後面不需要加上<code>=</code>，且對縮排有要求，當然也可以用之前提過的<strong>中綴</strong>方式來寫</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="title">bmiTell'</span> :: (<span class="type">RealFloat</span> a) =&gt; a -&gt; a -&gt; <span class="type">String</span></div><div class="line"><span class="title">weight</span> `bmiTell'` height</div><div class="line">    | weight / height ^ <span class="number">2</span> &lt;= <span class="number">18.5</span> = <span class="string">"You're underweight"</span></div><div class="line">    | weight / height ^ <span class="number">2</span> &lt;= <span class="number">25.0</span> = <span class="string">"You're supposedly normal"</span></div><div class="line">    | weight / height ^ <span class="number">2</span> &lt;= <span class="number">30.0</span> = <span class="string">"You're fat!"</span></div><div class="line">    | otherwise   = <span class="string">"You're a whale, congratulations!"</span></div></pre></td></tr></table></figure>
+<h3 id="Where"><a href="#Where" class="headerlink" title="Where"></a>Where</h3><p>在<code>bmiTell&#39;</code>裡我們重複了三次<code>weight / height ^ 2</code>，照理說應該要讓它有個常量可以暫存著，所以我們將它改成</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="title">bmiTell'</span> :: (<span class="type">RealFloat</span> a) =&gt; a -&gt; a -&gt; <span class="type">String</span></div><div class="line"><span class="title">weight</span> `bmiTell'` height</div><div class="line">    | bmi &lt;= <span class="number">18.5</span> = <span class="string">"You're underweight"</span></div><div class="line">    | bmi &lt;= <span class="number">25.0</span> = <span class="string">"You're supposedly normal"</span></div><div class="line">    | bmi &lt;= <span class="number">30.0</span> = <span class="string">"You're fat!"</span></div><div class="line">    | otherwise   = <span class="string">"You're a whale, congratulations!"</span></div><div class="line">    <span class="keyword">where</span> bmi = weight / height ^ <span class="number">2</span></div></pre></td></tr></table></figure>
+<p>要定義多個常量只要縮進就可以了</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="title">weight</span> `bmiTell'` height</div><div class="line">    | bmi &lt;= skinny = <span class="string">"You're underweight"</span></div><div class="line">    | bmi &lt;= normal = <span class="string">"You're supposedly normal"</span></div><div class="line">    | bmi &lt;= fat = <span class="string">"You're fat!"</span></div><div class="line">    | otherwise   = <span class="string">"You're a whale, congratulations!"</span></div><div class="line">    <span class="keyword">where</span> bmi = weight / height ^ <span class="number">2</span></div><div class="line">          skinny = <span class="number">18.5</span></div><div class="line">          normal = <span class="number">25.0</span></div><div class="line">          fat = <span class="number">30.0</span></div><div class="line"><span class="comment">-- 模式匹配版</span></div><div class="line"></div><div class="line">...省略</div><div class="line">    <span class="keyword">where</span> bmi = weight / height ^ <span class="number">2</span></div><div class="line">          (skinny, normal, fat) = (<span class="number">18.5</span>, <span class="number">25.0</span>, <span class="number">30.0</span>)</div></pre></td></tr></table></figure>
+<h3 id="let"><a href="#let" class="headerlink" title="let"></a>let</h3><p>let &amp; where很相似，差在於<code>where</code>綁定是在函數底部，綁定<code>語法結構</code>，且所有guard在內的整個函數皆可看見<br><code>let</code>綁定則是個<code>表達式</code>，像是定義局部變數，所以對不同guard不可見<br>但我們也可以想成，一個是放在前面，一個後面這樣~<br>既然let是綁定表達式，所以可以這樣寫</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; <span class="number">4</span> * (<span class="keyword">let</span> a = <span class="number">9</span> <span class="keyword">in</span> a + <span class="number">1</span>)</div><div class="line"><span class="number">40</span></div><div class="line"></div><div class="line"><span class="comment">-- 在其他結構裡</span></div><div class="line"><span class="title">ghci</span>&gt; [<span class="keyword">let</span> square x = x * x <span class="keyword">in</span> (square <span class="number">5</span>, square <span class="number">3</span>, square <span class="number">2</span>)]</div><div class="line">[(<span class="number">25</span>,<span class="number">9</span>,<span class="number">4</span>)]</div><div class="line"></div><div class="line"><span class="comment">-- 用在List Comprehension</span></div><div class="line"><span class="title">calcBmis</span> :: (<span class="type">RealFloat</span> a) =&gt; [(a, a)] -&gt; [a]</div><div class="line"><span class="title">calcBmis</span> xs = [bmi | (w, h) &lt;- xs, <span class="keyword">let</span> bmi = w / h ^ <span class="number">2</span>, bmi &gt;= <span class="number">25.0</span>]</div></pre></td></tr></table></figure>
+<h3 id="case-of"><a href="#case-of" class="headerlink" title="case of"></a>case of</h3><p>在剛剛介紹了Pattern Matching後，你一定覺得莫名其妙，爲何還要有switch的功能？<br>其實<strong>case</strong>才是正宗的! <strong>Pattern Matching</strong>是語法糖來着~<br>給個範例看看就好</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="title">head'</span> :: [a] -&gt; a</div><div class="line"><span class="title">head'</span> [] = error <span class="string">"Empty !"</span></div><div class="line"><span class="title">head'</span> (x:_) = x</div><div class="line"></div><div class="line"><span class="title">head''</span> :: [a] -&gt; a</div><div class="line"><span class="title">head''</span> xs = <span class="keyword">case</span> xs <span class="keyword">of</span> [] -&gt; error <span class="string">"Empty !"</span></div><div class="line">                       (x:_) -&gt; x</div></pre></td></tr></table></figure>
+<h3 id="lamda-function"><a href="#lamda-function" class="headerlink" title="lamda function"></a>lamda function</h3><p>就是匿名函數，那些一次性的Function通常不會特地去定義它，我們可以這樣寫</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="title">mapAndPlusOne</span> :: <span class="type">Num</span> a =&gt; [a] -&gt; [a]</div><div class="line"><span class="title">mapAndPlusOne</span> arr = map (\x -&gt; x+<span class="number">1</span>) arr</div></pre></td></tr></table></figure>
+<h3 id="函數呼叫符"><a href="#函數呼叫符" class="headerlink" title="$ 函數呼叫符"></a>$ 函數呼叫符</h3><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; :t ($)</div><div class="line">($) :: (a -&gt; b) -&gt; a -&gt; b</div></pre></td></tr></table></figure>
+<p>這只是個呼叫函數的符號而已，以往都是用<code>空格</code>直接呼叫函數，了不起再加個括號決定優先權<br>用空格呼叫的函數是<code>左結合</code>，<code>f a b c</code>等於<code>(((f a) b) c)</code>，<strong>$</strong>是右結合的<br>假設今天有個<code>sum (map sqrt [1..10])</code>，我們可以改寫成<code>sum $ map sqrt [1..10]</code>，少了括號也清楚多了<br>附上個需要想想的例子，可以用<code>:t</code>來看看位什麼</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; map ($ <span class="number">3</span>) [(<span class="number">4</span>+),(<span class="number">10</span>*),(^<span class="number">2</span>)]</div><div class="line">[<span class="number">7.0</span>,<span class="number">30.0</span>,<span class="number">9.0</span>]</div></pre></td></tr></table></figure>
+<h2 id="實例"><a href="#實例" class="headerlink" title="實例"></a>實例</h2><p>到入門的最後一關總要練習實例，這邊主要以簡單的leetcode、Hackrank題型來講</p>
+<h3 id="快速排序-quick-sort"><a href="#快速排序-quick-sort" class="headerlink" title="快速排序(quick sort)"></a>快速排序(quick sort)</h3><p>因爲我們要做排序，所以這邊要規定a爲<code>Ord Typeclass</code>的成員<br>主要邏輯就是：先取得比<code>頭部</code>小的數，然後<strong>quick sort</strong>，比<code>頭部</code>大的數，也是要<strong>quick sort</strong><br>所以要怎取得比頭部大&amp;小的數呢？ <strong>List Comprehension</strong>!</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="title">quicksort</span> :: (<span class="type">Ord</span> a) =&gt; [a] -&gt; [a]</div><div class="line"><span class="title">quicksort</span> [] = []</div><div class="line"><span class="title">quicksort</span> (x:xs) =</div><div class="line">  <span class="keyword">let</span> smallerSorted = quicksort [a | a &lt;- xs, a &lt;= x]</div><div class="line">      biggerSorted = quicksort [a | a &lt;- xs, a &gt; x]</div><div class="line">  <span class="keyword">in</span>  smallerSorted ++ [x] ++ biggerSorted</div></pre></td></tr></table></figure>
+<p>簡潔有力，這就是<em>Functional Programming</em>的厲害之處</p>
+<h3 id="回文-Palindrome-Number"><a href="#回文-Palindrome-Number" class="headerlink" title="回文 (Palindrome Number)"></a>回文 (Palindrome Number)</h3><p>給予一個<strong>Int</strong>並判斷它是不是回文的格式，例如, <code>1</code>,<code>121</code>,<code>4444</code>,<code>12321</code><br>先別想著用<code>[Char]</code>來做，單純用數值去操作<br>首先，我們要判斷是不是回文，至少要比較<strong>數字位數 除以 2</strong>次 - <code>length / 2</code><br>假設數字是<em>12321</em>，在知道總位數&amp;數值的前提下，我只要遍歷個/十位數，就可以知道千/萬位數是否相等<br>但因爲<strong>Int</strong>並沒有實作<strong>length</strong>，所以我們要用Function算 - <code>calLength</code><br>並且再實作一個比較的Function，這Function已知我們的數值n &amp; 總位數len，我們傳入位數i讓它比較相對的位數是否相等 - <code>compare</code></p>
+<ul>
+<li><strong>calLength</strong>: 初始長度爲1，利用遞迴將長度算出來</li>
+<li><strong>compare</strong>: 已知的數值n &amp; 長度len(這裡利用Currying簡化)，取相對應的位數來比較，並回傳<em>Bool</em></li>
+<li><strong>all</strong>: 可以利用<code>:t</code>來看它的Type，在此它會將<code>檢查是否爲True</code>的Function，map到一個List上，全爲True即True，否則False</li>
+</ul>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="title">palindrome</span> :: <span class="type">Integer</span> -&gt; <span class="type">Bool</span></div><div class="line"><span class="title">palindrome</span> n</div><div class="line">    | n &lt; <span class="number">0</span>             = <span class="type">False</span> <span class="comment">-- 不考慮負數</span></div><div class="line">    | otherwise         = all (== <span class="type">True</span>) $ map (compare n len') [<span class="number">1.</span>.(len' `div` <span class="number">2</span>)]</div><div class="line">    <span class="keyword">where</span> len'          = calLength <span class="number">1</span> n</div><div class="line">          calLength len n</div><div class="line">            | n &gt;= <span class="number">10</span>   = calLength (len+<span class="number">1</span>) (n `div` <span class="number">10</span>)</div><div class="line">            | otherwise = len</div><div class="line">          compare n len i =</div><div class="line">            <span class="keyword">let</span> high    = (n `div` <span class="number">10</span> ^ (len - i)) `mod` <span class="number">10</span></div><div class="line">                low     = (n `div` <span class="number">10</span> ^ (i - <span class="number">1</span>)) `mod` <span class="number">10</span></div><div class="line">            <span class="keyword">in</span>  high == low</div></pre></td></tr></table></figure>
+<p>再來是<del>偷工減料</del>轉爲字串版…</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="title">palindrome'</span> :: <span class="type">Integer</span> -&gt; <span class="type">Bool</span></div><div class="line"><span class="title">palindrome'</span> n</div><div class="line">    | n &lt; <span class="number">0</span>         = <span class="type">False</span></div><div class="line">    | str_n == re_n = <span class="type">True</span></div><div class="line">    | otherwise     = <span class="type">False</span></div><div class="line">    <span class="keyword">where</span> str_n     = show n</div><div class="line">          re_n      = reverse str_n</div></pre></td></tr></table></figure>
+<h3 id="移動0-Move-Zeroes"><a href="#移動0-Move-Zeroes" class="headerlink" title="移動0 (Move Zeroes)"></a>移動0 (Move Zeroes)</h3><p>最後來題比較輕鬆的，給予一個<code>[Int]</code>，將數字0都移到List最後面<br>例如: <code>[1,4,0,3,0,1]</code>轉成<code>[1,4,3,1,0,0]</code><br>用<strong>Pattern Matching</strong>加上<strong>遞迴</strong>能讓我們寫的很精簡(記得給予遞迴邊界)</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="title">moveZeroes</span> :: [<span class="type">Integer</span>] -&gt; [<span class="type">Integer</span>]</div><div class="line"><span class="title">moveZeroes</span> (x:xs)</div><div class="line">    | null xs = [x]</div><div class="line">    | x == <span class="number">0</span>  = moveZeroes xs ++ [x]</div><div class="line">    | otherwise = x : moveZeroes xs</div></pre></td></tr></table></figure>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>以上提到的只是Haskell最初的入門知識點，還有很多像是<strong>Module</strong>、<strong>TypeClass</strong>、<strong>Monad</strong>之類的學問，會在之後的文章有個說明<br>Haskell可以利用其他第三方Module、pakage建構出一個完整的服務<em>(I/O, Network…)</em>，並不單只是解些運算題而已<br>也推薦大家可以從<a href="https://www.gitbook.com/book/mno2/learnyouahaskell-zh/details" target="_blank" rel="external">Haskell趣學指南</a>當做入門點<br>未來還有很多驚喜<del>挫折</del>等著你呢~</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://www.gitbook.com/book/mno2/learnyouahaskell-zh/details" target="_blank" rel="external">Haskell趣學指南</a><br><a href="https://hackage.haskell.org/" target="_blank" rel="external">Hackage</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/FP/" rel="tag"># FP</a>
+          
+            <a href="/tags/Haskell/" rel="tag"># Haskell</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/15/docker-example/" rel="next" title="Docker基礎架設(以Python Scrapy為例)">
+                <i class="fa fa-chevron-left"></i> Docker基礎架設(以Python Scrapy為例)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/21/applicative-functor/" rel="prev" title="Applicative Functor">
+                Applicative Functor <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="https://avatars1.githubusercontent.com/u/31230110"
+              alt="SOVMedCare" />
+          
+            <p class="site-author-name" itemprop="name">SOVMedCare</p>
+            <p class="site-description motion-element" itemprop="description">Full Stack JS #FRP #RxJS #Redux #React</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">文章</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">標籤</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/sovmedcare" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:jackypan1989@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/sovtw" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.instagram.com/sovmedtw/" target="_blank" title="Instagram">
+                  
+                    <i class="fa fa-fw fa-instagram"></i>Instagram</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Haskell"><span class="nav-number">1.</span> <span class="nav-text">Haskell</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#簡介"><span class="nav-number">1.1.</span> <span class="nav-text">簡介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安裝"><span class="nav-number">1.2.</span> <span class="nav-text">安裝</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ghci"><span class="nav-number">1.2.1.</span> <span class="nav-text">ghci</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stack"><span class="nav-number">1.2.2.</span> <span class="nav-text">stack</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cabal"><span class="nav-number">1.2.3.</span> <span class="nav-text">cabal</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解釋"><span class="nav-number">1.2.4.</span> <span class="nav-text">解釋</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#語法"><span class="nav-number">1.3.</span> <span class="nav-text">語法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Operator"><span class="nav-number">1.3.1.</span> <span class="nav-text">Operator</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函數"><span class="nav-number">1.3.2.</span> <span class="nav-text">函數</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#if-else"><span class="nav-number">1.3.3.</span> <span class="nav-text">if/else</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#List"><span class="nav-number">1.3.4.</span> <span class="nav-text">List</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tuple"><span class="nav-number">1.3.5.</span> <span class="nav-text">Tuple</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#進階函數"><span class="nav-number">1.4.</span> <span class="nav-text">進階函數</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#模式匹配-Pattern-matching"><span class="nav-number">1.4.1.</span> <span class="nav-text">模式匹配 (Pattern matching)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Guards"><span class="nav-number">1.4.2.</span> <span class="nav-text">Guards</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Where"><span class="nav-number">1.4.3.</span> <span class="nav-text">Where</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#let"><span class="nav-number">1.4.4.</span> <span class="nav-text">let</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#case-of"><span class="nav-number">1.4.5.</span> <span class="nav-text">case of</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lamda-function"><span class="nav-number">1.4.6.</span> <span class="nav-text">lamda function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函數呼叫符"><span class="nav-number">1.4.7.</span> <span class="nav-text">$ 函數呼叫符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#實例"><span class="nav-number">1.5.</span> <span class="nav-text">實例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#快速排序-quick-sort"><span class="nav-number">1.5.1.</span> <span class="nav-text">快速排序(quick sort)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回文-Palindrome-Number"><span class="nav-number">1.5.2.</span> <span class="nav-text">回文 (Palindrome Number)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移動0-Move-Zeroes"><span class="nav-number">1.5.3.</span> <span class="nav-text">移動0 (Move Zeroes)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">1.6.</span> <span class="nav-text">總結</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">1.7.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SOVMedCare</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

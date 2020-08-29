@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-tw">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="React,Cycle," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="2014年，CycleJS 作者 André Staltz 寫了一篇 Don’t React ，大力批評 ReactJS 並不 reactive。這篇文章在當時引起軒然大波，雖然在三年後的今天已經被移除，但我們依然可以在 youtube 上面看到古老的戰神影片 André Medeiros: Don’t React (Webbisauna 2014)。這三年期間，我們都可以看到兩個">
+<meta name="keywords" content="React,Cycle">
+<meta property="og:type" content="article">
+<meta property="og:title" content="漫談 FRP - ReactJS vs CycleJS">
+<meta property="og:url" content="http://sovmedcare.github.io/2017/09/08/frp-reactjs-vs-cyclejs/index.html">
+<meta property="og:site_name" content="SOVMedCare Tech">
+<meta property="og:description" content="2014年，CycleJS 作者 André Staltz 寫了一篇 Don’t React ，大力批評 ReactJS 並不 reactive。這篇文章在當時引起軒然大波，雖然在三年後的今天已經被移除，但我們依然可以在 youtube 上面看到古老的戰神影片 André Medeiros: Don’t React (Webbisauna 2014)。這三年期間，我們都可以看到兩個">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:updated_time" content="2020-07-31T10:42:01.095Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="漫談 FRP - ReactJS vs CycleJS">
+<meta name="twitter:description" content="2014年，CycleJS 作者 André Staltz 寫了一篇 Don’t React ，大力批評 ReactJS 並不 reactive。這篇文章在當時引起軒然大波，雖然在三年後的今天已經被移除，但我們依然可以在 youtube 上面看到古老的戰神影片 André Medeiros: Don’t React (Webbisauna 2014)。這三年期間，我們都可以看到兩個">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://sovmedcare.github.io/2017/09/08/frp-reactjs-vs-cyclejs/"/>
+
+
+
+
+
+  <title>漫談 FRP - ReactJS vs CycleJS | SOVMedCare Tech</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SOVMedCare Tech</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">@sovmedcare</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-authors">
+          <a href="/authors/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            作者群
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2017/09/08/frp-reactjs-vs-cyclejs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">漫談 FRP - ReactJS vs CycleJS</h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/jackypan1989/" itemprop="url" rel="index">
+              <span itemprop="name">jackypan1989</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-09-08T15:43:08+08:00">
+                2017-09-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>2014年，CycleJS 作者 André Staltz 寫了一篇 Don’t React ，大力批評 ReactJS 並不 reactive。這篇文章在當時引起軒然大波，雖然在三年後的今天已經被移除，但我們依然可以在 youtube 上面看到古老的戰神影片 <a href="https://www.youtube.com/watch?v=9QObt0SGriI" target="_blank" rel="external">André Medeiros: Don’t React (Webbisauna 2014)</a>。這三年期間，我們都可以看到兩個 lib 的變化，還有社群推行方向，以下會針對兩個 lib，並討論 FRP (響應風格的函數式編程)。</p>
+<h1 id="FRP-響應風格的函數式編程"><a href="#FRP-響應風格的函數式編程" class="headerlink" title="FRP (響應風格的函數式編程)"></a>FRP (響應風格的函數式編程)</h1><ul>
+<li><p>FP (函數式編程)<br>所有東西都是函數，在語言中是第一公民，函數可以當作參數外 <code>(x, func) =&gt; func(x)</code>，而函數也可以回傳另一個函數 <code>x =&gt; y =&gt; x + y</code>，因此可以創造出各種高階函數(Higher Order Function)，也可以進行各種合成 (compose) 來完成各式各樣的功能，不用像物件導向，必須用很多種設計模式去優化代碼，我必須說，整個開發者世代花了好多時間導入物件導向，最後得到『多用合成，少用繼承』的結論，但其實在函數式編程中，合成是多麼渾然天成，一招就能打天下 :p</p>
+</li>
+<li><p>Reactive (響應風格)<br>函數中不會直接去操作外部的函數，取而代之的是都是去反應外部函數(參數)做了什麼事，而去改變，在物件導向風格常見於觀察者模式 (Observer pattern)，好處是分工非常明確，也容易追蹤代碼潛在問題。</p>
+</li>
+</ul>
+<h1 id="兩者比較"><a href="#兩者比較" class="headerlink" title="兩者比較"></a>兩者比較</h1><ul>
+<li><p>CycleJS<br>Cycle 更強調 reactive，因此你不會在裡面看到 this 關鍵字，但因為你不可能全部都沒有 side effect。所以這部份 cycle 利用 driver，把他認為髒的 side effect 抽出來處理。另一方面 Cycle 本身全部都是使用 RxJS / xstream，去管理所有的資料流，user input 會轉換成流，state 與 state 改變也會轉變成流，甚至連 render dom 也是流，因此整個架構就是多個流的合成與串接，action -&gt; state -&gt; render -&gt; action 形成一個超級流的大循環，我想這也是為什麼叫做 Cycle 的原因。</p>
+</li>
+<li><p>ReactJS<br>原本 lib 本身其實談不上太多 reactive，因為 reactive 的部分只有 <code>render()</code> 這個函數，Component 內的其他函數都是 active，因此會看到 this &amp; this.setState 這種東西，反觀 CycleJS 就不會看到 this 這個 JS 一直以來常常會出包的關鍵字，當然在 redux 出來後，以及 rx-react, redux-rx, 甚至 redux-observable 引進後，user input 與 state 改變才開始真正一步步 reactive 化 / stream 化。</p>
+</li>
+</ul>
+<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p>我個人覺得之所以 fb 會大力推動 react 的原因，有一個很大重點在於想要推函數式編程 (functional programming)，但不可能一開始就推個 Haskell 大家都嚇死，等到大家慢慢熟悉這個體系，開始 componenet base programming，寫一段時間後，就會開始寫高階元件 (High Order Component，也就是一個函數會傳進一個 component 再吐一個 component) ，然後又開始學習 render 永遠只根據 prop 改變的 stateless component (pure functional component)。你就會發現你入坑了(你也可以看到 fb 釋出這些想法的進程)，開始感受 FP 的奧妙，原來 component 的各種組成合成，就跟 FP 中的函數合成一樣。</p>
+<p>Cycle: 天生全部 reactive，架構上更好更美<br>React: 需要第三方協助(rx-react…)，但有大量社群支持</p>
+<p>總歸一句，在前端這麼吃重 ui 操作與呈現的情況下，社群發展到最後一定是慢慢往類似或是相同方向前進。<br>至少三年前的爭議已經平息，接下來就看社群是不是可以往更函數式編程前進了(ELM, Purescript … etc)。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://github.com/cyclejs/cyclejs" target="_blank" rel="external">CycleJS</a></li>
+<li><a href="https://github.com/fdecampredon/rx-react" target="_blank" rel="external">rx-react</a></li>
+<li><a href="https://github.com/acdlite/redux-rx" target="_blank" rel="external">redux-rx</a></li>
+<li><a href="https://github.com/redux-observable/redux-observable" target="_blank" rel="external">redux-observable</a></li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+            <a href="/tags/Cycle/" rel="tag"># Cycle</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/08/Immutable-js/" rel="next" title="Immutable.js 簡介">
+                <i class="fa fa-chevron-left"></i> Immutable.js 簡介
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/13/Rx-js-Observable/" rel="prev" title="RxJs Observable 介紹">
+                RxJs Observable 介紹 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="https://avatars1.githubusercontent.com/u/31230110"
+              alt="SOVMedCare" />
+          
+            <p class="site-author-name" itemprop="name">SOVMedCare</p>
+            <p class="site-description motion-element" itemprop="description">Full Stack JS #FRP #RxJS #Redux #React</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">文章</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">標籤</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/sovmedcare" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:jackypan1989@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/sovtw" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.instagram.com/sovmedtw/" target="_blank" title="Instagram">
+                  
+                    <i class="fa fa-fw fa-instagram"></i>Instagram</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#FRP-響應風格的函數式編程"><span class="nav-number">1.</span> <span class="nav-text">FRP (響應風格的函數式編程)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#兩者比較"><span class="nav-number">2.</span> <span class="nav-text">兩者比較</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#結論"><span class="nav-number">3.</span> <span class="nav-text">結論</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">3.1.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SOVMedCare</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

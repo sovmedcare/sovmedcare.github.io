@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-tw">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Haskell," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="程式中時常有許多函數是需要去使用共用的常數(shared environment)，常見的像是設定檔(config)之類的東西。 此時函數的參數就是這些使用到的如 config，我們必須在 type signature 寫出需要的參數型別，此外在使用時必須顯式的寫出要傳入的東西123456789-- 假設此時的 configs 中有 name age weight height 等等myFunc1">
+<meta name="keywords" content="Haskell">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Reader monad">
+<meta property="og:url" content="http://sovmedcare.github.io/2018/03/30/reader-monad/index.html">
+<meta property="og:site_name" content="SOVMedCare Tech">
+<meta property="og:description" content="程式中時常有許多函數是需要去使用共用的常數(shared environment)，常見的像是設定檔(config)之類的東西。 此時函數的參數就是這些使用到的如 config，我們必須在 type signature 寫出需要的參數型別，此外在使用時必須顯式的寫出要傳入的東西123456789-- 假設此時的 configs 中有 name age weight height 等等myFunc1">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:updated_time" content="2020-07-31T10:42:01.099Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Reader monad">
+<meta name="twitter:description" content="程式中時常有許多函數是需要去使用共用的常數(shared environment)，常見的像是設定檔(config)之類的東西。 此時函數的參數就是這些使用到的如 config，我們必須在 type signature 寫出需要的參數型別，此外在使用時必須顯式的寫出要傳入的東西123456789-- 假設此時的 configs 中有 name age weight height 等等myFunc1">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://sovmedcare.github.io/2018/03/30/reader-monad/"/>
+
+
+
+
+
+  <title>Reader monad | SOVMedCare Tech</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SOVMedCare Tech</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">@sovmedcare</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-authors">
+          <a href="/authors/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            作者群
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2018/03/30/reader-monad/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Reader monad</h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/tancc/" itemprop="url" rel="index">
+              <span itemprop="name">tancc</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-03-30T14:54:11+08:00">
+                2018-03-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>程式中時常有許多函數是需要去使用共用的常數(shared environment)，常見的像是設定檔(config)之類的東西。</p>
+<p>此時函數的參數就是這些使用到的如 config，我們必須在 type signature 寫出需要的參數型別，此外在使用時必須顯式的寫出要傳入的東西<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 假設此時的 configs 中有 name age weight height 等等</span></div><div class="line"><span class="title">myFunc1</span> :: <span class="type">Name</span> -&gt; <span class="type">Age</span> -&gt; ...</div><div class="line"><span class="title">myFunc2</span> :: <span class="type">Name</span> -&gt;...</div><div class="line"><span class="title">myFunc3</span> :: <span class="type">Weight</span> -&gt; <span class="type">Height</span> -&gt; ...</div><div class="line"><span class="comment">-- ...</span></div><div class="line"><span class="title">myFunc1</span> name age</div><div class="line"><span class="title">myFunc2</span> name </div><div class="line"><span class="title">myFunc3</span> weight height</div><div class="line"><span class="comment">-- ...</span></div></pre></td></tr></table></figure></p>
+<p>這樣的壞處很明顯就是我們必須重複寫很多東西。<br>要解決這問題的一個直覺想法就是，讓這些函數所在的 scope，可以自由地取得共用的資料，如此一來就不需由我們手動傳入了。<br>而在 functional programming 中，就是使用函數去達成。只要將這些函數做良好的定義，並塞到一個更大的函數裡，將共享資源傳入這個大函數中，裡頭的小函數們就都可以去取得了。</p>
+<p>Reader monad 就是可以幫我們做這件事情的工具，因此他又有另外的名稱，Environment monad。<br>而最簡單的 Reader monad 其實就是一個函數的新名稱罷了。</p>
+<hr>
+<h1 id="範例"><a href="#範例" class="headerlink" title="範例"></a>範例</h1><p>這裡用一段沒什麼用處的程式碼來舉例。<br>這裡的函數用返回執行別用<code>Maybe</code>，只是為了要用<code>do notation</code>而已<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">type</span> <span class="type">Name</span> = <span class="type">String</span></span></div><div class="line"><span class="class"><span class="keyword">type</span> <span class="type">Age</span> = <span class="type">Int</span></span></div><div class="line"><span class="class"><span class="keyword">type</span> <span class="type">Height</span> = <span class="type">Double</span></span></div><div class="line"><span class="class"><span class="keyword">type</span> <span class="type">Weight</span> = <span class="type">Double</span></span></div><div class="line"><span class="class"><span class="keyword">type</span> <span class="type">Result</span> = (<span class="type">String</span>, <span class="type">String</span>, <span class="type">String</span>, <span class="type">Double</span>)</span></div><div class="line"></div><div class="line"><span class="title">revName</span> :: <span class="type">Name</span> -&gt; <span class="type">Maybe</span> <span class="type">String</span></div><div class="line"><span class="title">revName</span> n = <span class="type">Just</span> $ <span class="string">"Reverse Name: "</span> ++ reverse n</div><div class="line"></div><div class="line"><span class="title">nameAndAge</span> :: <span class="type">Name</span> -&gt; <span class="type">Age</span> -&gt; <span class="type">Maybe</span> <span class="type">String</span></div><div class="line"><span class="title">nameAndAge</span> n a = <span class="type">Just</span> $ <span class="string">"Name &amp; Age: "</span> ++ n ++ <span class="string">" "</span> ++ show a</div><div class="line"></div><div class="line"><span class="title">weightAndHeight</span> :: <span class="type">Weight</span> -&gt; <span class="type">Height</span> -&gt; <span class="type">Maybe</span> <span class="type">String</span></div><div class="line"><span class="title">weightAndHeight</span> w h = <span class="type">Just</span> $ <span class="string">"Weight &amp; Height: "</span> ++ show w ++ <span class="string">" "</span> ++ show h</div><div class="line"></div><div class="line"><span class="title">calBmi</span> :: <span class="type">Height</span> -&gt; <span class="type">Weight</span> -&gt; <span class="type">Maybe</span> <span class="type">Double</span></div><div class="line"><span class="title">calBmi</span> h w = <span class="type">Just</span> $ w / (h / <span class="number">100</span>)^<span class="number">2</span></div><div class="line"></div><div class="line"><span class="title">go</span> = </div><div class="line">  <span class="keyword">let</span></div><div class="line">    name   = <span class="string">"Tom"</span></div><div class="line">    age    = <span class="number">20</span></div><div class="line">    height = <span class="number">180</span></div><div class="line">    weight = <span class="number">100</span></div><div class="line">  <span class="keyword">in</span></div><div class="line">    <span class="keyword">do</span></div><div class="line">      na &lt;- nameAndAge name age</div><div class="line">      n  &lt;- revName name</div><div class="line">      wh &lt;- weightAndHeight weight height</div><div class="line">      b  &lt;- calBmi height weight</div><div class="line">      return (na, n, wh, b)</div></pre></td></tr></table></figure></p>
+<p>可以發現 <code>nameAndAge</code>, <code>revName</code>, <code>weightAndHeight</code>, <code>calBmi</code>等函數，我們需要定義、傳地重複的東西進去，使程式碼看起來較為繁冗。<br>而他們用到的這些 input 就可以將其想像成 shared environment 這種在程式執行時並不會去改變且很多地方都會用到的東西。</p>
+<hr>
+<h1 id="定義-Reader-monad"><a href="#定義-Reader-monad" class="headerlink" title="定義 Reader monad"></a>定義 Reader monad</h1><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">newtype</span> <span class="type">Reader</span> r a = <span class="type">Reader</span> &#123; <span class="title">runReader</span> :: <span class="title">r</span> -&gt; <span class="title">a</span> &#125;</span></div></pre></td></tr></table></figure>
+<p>也就是說，<code>Reader</code> 就是包裹了一個函數 <code>r -&gt; a</code> ，其中 <code>r</code> 就是我們要傳入的共用資料，有些地方也會用<code>e</code>來表示(environment)；<code>a</code> 表示吃進 <code>r</code> 後，會回傳的東西是什麼。</p>
+<p>再來我們可以自己定義他一系列的<code>Functor</code> <code>Applicative</code> <code>Monad</code> instance</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Functor</span> (<span class="type">Reader</span> <span class="title">r</span>) <span class="keyword">where</span></span></div><div class="line">  fmap :: (a -&gt; b) -&gt; <span class="type">Reader</span> r a -&gt; <span class="type">Reader</span> r b</div><div class="line">  fmap f (<span class="type">Reader</span> ra) = <span class="type">Reader</span> $ f . ra</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Applicative</span> (<span class="type">Reader</span> <span class="title">r</span>) <span class="keyword">where</span></span></div><div class="line">  pure :: a -&gt; <span class="type">Reader</span> r a</div><div class="line">  pure a = <span class="type">Reader</span> $ const a</div><div class="line">  (&lt;*&gt;) :: <span class="type">Reader</span> r (a -&gt; b) -&gt; <span class="type">Reader</span> r a -&gt; <span class="type">Reader</span> r b</div><div class="line">  (<span class="type">Reader</span> rab) &lt;*&gt; (<span class="type">Reader</span> ra) =</div><div class="line">    <span class="type">Reader</span> $ \r -&gt; rab r (ra r)</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Monad</span> (<span class="type">Reader</span> <span class="title">r</span>) <span class="keyword">where</span></span></div><div class="line">  return = pure</div><div class="line">  (&gt;&gt;=) :: <span class="type">Reader</span> r a -&gt; (a -&gt; <span class="type">Reader</span> r b) -&gt; <span class="type">Reader</span> r b</div><div class="line">  (<span class="type">Reader</span> ra) &gt;&gt;= aRb =</div><div class="line">    <span class="type">Reader</span> $ \r -&gt; runReader (aRb (ra r)) r</div></pre></td></tr></table></figure>
+<p>可以看到這裡的 structure 是 <code>Reader r</code> 也就是 <code>(-&gt;) r</code> (function type) 這部分。而且在實作當中可以看到，<code>r</code>是保持著原來的值被傳遞，並沒有被做其他transform，因此可以確保 Reader monad 可以拿到相同的<code>r</code></p>
+<p>對照 <code>(-&gt;) r</code> 在<a href="https://hackage.haskell.org/package/base-4.11.0.0/docs/src/GHC.Base.html#line-794" target="_blank" rel="external">原始碼</a>中定義的<code>Functor</code> <code>Applicative</code> <code>Monad</code> instance，可以發現基本上是一樣的，只是多了 <code>Reader</code> 這一層包裝。</p>
+<p>若將型別定義中的 <code>Reader r</code> 用 <code>(-&gt;) r</code> 替換，可以看到更明顯的結果<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="title">fmap</span> :: (a -&gt; b) -&gt; <span class="type">Reader</span> r a -&gt; <span class="type">Reader</span> r b</div><div class="line">      = (a -&gt; b) -&gt;  (-&gt;)  r a -&gt;  (-&gt;)  r b</div><div class="line">      = (a -&gt; b) -&gt;  (r -&gt; a)  -&gt;  (r -&gt; b)</div><div class="line">      </div><div class="line">(&lt;*&gt;) :: <span class="type">Reader</span> r (a -&gt; b) -&gt; <span class="type">Reader</span> r a -&gt; <span class="type">Reader</span> r b</div><div class="line">      =   (-&gt;)  r (a -&gt; b) -&gt;  (-&gt;)  r a -&gt;  (-&gt;)  r b</div><div class="line">      =      (r -&gt; a -&gt; b) -&gt;  (r -&gt; a)  -&gt;  (r -&gt; b)</div><div class="line">      </div><div class="line">(&gt;&gt;=) :: <span class="type">Reader</span> r a -&gt; (a -&gt; <span class="type">Reader</span> r b) -&gt; <span class="type">Reader</span> r b</div><div class="line">      =    (-&gt;) r a -&gt; (a -&gt; ((-&gt;) r b)) -&gt; (-&gt;) r b</div><div class="line">      =    (r -&gt; a) -&gt; (a -&gt; (r -&gt; b)    -&gt; (r -&gt; b)</div></pre></td></tr></table></figure></p>
+<p>所以其實 Reader monad 的概念，就是跟 function type <code>(-&gt;) r</code> 是一樣的。</p>
+<hr>
+<h1 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h1><p>使用了<code>newtype Reader</code>將 function 包裝後，還沒有什麼用。<br>還需要一些小工具使我們可以方便地拿到想要的資料，<code>ask</code>與<code>asks</code>以及<code>local</code><br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 取得 shared environment</span></div><div class="line"><span class="title">ask</span> :: <span class="type">Reader</span> a a</div><div class="line"><span class="title">ask</span> = <span class="type">Reader</span> id</div><div class="line"> <span class="comment">-- = Reader $ \r -&gt; r</span></div><div class="line"></div><div class="line"><span class="title">asks</span> :: (r -&gt; a) -&gt; <span class="type">Reader</span> r a</div><div class="line"><span class="title">asks</span> = <span class="type">Reader</span></div></pre></td></tr></table></figure></p>
+<p><code>ask</code>就是一個<code>id</code>，也就是傳什麼就吐一樣的東西回來。所以就是可以拿到<code>Reader r a</code>中的<code>r</code>。<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="title">ex</span> :: <span class="type">Reader</span> <span class="type">Config</span> <span class="type">String</span></div><div class="line"><span class="title">ex</span> = <span class="keyword">do</span> </div><div class="line">  config &lt;- ask</div><div class="line">  <span class="comment">-- ...</span></div></pre></td></tr></table></figure></p>
+<p><code>asks</code>的參數是一個函數，這個函數的作用就類似 selector，用來塞選取得在 shared environment 中想要的資料。<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="title">ex</span> :: <span class="type">Reader</span> <span class="type">Config</span> <span class="type">String</span></div><div class="line"><span class="title">ex</span> = <span class="keyword">do</span> </div><div class="line">  n &lt;- asks $ lookup <span class="string">"name"</span></div><div class="line">  <span class="comment">-- ...</span></div></pre></td></tr></table></figure></p>
+<p><code>local</code>是用來修改 Reader content，但他不是修改全域的內容，而是只有在<code>local</code> scope 裡面的 Reader Monad 才會被影響。<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="title">local</span> :: (r -&gt; r) -&gt; <span class="type">Reader</span> r a -&gt; <span class="type">Reader</span> r a</div><div class="line"><span class="title">local</span> f (<span class="type">Reader</span> ra) = <span class="type">Reader</span> $ \r -&gt; ra (f r)</div><div class="line"></div><div class="line"><span class="comment">-- example</span></div><div class="line"><span class="title">ex</span> :: <span class="type">Reader</span> <span class="type">Int</span> (<span class="type">Int</span>, <span class="type">Int</span>)</div><div class="line"><span class="title">ex</span> = <span class="keyword">do</span></div><div class="line">  i &lt;- local (+<span class="number">1</span>) $ <span class="keyword">do</span></div><div class="line">    i &lt;- ask</div><div class="line">    return i</div><div class="line">  j &lt;- ask</div><div class="line">  return (i, j)</div><div class="line">  </div><div class="line">&gt; runReader ex <span class="number">10</span></div><div class="line">(<span class="number">11</span>, <span class="number">10</span>)</div></pre></td></tr></table></figure></p>
+<p>從<code>ex</code>的執行範例可以看到，<code>i</code>也就是經過<code>local</code>後 Reader content 的確是被修改了，但是用<code>ask</code>拿到的 Reader content <code>j</code>，還是為 10 沒有改變。<br>所以<code>local</code>的作用是區域修改而不會影響到其 scope 外的地方，所以總的來說其實 Reader content並沒有發生改變。</p>
+<hr>
+<h1 id="範例改寫"><a href="#範例改寫" class="headerlink" title="範例改寫"></a>範例改寫</h1><p>原本的範例程式可以用 Reader monad 如此改寫<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">type</span> <span class="type">Result</span> = (<span class="type">String</span>, <span class="type">String</span>, <span class="type">String</span>, <span class="type">Double</span>)</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">data</span> <span class="type">Config</span> = <span class="type">Config</span> &#123; <span class="title">name</span>   :: <span class="type">String</span></span></div><div class="line"><span class="class">                      , <span class="title">age</span>    :: <span class="type">Int</span></span></div><div class="line"><span class="class">                      , <span class="title">height</span> :: <span class="type">Double</span></span></div><div class="line"><span class="class">                      , <span class="title">weight</span> :: <span class="type">Double</span></span></div><div class="line"><span class="class">                      &#125;</span></div><div class="line"></div><div class="line"><span class="title">revName</span> :: <span class="type">Reader</span> <span class="type">Config</span> <span class="type">String</span></div><div class="line"><span class="title">revName</span> = <span class="keyword">do</span></div><div class="line">  n &lt;- asks name</div><div class="line">  return $ <span class="string">"Reverse Name: "</span> ++ reverse n</div><div class="line"></div><div class="line"><span class="title">nameAndAge</span> :: <span class="type">Reader</span> <span class="type">Config</span> <span class="type">String</span></div><div class="line"><span class="title">nameAndAge</span> = <span class="keyword">do</span></div><div class="line">  n &lt;- asks name</div><div class="line">  a &lt;- asks age</div><div class="line">  return $ <span class="string">"Name &amp; Age: "</span> ++ n ++ <span class="string">" "</span> ++ show a</div><div class="line"></div><div class="line"><span class="title">weightAndHeight</span> :: <span class="type">Reader</span> <span class="type">Config</span> <span class="type">String</span></div><div class="line"><span class="title">weightAndHeight</span> = <span class="keyword">do</span></div><div class="line">  w &lt;- asks weight</div><div class="line">  h &lt;- asks height</div><div class="line">  return $ <span class="string">"Weight &amp; Height: "</span> ++ show w ++ <span class="string">" "</span> ++ show h</div><div class="line"></div><div class="line"><span class="title">calBmi</span> :: <span class="type">Reader</span> <span class="type">Config</span> <span class="type">Double</span></div><div class="line"><span class="title">calBmi</span> = <span class="keyword">do</span></div><div class="line">  w &lt;- asks weight</div><div class="line">  h &lt;- asks height</div><div class="line">  return $ w / (h / <span class="number">100</span>)^<span class="number">2</span></div><div class="line"></div><div class="line"><span class="title">go</span> :: <span class="type">Reader</span> <span class="type">Config</span> <span class="type">Result</span></div><div class="line"><span class="title">go</span> = <span class="keyword">do</span></div><div class="line">    na &lt;- nameAndAge</div><div class="line">    n  &lt;- revName</div><div class="line">    wh &lt;- weightAndHeight</div><div class="line">    b  &lt;- calBmi</div><div class="line">    return (na, n, wh, b)</div><div class="line"></div><div class="line"><span class="title">showResult</span> = runReader go $ <span class="type">Config</span> &#123;name = <span class="string">"WOW"</span>, age = <span class="number">20</span>, height = <span class="number">190</span>, weight = <span class="number">100</span>&#125;</div></pre></td></tr></table></figure></p>
+<p>主要的差別在於，每個函數的 type signature 是一致的 <code>Reader Config [回傳型別]</code>，大家是共享一份 config。<br>各函數在其內部自行定義要取得什麼資料，如此一來在使用的時候就不需要顯示的傳遞進去了。</p>
+<hr>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>一般情況在使用 Reader Monad 時並不會自行去定義，可能會用一些 library 像 <a href="https://hackage.haskell.org/package/mtl" target="_blank" rel="external"><code>mtl</code></a>或<a href="https://hackage.haskell.org/package/transformers" target="_blank" rel="external"><code>transformers</code></a>，<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Control.Monad.Reader</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">data</span> <span class="type">MyContext</span> = <span class="type">MyContext</span></span></div><div class="line">  &#123; foo :: <span class="type">String</span></div><div class="line">  , bar :: <span class="type">Int</span></div><div class="line">  &#125; <span class="keyword">deriving</span> (<span class="type">Show</span>)</div><div class="line"></div><div class="line"><span class="title">computation</span> :: <span class="type">Reader</span> <span class="type">MyContext</span> (<span class="type">Maybe</span> <span class="type">String</span>)</div><div class="line"><span class="title">computation</span> = <span class="keyword">do</span></div><div class="line">  n &lt;- asks bar</div><div class="line">  x &lt;- asks foo</div><div class="line">  <span class="keyword">if</span> n &gt; <span class="number">0</span></div><div class="line">    <span class="keyword">then</span> return (<span class="type">Just</span> x)</div><div class="line">    <span class="keyword">else</span> return <span class="type">Nothing</span></div><div class="line"></div><div class="line"><span class="title">ex1</span> :: <span class="type">Maybe</span> <span class="type">String</span></div><div class="line"><span class="title">ex1</span> = runReader computation $ <span class="type">MyContext</span> <span class="string">"hello"</span> <span class="number">1</span></div><div class="line"></div><div class="line"><span class="title">ex2</span> :: <span class="type">Maybe</span> <span class="type">String</span></div><div class="line"><span class="title">ex2</span> = runReader computation $ <span class="type">MyContext</span> <span class="string">"haskell"</span> <span class="number">0</span></div></pre></td></tr></table></figure></p>
+<p>他們同樣也都提供了基本的像是<code>ask</code>, <code>asks</code>, <code>local</code>，可以去看看這些 library 是如何實作的，藉此來學習。</p>
+<p>此外通常看到或是使用時，因為會需搭配其他的 Monad 一起使用，並不會用<code>Reader</code>而是使用<code>ReaderT</code>，<code>T</code>表示 transformer。</p>
+<hr>
+<h1 id="參考資料及更多資源"><a href="#參考資料及更多資源" class="headerlink" title="參考資料及更多資源"></a>參考資料及更多資源</h1><ol>
+<li><a href="https://hackage.haskell.org/package/mtl" target="_blank" rel="external">mtl</a></li>
+<li><a href="https://hackage.haskell.org/package/transformers" target="_blank" rel="external">transformers</a></li>
+<li><a href="http://adit.io/posts/2013-06-10-three-useful-monads.html" target="_blank" rel="external">Three Useful Monads - adit.io</a></li>
+<li><a href="http://dev.stephendiehl.com/hask/#reader-monad" target="_blank" rel="external">What I Wish I Knew When Learning Haskell 2.3 ( Stephen Diehl )</a></li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Haskell/" rel="tag"># Haskell</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/29/haskell-functor/" rel="next" title="Haskell 系列 - Functor (函子)">
+                <i class="fa fa-chevron-left"></i> Haskell 系列 - Functor (函子)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/02/state-monad/" rel="prev" title="state_monad">
+                state_monad <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="https://avatars1.githubusercontent.com/u/31230110"
+              alt="SOVMedCare" />
+          
+            <p class="site-author-name" itemprop="name">SOVMedCare</p>
+            <p class="site-description motion-element" itemprop="description">Full Stack JS #FRP #RxJS #Redux #React</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">文章</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">標籤</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/sovmedcare" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:jackypan1989@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/sovtw" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.instagram.com/sovmedtw/" target="_blank" title="Instagram">
+                  
+                    <i class="fa fa-fw fa-instagram"></i>Instagram</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#範例"><span class="nav-number">1.</span> <span class="nav-text">範例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#定義-Reader-monad"><span class="nav-number">2.</span> <span class="nav-text">定義 Reader monad</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Methods"><span class="nav-number">3.</span> <span class="nav-text">Methods</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#範例改寫"><span class="nav-number">4.</span> <span class="nav-text">範例改寫</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#結語"><span class="nav-number">5.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#參考資料及更多資源"><span class="nav-number">6.</span> <span class="nav-text">參考資料及更多資源</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SOVMedCare</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

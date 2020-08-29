@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-tw">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="javascript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="在ES6中，Promise將我們從「Callback Hell」稍微解放出來 1234567asyncFun1(() =&amp;gt; &amp;#123;  // do something...  return result&amp;#125;).then(asyncFun2).then(asyncFun3)// ...more and more asyncFun 但Promise也有缺點，例如當asyncFun3需">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Javascript ES6 Generator 介紹">
+<meta property="og:url" content="http://sovmedcare.github.io/2017/09/27/js-es6-generator/index.html">
+<meta property="og:site_name" content="SOVMedCare Tech">
+<meta property="og:description" content="在ES6中，Promise將我們從「Callback Hell」稍微解放出來 1234567asyncFun1(() =&amp;gt; &amp;#123;  // do something...  return result&amp;#125;).then(asyncFun2).then(asyncFun3)// ...more and more asyncFun 但Promise也有缺點，例如當asyncFun3需">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:image" content="https://cdn-images-1.medium.com/max/1400/1*7ZdFWFlA9dSRCv2naCjihA.png">
+<meta property="og:updated_time" content="2020-07-31T10:42:01.098Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Javascript ES6 Generator 介紹">
+<meta name="twitter:description" content="在ES6中，Promise將我們從「Callback Hell」稍微解放出來 1234567asyncFun1(() =&amp;gt; &amp;#123;  // do something...  return result&amp;#125;).then(asyncFun2).then(asyncFun3)// ...more and more asyncFun 但Promise也有缺點，例如當asyncFun3需">
+<meta name="twitter:image" content="https://cdn-images-1.medium.com/max/1400/1*7ZdFWFlA9dSRCv2naCjihA.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://sovmedcare.github.io/2017/09/27/js-es6-generator/"/>
+
+
+
+
+
+  <title>Javascript ES6 Generator 介紹 | SOVMedCare Tech</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SOVMedCare Tech</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">@sovmedcare</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-authors">
+          <a href="/authors/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            作者群
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2017/09/27/js-es6-generator/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Javascript ES6 Generator 介紹</h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/Tu-Szu-Chi/" itemprop="url" rel="index">
+              <span itemprop="name">Tu-Szu-Chi</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-09-27T17:42:49+08:00">
+                2017-09-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在ES6中，Promise將我們從「<strong>Callback Hell</strong>」稍微解放出來</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">asyncFun1(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">  <span class="comment">// do something...</span></div><div class="line">  <span class="keyword">return</span> result</div><div class="line">&#125;)</div><div class="line">.then(asyncFun2)</div><div class="line">.then(asyncFun3)</div><div class="line"><span class="comment">// ...more and more asyncFun</span></div></pre></td></tr></table></figure>
+<p>但Promise也有缺點，例如當<strong>asyncFun3</strong>需要調用<strong>asyncFun1</strong>的result時，該怎做呢？可能會用巢狀式Promise，或者用變數暫存每一次的result之類，我們都知道這些不是個好方法</p>
+<h1 id="Generator"><a href="#Generator" class="headerlink" title="Generator"></a>Generator</h1><p><strong>generator</strong>可讓我們的異步流程寫得更synchronous-style，免除了之前的困擾<br>先用個範例將Promise小改成Generator</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span>* <span class="title">logGen</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">  <span class="keyword">const</span> url = <span class="string">'https://api.github.com/users/'</span> + <span class="string">'name'</span></div><div class="line">  <span class="keyword">const</span> result1 = <span class="keyword">yield</span> fetch(url)</div><div class="line">&#125;</div><div class="line"><span class="keyword">const</span> gen = logGen(<span class="string">'sov'</span>)</div><div class="line"></div><div class="line"><span class="keyword">const</span> result = gen.next()</div><div class="line">result.value</div><div class="line">  .then(<span class="function"><span class="params">data</span> =&gt;</span> data.json())</div><div class="line">  .then(<span class="function"><span class="params">data</span> =&gt;</span> gen.next(data))</div></pre></td></tr></table></figure>
+<p><em>Ln:7</em>的result會收到<em>Ln:3</em> yield回傳的Promise<br>待API回傳後，<em>Ln:10</em> <strong>gen.next(data)</strong> 會將API回傳的data賦值給result1</p>
+<p>但我們不可能一直<em>.then</em>下去，這樣又回到地獄了，所以我們需要一個Function幫我們管理這整個流程，可以自動接著下去做事的傢伙<br><a href="https://github.com/tj/co" target="_blank" rel="external">Co</a> - 知名的TJ大神在幾年前就實現了Generator概念，有興趣的可以參考他的實踐方式，在此我們先寫一個簡易版的管理器用用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> co = <span class="function">(<span class="params">gen, parameter</span>) =&gt;</span> &#123;</div><div class="line">  <span class="keyword">const</span> g = gen(parameter)</div><div class="line"></div><div class="line">  next = <span class="function">(<span class="params">data, err</span>) =&gt;</span> &#123;</div><div class="line">    <span class="keyword">let</span> res</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (err) &#123;</div><div class="line">      <span class="keyword">return</span> g.throw(err)</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      res = g.next(data)</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (!res.done) &#123;</div><div class="line">      res.value</div><div class="line">        .then(<span class="function"><span class="params">data</span> =&gt;</span> data.json())</div><div class="line">        .then(<span class="function"><span class="params">data</span> =&gt;</span> &#123; next(data) &#125;)</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      <span class="built_in">console</span>.log(<span class="string">'DONE! '</span>,res.value)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  next()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>這簡易版的可以協助我們連續的Promise請求，可在這<a href="https://jsbin.com/puxurihewi/2/edit?js,console" target="_blank" rel="external">JS Bin</a> Run看看，在此也附上我設定的「任務」Code</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span>* <span class="title">logGen</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">  <span class="keyword">const</span> url = <span class="string">'https://api.github.com/users/'</span></div><div class="line"></div><div class="line">  <span class="keyword">const</span> result1 = <span class="keyword">yield</span> fetch(url + name)</div><div class="line">  <span class="keyword">const</span> result2 = <span class="keyword">yield</span> fetch(url + <span class="string">'abc'</span>)</div><div class="line">  <span class="keyword">const</span> result3 = <span class="keyword">yield</span> fetch(url + <span class="string">'def'</span>)</div><div class="line"></div><div class="line">  <span class="keyword">return</span> result1.id + <span class="string">'~'</span> + result3.id</div><div class="line">&#125;</div><div class="line"></div><div class="line">co(logGen, <span class="string">'sov'</span>)</div></pre></td></tr></table></figure>
+<p>但這樣的流程管理器只能處理都是<em>yield Promise</em>的需求，固我們可以加個工具幫我們判斷是否為Promise</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> isPromise = <span class="function"><span class="params">obj</span> =&gt;</span> <span class="built_in">Boolean</span>(obj) &amp;&amp; (<span class="keyword">typeof</span> obj.then === <span class="string">'function'</span>)</div></pre></td></tr></table></figure>
+<p>將<em>isPromise</em>加入到我們的流程管理器 - <a href="https://jsbin.com/niguxijuye/1/edit?js,console" target="_blank" rel="external">JS Bin</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(!res.done) &#123;</div><div class="line">  isPromise(res.value)</div><div class="line">    ? res.value</div><div class="line">        .then(<span class="function"><span class="params">data</span> =&gt;</span> data.json())</div><div class="line">        .then(<span class="function"><span class="params">data</span> =&gt;</span> &#123; next(data) &#125;)</div><div class="line">    : next(<span class="string">'It is not Promise'</span>)</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'DONE! '</span>,res.value)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>對應任務的不同再將流程管理器改造一下就可以用了</p>
+</blockquote>
+<h1 id="進階-Observable-style"><a href="#進階-Observable-style" class="headerlink" title="進階 (Observable-style)"></a>進階 (Observable-style)</h1><p>接下來這章節主要是想將Generator的Iterable-style寫成Observable-style的方式</p>
+<p><img src="https://cdn-images-1.medium.com/max/1400/1*7ZdFWFlA9dSRCv2naCjihA.png" alt="GTOR" title="Kris Kowal&#39;s - A General Theory of Reactivity"></p>
+<p>這表格來自於<em>Kris Kowal’s</em> - <a href="https://github.com/kriskowal/gtor" target="_blank" rel="external">GTOR: A General Theory of Reactivity</a>，比較不好理解的部分是Iterable/Observable的差別</p>
+<blockquote>
+<p>Iterable是<strong>pull</strong> value，Observable是<strong>push</strong> value</p>
+</blockquote>
+<h2 id="Interable"><a href="#Interable" class="headerlink" title="Interable"></a>Interable</h2><p>Generator通過<strong>next()</strong>來pull value</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> gen = <span class="function"><span class="keyword">function</span>* (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">yield</span> <span class="number">1</span>;</div><div class="line">  <span class="keyword">yield</span> <span class="number">2</span>;</div><div class="line">  <span class="keyword">yield</span> <span class="number">3</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">const</span> iterator = gen();</div><div class="line"></div><div class="line">iterator.next(); <span class="comment">// &#123; value: 1, done: false &#125;</span></div><div class="line">iterator.next(); <span class="comment">// &#123; value: 2, done: false &#125;</span></div><div class="line">iterator.next(); <span class="comment">// &#123; value: 3, done: false &#125;</span></div><div class="line">iterator.next(); <span class="comment">// &#123; value: undefined, done: true &#125;</span></div></pre></td></tr></table></figure>
+<h2 id="Observable"><a href="#Observable" class="headerlink" title="Observable"></a>Observable</h2><p>而所謂的Observable通常是指Value「可使用」後，會有通知/訂閱機制(subscription/notification)將Value送出去<br>在此我們要將流程管理器抽象化成Observable模式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> co = <span class="function">(<span class="params">gen</span>) =&gt;</span> (...args) =&gt; (&#123;</div><div class="line">  subscribe: <span class="function">(<span class="params">onNext, onError, onCompleted</span>) =&gt;</span> &#123;</div><div class="line">    next(gen(...args), &#123;onNext, onError, onCompleted&#125;)</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>co管理器多了<em><code>.subscribe()</code></em>，就跟Rx’Library中的Observable一樣，並且接收三個Function作為參數<br>原本的迭代器<code>next()</code>也要改動一下</p>
+<blockquote>
+<p>因為是簡易版，所以沒有加上errorHandler</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> next = <span class="function">(<span class="params">iter, callbacks, prevData = <span class="literal">undefined</span></span>) =&gt;</span> &#123;</div><div class="line">  <span class="keyword">const</span> &#123; onNext, onCompleted &#125; = callbacks</div><div class="line">  <span class="keyword">const</span> res = iter.next(prevData)</div><div class="line">  <span class="keyword">const</span> value = res.value</div><div class="line"></div><div class="line">  <span class="keyword">if</span>(!res.done) &#123;</div><div class="line">    <span class="keyword">if</span>(isPromise(value)) &#123;</div><div class="line">      value</div><div class="line">        .then(<span class="function"><span class="params">data</span> =&gt;</span> data.json())</div><div class="line">        .then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</div><div class="line">          onNext(data)</div><div class="line">          next(iter, callbacks, data)</div><div class="line">        &#125;)</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      onNext(value)</div><div class="line">      next(iter, callbacks, value)</div><div class="line">    &#125;</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">return</span> onCompleted()</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>這樣當每次Value「可使用」後，我們會直接push到<code>onNext()</code>去，這邊任務的範例是會接收一個Array of name，去call API得到這個name的Github user</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span>* <span class="title">logGen</span>(<span class="params">...names</span>) </span>&#123;</div><div class="line">  <span class="keyword">const</span> url = <span class="string">'https://api.github.com/users/'</span></div><div class="line"></div><div class="line">  <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; names.length; i++) &#123;</div><div class="line">    <span class="keyword">yield</span> fetch(url + names[i])</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>再來是產生一個<code>偽-Observable</code>對象</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> asyncFun = co(logGen)</div><div class="line"></div><div class="line">asyncFun(<span class="string">'sov'</span>,<span class="string">'abc'</span>, <span class="string">'ww'</span>, <span class="string">'tt'</span>)</div><div class="line">  .subscribe(</div><div class="line">    (val) =&gt; <span class="built_in">console</span>.log(<span class="string">'Success: '</span>, val.login + <span class="string">'-'</span> + val.id),</div><div class="line">    (err) =&gt; <span class="built_in">console</span>.log(<span class="string">'Error: '</span>, err),</div><div class="line">    () =&gt; <span class="built_in">console</span>.log(<span class="string">'Completed!'</span>)</div><div class="line">)</div></pre></td></tr></table></figure>
+<p>這樣就完成了(完整的<a href="https://jsbin.com/xusekusaka/1/edit?js,console" target="_blank" rel="external">JS Bin</a>)!而這樣做的好處就是…</p>
+<blockquote>
+<p>你會發現RxJS原來這麼好用</p>
+</blockquote>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>其實<code>co()</code>在這就是個「迭代器(Iterator)」角色，讓我們不用一直像以下這樣做</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">generatorFun.next()</div><div class="line">generatorFun.next()</div><div class="line">generatorFun.next()</div><div class="line"><span class="comment">// ... more and more next()</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>也可以直接看Co.js的<a href="https://github.com/tj/co/blob/master/index.js" target="_blank" rel="external">原始碼</a>，並不複雜</p>
+</blockquote>
+<p>看到這裡，希望你對Generator有更深的認識，或許也會對<code>ES7 async/await</code> 和 <code>RxJS</code>存在的用意更有感觸~</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://medium.com/javascript-scene/the-hidden-power-of-es6-generators-observable-async-flow-control-cfa4c7f31435" target="_blank" rel="external">The Hidden Power of ES6 Generators</a><br><a href="https://www.ericponto.com/blog/2016/12/05/teaching-rxjs/" target="_blank" rel="external">Teaching RxJS</a><br><a href="http://www.codedata.com.tw/javascript/es6-3-generator/" target="_blank" rel="external">初探ES6 Generators</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/21/webpack-migration/" rel="next" title="Webpack Migration 從 v1 到 v3">
+                <i class="fa fa-chevron-left"></i> Webpack Migration 從 v1 到 v3
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/28/webpack-production-tuning/" rel="prev" title="Webpack production bundle 優化 (72x)">
+                Webpack production bundle 優化 (72x) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="https://avatars1.githubusercontent.com/u/31230110"
+              alt="SOVMedCare" />
+          
+            <p class="site-author-name" itemprop="name">SOVMedCare</p>
+            <p class="site-description motion-element" itemprop="description">Full Stack JS #FRP #RxJS #Redux #React</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">文章</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">標籤</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/sovmedcare" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:jackypan1989@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/sovtw" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.instagram.com/sovmedtw/" target="_blank" title="Instagram">
+                  
+                    <i class="fa fa-fw fa-instagram"></i>Instagram</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Generator"><span class="nav-number">1.</span> <span class="nav-text">Generator</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#進階-Observable-style"><span class="nav-number">2.</span> <span class="nav-text">進階 (Observable-style)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Interable"><span class="nav-number">2.1.</span> <span class="nav-text">Interable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Observable"><span class="nav-number">2.2.</span> <span class="nav-text">Observable</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#結語"><span class="nav-number">3.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SOVMedCare</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

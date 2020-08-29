@@ -1,0 +1,2225 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-tw">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Full Stack JS #FRP #RxJS #Redux #React">
+<meta property="og:type" content="website">
+<meta property="og:title" content="SOVMedCare Tech">
+<meta property="og:url" content="http://sovmedcare.github.io/page/2/index.html">
+<meta property="og:site_name" content="SOVMedCare Tech">
+<meta property="og:description" content="Full Stack JS #FRP #RxJS #Redux #React">
+<meta property="og:locale" content="zh-tw">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SOVMedCare Tech">
+<meta name="twitter:description" content="Full Stack JS #FRP #RxJS #Redux #React">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://sovmedcare.github.io/page/2/"/>
+
+
+
+
+
+  <title>SOVMedCare Tech</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+  page-home">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SOVMedCare Tech</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">@sovmedcare</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-authors">
+          <a href="/authors/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            作者群
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2018/03/19/learn-youa-haskell/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/19/learn-youa-haskell/" itemprop="url">初識Haskell</a></h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/Tu-Szu-Chi/" itemprop="url" rel="index">
+              <span itemprop="name">Tu-Szu-Chi</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-03-19T00:00:00+08:00">
+                2018-03-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Haskell"><a href="#Haskell" class="headerlink" title="Haskell"></a>Haskell</h1><h2 id="簡介"><a href="#簡介" class="headerlink" title="簡介"></a>簡介</h2><p>在之前我們介紹了些<strong>Functional Programming</strong>的概念<em>(ex. Currying/High-Order-Function…)</em><br><strong>Haskell</strong>就是最具有代表性的函數式語言，整個應用就是透過定義函數而組成，大致上函數皆沒有副作用<em>(Haskell用特定類型表達副作用，後續會提及)</em><br>不再像命令式語言命令電腦要做什麼，而是用函數來描述出問題是什麼<br>其本身也有社群 - <a href="https://goo.gl/UiG8eQ" target="_blank" rel="external">Hackage</a> 持續發佈許多工具讓我們更方便建立應用<br>而多數理工人都碰過的<strong>GHC</strong>編譯器其實就是<strong>Glasgow Haskell Compiler</strong>的縮寫<br>接着我會從安裝到語法來介紹這門特殊的程式語言<br><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Haskell-Logo.svg/240px-Haskell-Logo.svg.png" alt="logo" title="Haskell以「λ」作為自己的標誌，具有「證明即程式、命題為類型」的特徵"></p>
+<h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><p>在<a href="https://www.haskell.org/downloads" target="_blank" rel="external">Haskell官方</a>頁面中有三種方式讓我們建設基本環境，在此我選擇功能較齊全的<code>Haskell-Platform</code>來安裝，並用Docker新建了純淨的Ubuntu環境來操作<br>有碰上<em>ERROR: Unable to locate package</em>，先下一個<code>apt-get update</code>再<code>apt-get install haskell-platform</code>就可以了<br>安裝後如果發現<em>ERROR: stack command not found</em>，可參考<a href="https://github.com/commercialhaskell/stack/blob/master/doc/GUIDE.md#downloading-and-installation" target="_blank" rel="external">stack 官方</a>的步驟</p>
+<h3 id="ghci"><a href="#ghci" class="headerlink" title="ghci"></a>ghci</h3><p><code>ghci</code>這指令可讓我們直接進入終端機來嘗試Haskell，就像Python的<code>python</code>指令一樣</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">root@758b279035c4:~<span class="comment"># ghci</span></div><div class="line">GHCi, version 7.10.3: http://www.haskell.org/ghc/  :? <span class="keyword">for</span> <span class="built_in">help</span></div><div class="line">Prelude&gt; :q</div><div class="line">Leaving GHCi.</div><div class="line">root@758b279035c4:~<span class="comment">#</span></div></pre></td></tr></table></figure>
+<h3 id="stack"><a href="#stack" class="headerlink" title="stack"></a>stack</h3><p><code>stack</code>指令主要是用來管理Haskell Project，<code>stack new</code>可以快速地幫我們建立一個基礎的專案架構<br>在此用的版本是<code>1.6.5</code>，截至今日，建議升級到1.6以上</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># stack --version</span></div><div class="line"><span class="comment"># stack upgrade</span></div><div class="line">stack new my-project</div><div class="line"><span class="built_in">cd</span> my-project</div><div class="line">stack setup</div><div class="line">stack build</div><div class="line">stack <span class="built_in">exec</span> my-project-exe</div></pre></td></tr></table></figure>
+<h3 id="cabal"><a href="#cabal" class="headerlink" title="cabal"></a>cabal</h3><p><code>cabal</code>主要用來管理package，<code>stack</code>背後也就是cabal在運作</p>
+<h3 id="解釋"><a href="#解釋" class="headerlink" title="解釋"></a>解釋</h3><p>現在<em>/my-project</em>內會有<code>stack.yaml</code> &amp; <code>my-project.cabal</code>兩個檔案，在此要稍微解釋一下<br>這和我們在寫Javascript專案時不一樣，不單單只有一個<code>package.json</code>幫我們管理第三方套件<br>首先，打開<em>my-project.cabal</em>，會看到cabal定義的package主要會有:</p>
+<ul>
+<li>Name &amp; Version</li>
+<li>0 or 1 libraries</li>
+<li>0 or more executables</li>
+<li>A cabal file (在此是<em>my-project.cabal</em>)</li>
+</ul>
+<p>而打開<em>stack.yaml</em>，stack定義的project會有:</p>
+<ul>
+<li>A resolver</li>
+<li>Extra dependencies (extra-deps)</li>
+<li>0 or more local Cabal packages</li>
+</ul>
+<p><code>stack.yaml</code>中的<strong>resolver</strong>除了定義要用什麼來編譯外，也決定了<em>.cabal</em>中<strong>build-depends</strong>的package版本<br>各位可以試試看，當<code>resolver = lts-10.5</code> or <code>resolver = lts-9.4</code>兩種狀況時，當<code>stack build</code>過程，<strong>network</strong>的版本分別是多少</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="string">executable</span> <span class="string">my-project-exe</span></div><div class="line"><span class="attr">  hs-source-dirs:</span>      <span class="string">app</span></div><div class="line"><span class="attr">  main-is:</span>             <span class="string">Main.hs</span></div><div class="line"><span class="attr">  ghc-options:</span>         <span class="bullet">-threaded</span> <span class="bullet">-rtsopts</span> <span class="bullet">-with-rtsopts=-N</span></div><div class="line"><span class="attr">  build-depends:</span>       <span class="string">base</span> <span class="string">&gt;=</span> <span class="number">4.7</span> <span class="string">&amp;&amp;</span> <span class="string">&lt;</span> <span class="number">5</span></div><div class="line">                     <span class="string">,</span> <span class="string">network</span></div><div class="line">                     <span class="string">,</span> <span class="string">my-project</span></div><div class="line"><span class="attr">  default-language:</span>    <span class="string">Haskell2010</span></div></pre></td></tr></table></figure>
+<p>對於各個resolver對應的package version都可以在<a href="https://www.stackage.org/lts-10.5" target="_blank" rel="external">這網站</a>查到<br>那當你想用<a href="https://hackage.haskell.org/packages/browse" target="_blank" rel="external">Hackage</a>上的某個package，卻沒在當前的resolver找到呢？<br>這時只要在<strong>stack.yaml</strong>的<code>extra-deps</code>添加即可(版本號必備)</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="attr">extra-deps:</span></div><div class="line"><span class="bullet">-</span> <span class="string">accelerate-cublas-0.0</span></div></pre></td></tr></table></figure>
+<p>而專案的架構也可以從Github上發現，在package的<code>hs-source-dirs</code>資料夾，除了主要的Main檔外，不會有多餘的檔案<br>自行定義的諸多Function都整理爲<strong>Library</strong>，並在<strong>.cabal</strong>的<code>library: Exposed-Modules</code>載入<br>可以參考 <a href="https://github.com/begriffs/postgrest" target="_blank" rel="external">begriffs/postgrest</a> &amp; <a href="https://github.com/uber/queryparser" target="_blank" rel="external">uber/queryparser</a>這兩個repo</p>
+<h2 id="語法"><a href="#語法" class="headerlink" title="語法"></a>語法</h2><p>首先，有兩種方式可以讓我們進入<strong>GHC</strong>的互動模式</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 1</span></div><div class="line">stack ghci</div><div class="line"><span class="comment"># 2</span></div><div class="line"><span class="built_in">cd</span> app/</div><div class="line">ghci</div><div class="line">:l Main</div></pre></td></tr></table></figure>
+<p>第一種方式會幫我們自動載入所有檔案，不需要一個個引入；而第二種就要個別引入檔案，在此預設使用第一種方式<br>當指令下完後，你的終端機會出現這些文字</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">Loaded GHCi configuration from /private/tmp/ghci94387/ghci-script</div><div class="line">*Main Lib&gt;</div></pre></td></tr></table></figure>
+<p>但前綴有點長(引入的檔名都顯示出來)，我們再直接下個指令更改</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:set prompt &quot;ghci&gt;&quot;</div></pre></td></tr></table></figure>
+<p>然後跑stack project預設的程式試試</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ghci&gt; main</div><div class="line">someFunc</div><div class="line">ghci&gt;</div></pre></td></tr></table></figure>
+<h3 id="Operator"><a href="#Operator" class="headerlink" title="Operator"></a>Operator</h3><p>一般常用的數學運算符用法都差不多</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; <span class="number">1</span> + <span class="number">1</span></div><div class="line"><span class="number">2</span></div><div class="line"><span class="title">ghci</span>&gt; <span class="number">1</span> - <span class="number">1</span></div><div class="line"><span class="number">0</span></div><div class="line"><span class="title">ghci</span>&gt; <span class="number">2</span> * <span class="number">2</span></div><div class="line"><span class="number">4</span></div><div class="line"><span class="title">ghci</span>&gt; <span class="number">2</span> / <span class="number">2</span></div><div class="line"><span class="number">1.0</span></div><div class="line"><span class="title">ghci</span>&gt; <span class="number">1</span> == <span class="number">1</span></div><div class="line"><span class="type">True</span></div><div class="line"><span class="title">ghci</span>&gt; <span class="number">1</span> == <span class="number">2</span></div><div class="line"><span class="type">False</span></div><div class="line"><span class="title">ghci</span>&gt; <span class="number">1</span> /= <span class="number">1</span></div><div class="line"><span class="type">False</span></div><div class="line"><span class="title">ghci</span>&gt; <span class="number">1</span> /= <span class="number">2</span></div><div class="line"><span class="type">True</span></div></pre></td></tr></table></figure>
+<p>其實這每一個運算符也都是Function，這些被兩個參數夾在一起呼叫的我們稱爲<strong>中綴函數</strong>，其餘則是<strong>前綴函數</strong>(大部分皆這種)</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; max <span class="number">5</span> <span class="number">1</span></div><div class="line"><span class="number">5</span></div><div class="line"><span class="title">ghci</span>&gt; mod <span class="number">10</span> <span class="number">5</span></div><div class="line"><span class="number">0</span></div></pre></td></tr></table></figure>
+<p>Haskell的Function在傳遞參數並不用逗號、括號來分割，純粹用空格來表示；當然也有括號的優先順序</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; max <span class="number">5</span> (max <span class="number">10</span> <span class="number">1</span>)</div><div class="line"><span class="number">10</span></div><div class="line"><span class="title">ghci</span>&gt; (succ <span class="number">9</span>) + (max <span class="number">5</span> <span class="number">4</span>) + <span class="number">1</span></div><div class="line"><span class="number">16</span></div></pre></td></tr></table></figure>
+<p>但這些前綴函數有時會讓人覺得不易讀，所以我們也可以將它們改成用中綴的方式寫，只要這樣加上<strong>`</strong>即可</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; <span class="number">10</span> `mod` <span class="number">5</span></div><div class="line"><span class="number">0</span></div><div class="line"><span class="title">ghci</span>&gt; <span class="number">10</span> `div` <span class="number">5</span></div><div class="line"><span class="number">2</span></div></pre></td></tr></table></figure>
+<h3 id="函數"><a href="#函數" class="headerlink" title="函數"></a>函數</h3><p>接下來的Code會直接寫在Main.hs裡頭，每當存檔後，只要下<code>:r</code>這指令就會重新幫我們載入<br>來寫一個<code>addTwo</code>的Function</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="title">addTwo</span> :: <span class="type">Num</span> a =&gt; a -&gt; a</div><div class="line"><span class="title">addTwo</span> n = n + <span class="number">2</span></div></pre></td></tr></table></figure>
+<p>第一行是定義這個Function的Type，代表它接收一個型別爲<em>Num</em>的參數並同樣回傳<em>Num</em>(你也可以先不定義)；第二行就是這Function主要做的事情<br><code>:r</code>重新載入後，如果剛剛你沒定義這Function的Type，可以用<code>:t addTwo</code>看見Haskell自動幫你定義了，<code>:i addTwo</code>也可試試看</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="title">addBoth</span> :: <span class="type">Num</span> a =&gt; a -&gt; a -&gt; a</div><div class="line"><span class="title">addBoth</span> x y = x + y</div></pre></td></tr></table></figure>
+<h3 id="if-else"><a href="#if-else" class="headerlink" title="if/else"></a>if/else</h3><p>用法也大同小異，只是在Haskell中，<code>else</code>不可省略(爲了確保一定會回傳一個值)<br>不論是<code>5</code>/<code>x+y</code>/<code>if...then...else</code>都只是個表達式(就是返回一個值的程式碼)，所以可以輕鬆的在函數中使用</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="title">doubleSmallNumber</span> x = <span class="keyword">if</span> x &gt; <span class="number">100</span></div><div class="line">                      <span class="keyword">then</span> x</div><div class="line">                      <span class="keyword">else</span> x*<span class="number">2</span></div><div class="line"></div><div class="line"><span class="title">doubleSmallAndAddOne</span> x = (<span class="keyword">if</span> x &gt; <span class="number">100</span> <span class="keyword">then</span> x <span class="keyword">else</span> x*<span class="number">2</span>) + <span class="number">1</span></div></pre></td></tr></table></figure>
+<h3 id="List"><a href="#List" class="headerlink" title="List"></a>List</h3><p>這是我們很熟悉的資料結構，許多資料都用List來操作，但在Haskell中List是一種單型別資料結構，List內的元素皆要是同型別<br><code>GHCi模式中可以用 let a = [1,2,3] 定義常量</code></p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- let 定義</span></div><div class="line"><span class="title">ghci</span>&gt; <span class="keyword">let</span> temp = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</div><div class="line"><span class="title">ghci</span>&gt; temp</div><div class="line">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</div><div class="line"></div><div class="line"><span class="comment">-- 合併List</span></div><div class="line"><span class="title">ghci</span>&gt; [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>] ++ [<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</div><div class="line">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</div><div class="line"></div><div class="line"><span class="comment">-- String其實就是一組字元的List而已</span></div><div class="line"><span class="title">ghci</span>&gt; ['h','a'] ++ ['<span class="type">O'</span>,'<span class="type">O'</span>]</div><div class="line"><span class="string">"haOO"</span></div><div class="line"><span class="title">ghci</span>&gt; <span class="string">"ha"</span> ++ <span class="string">"OO"</span></div><div class="line"><span class="string">"haOO"</span></div></pre></td></tr></table></figure>
+<p>在用<code>++</code>要特別注意，Haskell會遍歷整個List(符號左邊那個)，如果List長度大時會跑一陣子<br>單單插入一個元素可以使用<code>:</code>往List前端插入，這樣較高效</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; <span class="number">1</span>:[<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line"><span class="title">ghci</span>&gt; <span class="number">1</span>:<span class="number">2</span>:[<span class="number">3</span>,<span class="number">4</span>]</div><div class="line">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div></pre></td></tr></table></figure>
+<p>一些List的函數</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 取List的值</span></div><div class="line"><span class="title">ghci</span>&gt; [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>] !! <span class="number">2</span></div><div class="line"><span class="number">3</span></div><div class="line"><span class="title">ghci</span>&gt; head [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line"><span class="number">1</span></div><div class="line"><span class="title">ghci</span>&gt; tail [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line">[<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line"><span class="title">ghci</span>&gt; last [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line"><span class="number">4</span></div><div class="line"><span class="title">ghci</span>&gt; init [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</div><div class="line"><span class="title">ghci</span>&gt; length [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line"><span class="number">4</span></div><div class="line"><span class="title">ghci</span>&gt; null [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line"><span class="type">False</span></div><div class="line"><span class="title">ghci</span>&gt; null []</div><div class="line"><span class="type">True</span></div><div class="line"><span class="title">ghci</span>&gt; reverse [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line">[<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>]</div><div class="line"><span class="title">ghci</span>&gt; take <span class="number">3</span> [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</div><div class="line"><span class="title">ghci</span>&gt; drop <span class="number">2</span> [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line">[<span class="number">3</span>,<span class="number">4</span>]</div><div class="line"><span class="title">ghci</span>&gt; minium [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line"><span class="number">1</span></div><div class="line"><span class="title">ghci</span>&gt; maximum [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line"><span class="number">4</span></div><div class="line"><span class="title">ghci</span>&gt; sum [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line"><span class="number">10</span></div><div class="line"><span class="title">ghci</span>&gt; product [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line"><span class="number">24</span></div><div class="line"><span class="comment">-- 檢查元素是否在List裡</span></div><div class="line"><span class="title">ghci</span>&gt; <span class="number">4</span> `elem` [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line"><span class="type">True</span></div><div class="line"><span class="title">ghci</span>&gt; <span class="number">5</span> `elem` [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div></pre></td></tr></table></figure>
+<p>再來介紹List中一個好用的功能 - <strong>Range</strong><br>欲表達一個1~20的List我們可以這樣做</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; [<span class="number">1.</span><span class="number">.20</span>]</div><div class="line">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">13</span>,<span class="number">14</span>,<span class="number">15</span>,<span class="number">16</span>,<span class="number">17</span>,<span class="number">18</span>,<span class="number">19</span>,<span class="number">20</span>]</div><div class="line"><span class="comment">-- 字元也行</span></div><div class="line"><span class="title">ghci</span>&gt; ['a'..'z']</div><div class="line"><span class="string">"abcdefghijklmnopqrstuvwxyz"</span></div><div class="line"><span class="comment">-- 也可以給它間距</span></div><div class="line"><span class="title">ghci</span>&gt; [<span class="number">1</span>,<span class="number">3.</span><span class="number">.20</span>]</div><div class="line">[<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">9</span>,<span class="number">11</span>,<span class="number">13</span>,<span class="number">15</span>,<span class="number">17</span>,<span class="number">19</span>]</div><div class="line"><span class="comment">-- 但間距只能給一次</span></div><div class="line"><span class="title">ghci</span>&gt; [<span class="number">1</span>,<span class="number">3</span>,<span class="number">5.</span><span class="number">.20</span>]</div><div class="line"><span class="title">error</span>: parse error on input ‘..’</div></pre></td></tr></table></figure>
+<p>我們也可以不標註界限，定義個無限長度的List - <code>[1,3..]</code><br>由於Haskell是惰性的，所以並不會去取一個無限長度的值，它會等到你真的要取的時候，看你要多少才給多少</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; take <span class="number">10</span> [<span class="number">1</span>,<span class="number">3.</span>.]</div><div class="line">[<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">9</span>,<span class="number">11</span>,<span class="number">13</span>,<span class="number">15</span>,<span class="number">17</span>,<span class="number">19</span>]</div><div class="line"><span class="title">ghci</span>&gt;  take <span class="number">14</span> (cycle <span class="string">"SOV! "</span>)</div><div class="line"><span class="string">"SOV! SOV! SOV!"</span></div><div class="line"><span class="title">ghci</span>&gt;  take <span class="number">10</span> (repeat <span class="number">5</span>)</div><div class="line">[<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>]</div></pre></td></tr></table></figure>
+<p>接着也是個厲害的語法 - <strong>List Comprehension</strong><br>這其實就是數學中<em>Set Comprehension</em>的概念，從既有的集合按照規則產生一個新集合</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; [x*<span class="number">2</span> | x &lt;- [<span class="number">1.</span><span class="number">.10</span>]]</div><div class="line">[<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>,<span class="number">10</span>,<span class="number">12</span>,<span class="number">14</span>,<span class="number">16</span>,<span class="number">18</span>,<span class="number">20</span>]</div><div class="line"><span class="title">ghci</span>&gt; [x + y | x &lt;- [<span class="number">1.</span><span class="number">.5</span>], y &lt;- [<span class="number">2</span>,<span class="number">3</span>]]</div><div class="line">[<span class="number">3</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">7</span>,<span class="number">8</span>]</div></pre></td></tr></table></figure>
+<p>如果我們自己動手實現一個<code>length&#39;</code>函數可以這樣</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="title">length'</span> xs = sum [<span class="number">1</span> | _ &lt;- xs]</div></pre></td></tr></table></figure>
+<p><code>_</code>代表我們不在乎它是什麼值</p>
+<h3 id="Tuple"><a href="#Tuple" class="headerlink" title="Tuple"></a>Tuple</h3><p><strong>Tuple</strong>很像<strong>List</strong> - 將多個值存入一個容器中，我們剛剛有提到，List內的元素皆是同型別，且它的Type不會因爲內部的元素數目而有異<br>可是<strong>Tuple</strong>要求明確的內部數據數目，它的Type會取決於內部數據的數目&amp;Type</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 可以發現Type的異處 --</span></div><div class="line"><span class="title">ghci</span>&gt; :t [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</div><div class="line">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>] :: <span class="type">Num</span> a =&gt; [a]</div><div class="line"><span class="title">ghci</span>&gt; :t (<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</div><div class="line">(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>) :: (<span class="type">Num</span> c, <span class="type">Num</span> b, <span class="type">Num</span> a) =&gt; (a, b, c)</div><div class="line"><span class="title">ghci</span>&gt; :t ([<span class="number">1</span>,<span class="number">2</span>], <span class="number">3</span>)</div><div class="line">([<span class="number">1</span>,<span class="number">2</span>], <span class="number">3</span>) :: (<span class="type">Num</span> b, <span class="type">Num</span> a) =&gt; ([a], b)</div><div class="line"><span class="comment">-- 不會有單元素的Tuple --</span></div><div class="line"><span class="title">ghci</span>&gt; :t (<span class="number">1</span>)</div><div class="line">(<span class="number">1</span>) :: <span class="type">Num</span> p =&gt; p</div></pre></td></tr></table></figure>
+<p>我們先介紹針對<em>序對</em>Tuple的Function(後續會提及其他長度的Tuple)</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; fst (<span class="number">1</span>,<span class="number">2</span>)</div><div class="line"><span class="number">1</span></div><div class="line"><span class="title">ghci</span>&gt; snd (<span class="number">1</span>,<span class="number">2</span>)</div><div class="line"><span class="number">2</span></div></pre></td></tr></table></figure>
+<p>用List產生Tuple</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; zip [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>] [<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>]</div><div class="line">[(<span class="number">1</span>,<span class="number">5</span>),(<span class="number">2</span>,<span class="number">5</span>),(<span class="number">3</span>,<span class="number">5</span>),(<span class="number">4</span>,<span class="number">5</span>),(<span class="number">5</span>,<span class="number">5</span>)]</div><div class="line"><span class="title">ghci</span>&gt; zip [<span class="number">1</span> .. <span class="number">5</span>] [<span class="string">"one"</span>, <span class="string">"two"</span>, <span class="string">"three"</span>, <span class="string">"four"</span>, <span class="string">"five"</span>]</div><div class="line">[(<span class="number">1</span>,<span class="string">"one"</span>),(<span class="number">2</span>,<span class="string">"two"</span>),(<span class="number">3</span>,<span class="string">"three"</span>),(<span class="number">4</span>,<span class="string">"four"</span>),(<span class="number">5</span>,<span class="string">"five"</span>)]</div><div class="line"><span class="comment">-- 如果兩個List長度不一，取小的</span></div><div class="line"><span class="title">ghci</span>&gt; zip [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>] [<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>]</div><div class="line">[(<span class="number">1</span>,<span class="number">4</span>),(<span class="number">2</span>,<span class="number">5</span>),(<span class="number">3</span>,<span class="number">6</span>)]</div><div class="line"><span class="comment">-- 所以也可以處理無限的List</span></div><div class="line"><span class="title">ghci</span>&gt;zip [<span class="number">1</span>,<span class="number">3.</span>.] [<span class="string">"one"</span>, <span class="string">"two"</span>]</div><div class="line">[(<span class="number">1</span>,<span class="string">"one"</span>),(<span class="number">3</span>,<span class="string">"two"</span>)]</div></pre></td></tr></table></figure>
+<p>實際的應用上，我們以三角形爲例</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="title">let</span> threeEdge = [ (a,b,c) | c &lt;- [<span class="number">1.</span><span class="number">.10</span>], b &lt;- [<span class="number">1.</span><span class="number">.10</span>], a &lt;- [<span class="number">1.</span><span class="number">.10</span>] ]</div></pre></td></tr></table></figure>
+<p>我們必須再多給些條件才能讓它是三角形的集合(假設我要直角三角形)</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- c是斜邊, b是長邊, a是短邊</span></div><div class="line"><span class="title">let</span> triangles = [ (a,b,c) | c &lt;- [<span class="number">1.</span><span class="number">.10</span>], b &lt;- [<span class="number">1.</span>.c], a &lt;- [<span class="number">1.</span>.b], a^<span class="number">2</span> + b^<span class="number">2</span> == c^<span class="number">2</span> ]</div></pre></td></tr></table></figure>
+<p>最後我只想要周長爲24的三角形，所以再修改一下</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="title">let</span> finalTriangle = [ (a,b,c) | c &lt;- [<span class="number">1.</span><span class="number">.10</span>], b &lt;- [<span class="number">1.</span>.c], a &lt;- [<span class="number">1.</span>.b], a^<span class="number">2</span> + b^<span class="number">2</span> == c^<span class="number">2</span>, a+b+c == <span class="number">24</span> ]</div></pre></td></tr></table></figure>
+<h2 id="進階函數"><a href="#進階函數" class="headerlink" title="進階函數"></a>進階函數</h2><p>語法提及的差不多，接着要持續深入Haskell中Function的精髓</p>
+<h3 id="模式匹配-Pattern-matching"><a href="#模式匹配-Pattern-matching" class="headerlink" title="模式匹配 (Pattern matching)"></a>模式匹配 (Pattern matching)</h3><p>這是一個很實用的功能，<del>真心推薦每個語言都帶有</del>除了能幫我們Code寫的更簡潔外，取參數也變得更加容易<br>來個簡單的範例</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="title">lucky</span> :: (<span class="type">Integral</span> a) =&gt; a -&gt; <span class="type">String</span></div><div class="line"><span class="title">lucky</span> <span class="number">7</span> = <span class="string">"LUCKY SEVEN!"</span></div><div class="line"><span class="title">lucky</span> x = <span class="string">"Sorry, you're out of luck..."</span></div></pre></td></tr></table></figure>
+<p><strong>Pattern Matching</strong>會從上到下開始匹配，如果把最後一個匹配一切的模式移到最前面，那永遠會回傳<em>Sorry, you’re out of luck…</em><br>我們來實作個階乘函數，可以計算<code>10!</code>,<code>7!</code>之類的，而條件就是<code>0!</code>回傳<strong>1</strong></p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 還結合了遞迴在裏頭~</span></div><div class="line"><span class="title">factorial</span> :: (<span class="type">Integral</span> a) =&gt; a -&gt; a</div><div class="line"><span class="title">factorial</span> <span class="number">0</span> = <span class="number">1</span></div><div class="line"><span class="title">factorial</span> n = n * factorial (n - <span class="number">1</span>)</div></pre></td></tr></table></figure>
+<p><strong>Pattern Matching</strong>的順序很重要，如果將兩個模式對調，那就是無窮盡的一直跑了…<br>我們再來把Tuple融合到模式匹配裡，以<code>相加兩個Vector向量</code>爲例</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">--- 一般Function寫法</span></div><div class="line"><span class="title">addVectors</span> :: (<span class="type">Num</span> a) =&gt; (a, a) -&gt; (a, a) -&gt; (a, a)</div><div class="line"><span class="title">addVectors</span> a b = (fst a + fst b, snd a + snd b)</div><div class="line"></div><div class="line"><span class="comment">-- Pattern Matching寫法</span></div><div class="line"><span class="title">addVectors'</span> :: (<span class="type">Num</span> a) =&gt; (a, a) -&gt; (a, a) -&gt; (a, a)</div><div class="line"><span class="title">addVectors'</span> (x1, y1) (x2, y2) = (x1 + x2, y1 + y2)</div></pre></td></tr></table></figure>
+<p>這跟Javascript的<em>解構賦值</em>有點像，我們再舉個三元組的Tuple來試試</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="title">first</span> :: (a, b, c) -&gt; a</div><div class="line"><span class="title">first</span> (x, _, _) = x</div><div class="line"></div><div class="line"><span class="title">second</span> :: (a, b, c) -&gt; b</div><div class="line"><span class="title">second</span> (_, y, _) = y</div><div class="line"></div><div class="line"><span class="title">third</span> :: (a, b, c) -&gt; c</div><div class="line"><span class="title">third</span> (_, _, z) = z</div></pre></td></tr></table></figure>
+<p><code>_</code>就跟剛剛一樣，我們不在乎它是什麼~<br>再來要以<strong>List</strong>爲例子，這也可能是往後很常用到的技巧<br><code>[1,2]</code>就是<code>1:2:[]</code>的結果，也可以是<code>1:[2]</code>，用變數表達來看即爲<code>a:b:c</code> or <code>x:xs</code>，這也是我們在模式匹配中針對List的寫法</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 改寫head，List的匹配至少要有一個元素，所以空的就拋出錯誤</span></div><div class="line"><span class="title">head'</span> :: [a] -&gt; a</div><div class="line"><span class="title">head'</span> [] = error <span class="string">"Empty !"</span></div><div class="line"><span class="title">head'</span> (x:_) = x</div></pre></td></tr></table></figure>
+<p>再來改寫<code>length</code>試試</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 遞迴又用上了</span></div><div class="line"><span class="title">length'</span> :: (<span class="type">Num</span> b) =&gt; [a] -&gt; b</div><div class="line"><span class="title">length'</span> [] = <span class="number">0</span></div><div class="line"><span class="title">length'</span> (_:xs) = <span class="number">1</span> + length' xs</div></pre></td></tr></table></figure>
+<p>總之在用Pattern Matching搭配遞迴的時後要記得給予邊界條件，就像我們針對空List或是值等於<strong>0</strong>那樣，避免無窮下去</p>
+<h3 id="Guards"><a href="#Guards" class="headerlink" title="Guards"></a>Guards</h3><p><strong>Pattern Matching</strong>用來檢查一個值是否適合從中取值，而<strong>guards</strong>是用來檢查一個值的某項屬性是否爲真<del>就是比較簡潔的if/else啦</del><br>先用個簡單的Bmi來試試</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="title">bmiTell</span> :: (<span class="type">RealFloat</span> a) =&gt; a -&gt; <span class="type">String</span></div><div class="line"><span class="title">bmiTell</span> bmi</div><div class="line">    | bmi &lt;= <span class="number">18.5</span> = <span class="string">"You're underweight"</span></div><div class="line">    | bmi &lt;= <span class="number">25.0</span> = <span class="string">"You're supposedly normal"</span></div><div class="line">    | bmi &lt;= <span class="number">30.0</span> = <span class="string">"You're fat!"</span></div><div class="line">    | otherwise   = <span class="string">"You're a whale, congratulations!"</span></div></pre></td></tr></table></figure>
+<p>guard利用豎線來表示，並且要記得縮排(不然會報錯)<br>他跟Pattern Matching一樣，由上到下開始撮合，最後要給一個<code>otherwise</code>來處理未列舉的狀況<br>Haskell定義Function後面不需要加上<code>=</code>，且對縮排有要求，當然也可以用之前提過的<strong>中綴</strong>方式來寫</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="title">bmiTell'</span> :: (<span class="type">RealFloat</span> a) =&gt; a -&gt; a -&gt; <span class="type">String</span></div><div class="line"><span class="title">weight</span> `bmiTell'` height</div><div class="line">    | weight / height ^ <span class="number">2</span> &lt;= <span class="number">18.5</span> = <span class="string">"You're underweight"</span></div><div class="line">    | weight / height ^ <span class="number">2</span> &lt;= <span class="number">25.0</span> = <span class="string">"You're supposedly normal"</span></div><div class="line">    | weight / height ^ <span class="number">2</span> &lt;= <span class="number">30.0</span> = <span class="string">"You're fat!"</span></div><div class="line">    | otherwise   = <span class="string">"You're a whale, congratulations!"</span></div></pre></td></tr></table></figure>
+<h3 id="Where"><a href="#Where" class="headerlink" title="Where"></a>Where</h3><p>在<code>bmiTell&#39;</code>裡我們重複了三次<code>weight / height ^ 2</code>，照理說應該要讓它有個常量可以暫存著，所以我們將它改成</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="title">bmiTell'</span> :: (<span class="type">RealFloat</span> a) =&gt; a -&gt; a -&gt; <span class="type">String</span></div><div class="line"><span class="title">weight</span> `bmiTell'` height</div><div class="line">    | bmi &lt;= <span class="number">18.5</span> = <span class="string">"You're underweight"</span></div><div class="line">    | bmi &lt;= <span class="number">25.0</span> = <span class="string">"You're supposedly normal"</span></div><div class="line">    | bmi &lt;= <span class="number">30.0</span> = <span class="string">"You're fat!"</span></div><div class="line">    | otherwise   = <span class="string">"You're a whale, congratulations!"</span></div><div class="line">    <span class="keyword">where</span> bmi = weight / height ^ <span class="number">2</span></div></pre></td></tr></table></figure>
+<p>要定義多個常量只要縮進就可以了</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="title">weight</span> `bmiTell'` height</div><div class="line">    | bmi &lt;= skinny = <span class="string">"You're underweight"</span></div><div class="line">    | bmi &lt;= normal = <span class="string">"You're supposedly normal"</span></div><div class="line">    | bmi &lt;= fat = <span class="string">"You're fat!"</span></div><div class="line">    | otherwise   = <span class="string">"You're a whale, congratulations!"</span></div><div class="line">    <span class="keyword">where</span> bmi = weight / height ^ <span class="number">2</span></div><div class="line">          skinny = <span class="number">18.5</span></div><div class="line">          normal = <span class="number">25.0</span></div><div class="line">          fat = <span class="number">30.0</span></div><div class="line"><span class="comment">-- 模式匹配版</span></div><div class="line"></div><div class="line">...省略</div><div class="line">    <span class="keyword">where</span> bmi = weight / height ^ <span class="number">2</span></div><div class="line">          (skinny, normal, fat) = (<span class="number">18.5</span>, <span class="number">25.0</span>, <span class="number">30.0</span>)</div></pre></td></tr></table></figure>
+<h3 id="let"><a href="#let" class="headerlink" title="let"></a>let</h3><p>let &amp; where很相似，差在於<code>where</code>綁定是在函數底部，綁定<code>語法結構</code>，且所有guard在內的整個函數皆可看見<br><code>let</code>綁定則是個<code>表達式</code>，像是定義局部變數，所以對不同guard不可見<br>但我們也可以想成，一個是放在前面，一個後面這樣~<br>既然let是綁定表達式，所以可以這樣寫</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; <span class="number">4</span> * (<span class="keyword">let</span> a = <span class="number">9</span> <span class="keyword">in</span> a + <span class="number">1</span>)</div><div class="line"><span class="number">40</span></div><div class="line"></div><div class="line"><span class="comment">-- 在其他結構裡</span></div><div class="line"><span class="title">ghci</span>&gt; [<span class="keyword">let</span> square x = x * x <span class="keyword">in</span> (square <span class="number">5</span>, square <span class="number">3</span>, square <span class="number">2</span>)]</div><div class="line">[(<span class="number">25</span>,<span class="number">9</span>,<span class="number">4</span>)]</div><div class="line"></div><div class="line"><span class="comment">-- 用在List Comprehension</span></div><div class="line"><span class="title">calcBmis</span> :: (<span class="type">RealFloat</span> a) =&gt; [(a, a)] -&gt; [a]</div><div class="line"><span class="title">calcBmis</span> xs = [bmi | (w, h) &lt;- xs, <span class="keyword">let</span> bmi = w / h ^ <span class="number">2</span>, bmi &gt;= <span class="number">25.0</span>]</div></pre></td></tr></table></figure>
+<h3 id="case-of"><a href="#case-of" class="headerlink" title="case of"></a>case of</h3><p>在剛剛介紹了Pattern Matching後，你一定覺得莫名其妙，爲何還要有switch的功能？<br>其實<strong>case</strong>才是正宗的! <strong>Pattern Matching</strong>是語法糖來着~<br>給個範例看看就好</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="title">head'</span> :: [a] -&gt; a</div><div class="line"><span class="title">head'</span> [] = error <span class="string">"Empty !"</span></div><div class="line"><span class="title">head'</span> (x:_) = x</div><div class="line"></div><div class="line"><span class="title">head''</span> :: [a] -&gt; a</div><div class="line"><span class="title">head''</span> xs = <span class="keyword">case</span> xs <span class="keyword">of</span> [] -&gt; error <span class="string">"Empty !"</span></div><div class="line">                       (x:_) -&gt; x</div></pre></td></tr></table></figure>
+<h3 id="lamda-function"><a href="#lamda-function" class="headerlink" title="lamda function"></a>lamda function</h3><p>就是匿名函數，那些一次性的Function通常不會特地去定義它，我們可以這樣寫</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="title">mapAndPlusOne</span> :: <span class="type">Num</span> a =&gt; [a] -&gt; [a]</div><div class="line"><span class="title">mapAndPlusOne</span> arr = map (\x -&gt; x+<span class="number">1</span>) arr</div></pre></td></tr></table></figure>
+<h3 id="函數呼叫符"><a href="#函數呼叫符" class="headerlink" title="$ 函數呼叫符"></a>$ 函數呼叫符</h3><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; :t ($)</div><div class="line">($) :: (a -&gt; b) -&gt; a -&gt; b</div></pre></td></tr></table></figure>
+<p>這只是個呼叫函數的符號而已，以往都是用<code>空格</code>直接呼叫函數，了不起再加個括號決定優先權<br>用空格呼叫的函數是<code>左結合</code>，<code>f a b c</code>等於<code>(((f a) b) c)</code>，<strong>$</strong>是右結合的<br>假設今天有個<code>sum (map sqrt [1..10])</code>，我們可以改寫成<code>sum $ map sqrt [1..10]</code>，少了括號也清楚多了<br>附上個需要想想的例子，可以用<code>:t</code>來看看位什麼</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; map ($ <span class="number">3</span>) [(<span class="number">4</span>+),(<span class="number">10</span>*),(^<span class="number">2</span>)]</div><div class="line">[<span class="number">7.0</span>,<span class="number">30.0</span>,<span class="number">9.0</span>]</div></pre></td></tr></table></figure>
+<h2 id="實例"><a href="#實例" class="headerlink" title="實例"></a>實例</h2><p>到入門的最後一關總要練習實例，這邊主要以簡單的leetcode、Hackrank題型來講</p>
+<h3 id="快速排序-quick-sort"><a href="#快速排序-quick-sort" class="headerlink" title="快速排序(quick sort)"></a>快速排序(quick sort)</h3><p>因爲我們要做排序，所以這邊要規定a爲<code>Ord Typeclass</code>的成員<br>主要邏輯就是：先取得比<code>頭部</code>小的數，然後<strong>quick sort</strong>，比<code>頭部</code>大的數，也是要<strong>quick sort</strong><br>所以要怎取得比頭部大&amp;小的數呢？ <strong>List Comprehension</strong>!</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="title">quicksort</span> :: (<span class="type">Ord</span> a) =&gt; [a] -&gt; [a]</div><div class="line"><span class="title">quicksort</span> [] = []</div><div class="line"><span class="title">quicksort</span> (x:xs) =</div><div class="line">  <span class="keyword">let</span> smallerSorted = quicksort [a | a &lt;- xs, a &lt;= x]</div><div class="line">      biggerSorted = quicksort [a | a &lt;- xs, a &gt; x]</div><div class="line">  <span class="keyword">in</span>  smallerSorted ++ [x] ++ biggerSorted</div></pre></td></tr></table></figure>
+<p>簡潔有力，這就是<em>Functional Programming</em>的厲害之處</p>
+<h3 id="回文-Palindrome-Number"><a href="#回文-Palindrome-Number" class="headerlink" title="回文 (Palindrome Number)"></a>回文 (Palindrome Number)</h3><p>給予一個<strong>Int</strong>並判斷它是不是回文的格式，例如, <code>1</code>,<code>121</code>,<code>4444</code>,<code>12321</code><br>先別想著用<code>[Char]</code>來做，單純用數值去操作<br>首先，我們要判斷是不是回文，至少要比較<strong>數字位數 除以 2</strong>次 - <code>length / 2</code><br>假設數字是<em>12321</em>，在知道總位數&amp;數值的前提下，我只要遍歷個/十位數，就可以知道千/萬位數是否相等<br>但因爲<strong>Int</strong>並沒有實作<strong>length</strong>，所以我們要用Function算 - <code>calLength</code><br>並且再實作一個比較的Function，這Function已知我們的數值n &amp; 總位數len，我們傳入位數i讓它比較相對的位數是否相等 - <code>compare</code></p>
+<ul>
+<li><strong>calLength</strong>: 初始長度爲1，利用遞迴將長度算出來</li>
+<li><strong>compare</strong>: 已知的數值n &amp; 長度len(這裡利用Currying簡化)，取相對應的位數來比較，並回傳<em>Bool</em></li>
+<li><strong>all</strong>: 可以利用<code>:t</code>來看它的Type，在此它會將<code>檢查是否爲True</code>的Function，map到一個List上，全爲True即True，否則False</li>
+</ul>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="title">palindrome</span> :: <span class="type">Integer</span> -&gt; <span class="type">Bool</span></div><div class="line"><span class="title">palindrome</span> n</div><div class="line">    | n &lt; <span class="number">0</span>             = <span class="type">False</span> <span class="comment">-- 不考慮負數</span></div><div class="line">    | otherwise         = all (== <span class="type">True</span>) $ map (compare n len') [<span class="number">1.</span>.(len' `div` <span class="number">2</span>)]</div><div class="line">    <span class="keyword">where</span> len'          = calLength <span class="number">1</span> n</div><div class="line">          calLength len n</div><div class="line">            | n &gt;= <span class="number">10</span>   = calLength (len+<span class="number">1</span>) (n `div` <span class="number">10</span>)</div><div class="line">            | otherwise = len</div><div class="line">          compare n len i =</div><div class="line">            <span class="keyword">let</span> high    = (n `div` <span class="number">10</span> ^ (len - i)) `mod` <span class="number">10</span></div><div class="line">                low     = (n `div` <span class="number">10</span> ^ (i - <span class="number">1</span>)) `mod` <span class="number">10</span></div><div class="line">            <span class="keyword">in</span>  high == low</div></pre></td></tr></table></figure>
+<p>再來是<del>偷工減料</del>轉爲字串版…</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="title">palindrome'</span> :: <span class="type">Integer</span> -&gt; <span class="type">Bool</span></div><div class="line"><span class="title">palindrome'</span> n</div><div class="line">    | n &lt; <span class="number">0</span>         = <span class="type">False</span></div><div class="line">    | str_n == re_n = <span class="type">True</span></div><div class="line">    | otherwise     = <span class="type">False</span></div><div class="line">    <span class="keyword">where</span> str_n     = show n</div><div class="line">          re_n      = reverse str_n</div></pre></td></tr></table></figure>
+<h3 id="移動0-Move-Zeroes"><a href="#移動0-Move-Zeroes" class="headerlink" title="移動0 (Move Zeroes)"></a>移動0 (Move Zeroes)</h3><p>最後來題比較輕鬆的，給予一個<code>[Int]</code>，將數字0都移到List最後面<br>例如: <code>[1,4,0,3,0,1]</code>轉成<code>[1,4,3,1,0,0]</code><br>用<strong>Pattern Matching</strong>加上<strong>遞迴</strong>能讓我們寫的很精簡(記得給予遞迴邊界)</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="title">moveZeroes</span> :: [<span class="type">Integer</span>] -&gt; [<span class="type">Integer</span>]</div><div class="line"><span class="title">moveZeroes</span> (x:xs)</div><div class="line">    | null xs = [x]</div><div class="line">    | x == <span class="number">0</span>  = moveZeroes xs ++ [x]</div><div class="line">    | otherwise = x : moveZeroes xs</div></pre></td></tr></table></figure>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>以上提到的只是Haskell最初的入門知識點，還有很多像是<strong>Module</strong>、<strong>TypeClass</strong>、<strong>Monad</strong>之類的學問，會在之後的文章有個說明<br>Haskell可以利用其他第三方Module、pakage建構出一個完整的服務<em>(I/O, Network…)</em>，並不單只是解些運算題而已<br>也推薦大家可以從<a href="https://www.gitbook.com/book/mno2/learnyouahaskell-zh/details" target="_blank" rel="external">Haskell趣學指南</a>當做入門點<br>未來還有很多驚喜<del>挫折</del>等著你呢~</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://www.gitbook.com/book/mno2/learnyouahaskell-zh/details" target="_blank" rel="external">Haskell趣學指南</a><br><a href="https://hackage.haskell.org/" target="_blank" rel="external">Hackage</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2017/11/15/docker-example/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/15/docker-example/" itemprop="url">Docker基礎架設(以Python Scrapy為例)</a></h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/Tu-Szu-Chi/" itemprop="url" rel="index">
+              <span itemprop="name">Tu-Szu-Chi</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-11-15T17:00:00+08:00">
+                2017-11-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="簡介"><a href="#簡介" class="headerlink" title="簡介"></a>簡介</h1><p><strong>Docker</strong>的介紹和教學已有相當多的資源，但當我以為可以快速地建立環境、連上DB，卻不盡然<br>許多資源很棒，寫得很詳細，但正因對每一項解釋太詳細以致我無法很快找到我要的知識點，故在此提供這一回摸索後，我認為能較快建立環境的流程。</p>
+<h1 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h1><p>因一直想寫寫爬蟲，較著名的Framework是基於Python的 - <strong>Scrapy</strong>，但其實Scrapy之外還要安裝蠻多東西的，故能用Docker幫我們整合當然再好不過</p>
+<h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><ol>
+<li>Docker<ul>
+<li><a href="https://store.docker.com/editions/community/docker-ce-desktop-mac" target="_blank" rel="external">Mac</a></li>
+<li><a href="https://store.docker.com/editions/community/docker-ce-desktop-windows" target="_blank" rel="external">Windows</a></li>
+</ul>
+</li>
+<li><a href="https://kitematic.com/" target="_blank" rel="external">Kitematic</a><br>這是一個Docker的GUI工具，個人很推薦剛入門者使用</li>
+</ol>
+<p>都安裝好後記得確認下Docker是否正常運行著，並打開Kitematic，會要求輸入Docker帳號密碼，沒有的可以申請一組</p>
+<blockquote>
+<p>Mac使用者可看上方工具列小鯨魚點開，會亮綠燈且<em>Docker is running</em></p>
+</blockquote>
+<h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><p>總共會有三個Container來做示範，Scrapy/Postgres/Adminer</p>
+<h3 id="Scrapy"><a href="#Scrapy" class="headerlink" title="Scrapy"></a>Scrapy</h3><p>接著要建立Scrapy的Container，在搜尋框輸入「Scrapy」第一個就會是了(<em>from scrapinghub</em>)<br>點一下三個點點的<em>More button</em>會看到可以選擇Tag/Network，先選擇<code>1.1-py3-latest</code>的Tag讓後續我們的版本一致，選好後就按下<strong>Create</strong>即可</p>
+<blockquote>
+<p>因我在run流程第二遍時有發生HTTP 500 error在這步驟，可以參考<a href="https://github.com/docker/kitematic/issues/3260" target="_blank" rel="external">這篇</a>，登出Kitematic的Docker Account</p>
+</blockquote>
+<p>載好後Kitematic就會自動run這個Container，可以在Setting看到些資訊<br><img src="https://i.imgur.com/gDOrbxO.png" alt="Index"></p>
+<p>接著點擊上方的<strong>EXEC</strong>會將Container啟動在我們的終端機上，輸入<code>scrapy</code>並按下Enter確認Container正常運作</p>
+<blockquote>
+<p>可以先點左下方齒輪(設定)，將<em>Exec command shell</em>選擇bash會比較習慣</p>
+</blockquote>
+<h3 id="Postgres"><a href="#Postgres" class="headerlink" title="Postgres"></a>Postgres</h3><p>再來按<strong>New</strong>去搜尋<code>Postgres</code>並選擇第一個官方的Image(在此是用10.1版本)，一樣好了後利用<strong>EXEC</strong>在終端機上開啟並輸入<code>psql</code><br>會有以下錯誤訊息</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">psql: FATAL:  role "root" does not exist</div></pre></td></tr></table></figure>
+<p>改成輸入預設的帳號就可以了</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">psql -h localhost -U postgres</div></pre></td></tr></table></figure>
+<p>要離開psql就輸入<code>\q</code></p>
+<h3 id="Adminer"><a href="#Adminer" class="headerlink" title="Adminer"></a>Adminer</h3><p>接著<strong>New</strong>一個adminer的Container(官方的Image)，選擇latest版，方便我們之後檢查是否有連上DB<br>好了後可以到Settings -&gt; Hostname/Ports 確認下這Container的Published IP (<em>有可能顯示的是localhost</em>)<br><img src="https://i.imgur.com/pGDA7hC.png" alt="Adminer"><br>直接點藍色IP字段就會將Adminer打開在瀏覽器了<br>再來要輸入Server位置，我們要在Postgres的command line輸入</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ip address</div></pre></td></tr></table></figure>
+<p>會得到類似以下資訊<br><img src="https://i.imgur.com/w9GqGCC.png" alt="Ip address"><br>第二段的<code>172.17.0.3</code>就是Postgres在Docker內網的位置<br>為了要管理Container的Network，可以到Settings -&gt; Network檢查該Container是屬於哪一組網路(<em>預設是bridge</em>)<br>要在同一組網路下連內網IP才有用<br>所以我們的三個Container都是在bridge情況下，要連對方用內網IP即可<br>故在Adminer介面只要輸入剛剛得到的Postgres內網IP &amp; Username，按下Login就會連上了<br><img src="https://i.imgur.com/RgZtEIa.png" alt="Adminer"><br>環境架設就先到這裡！</p>
+<h1 id="專案"><a href="#專案" class="headerlink" title="專案"></a>專案</h1><p>再來就拿實際專案來做示範，可以先clone我個人抓證交所資料的<a href="https://github.com/Tu-Szu-Chi/stockParser/tree/docker-test" target="_blank" rel="external">專案</a>來測試</p>
+<blockquote>
+<p>branch 選擇 docker-test</p>
+</blockquote>
+<p>要讓Container讀取本機端的檔案，要設定<code>Volumes</code>，而在Kitematic上不是每個Image都可以直接到Settings -&gt; Volumes 去設定</p>
+<blockquote>
+<p>本次的Scrapy就不行，Postgres可以</p>
+</blockquote>
+<p>所以要教大家利用指令來啟動Container &amp; 指定Volumes(原有的Scrapy Container不需要了)</p>
+<h2 id="Step-1"><a href="#Step-1" class="headerlink" title="Step 1"></a>Step 1</h2><p>先在終端機上輸入指令，找到我們的<code>scrapinghub/scrapinghub-stack-scrapy</code> Image，並記住Image ID</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker images</div></pre></td></tr></table></figure>
+<h2 id="Step-2"><a href="#Step-2" class="headerlink" title="Step 2"></a>Step 2</h2><p>在終端機輸入</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker run -it -v ~/stockParser/twse/:/twse [Image ID] bash</div></pre></td></tr></table></figure>
+<p><code>-i</code>是讓Container的標準輸入保持打開；<code>-t</code>是讓Docker分配一個虛擬終端(pseudo-tty)並綁定到Container標準輸入上<br><code>-v</code>即是Volumes的設定，冒號左邊是本機端位置，要用絕對路徑，冒號右邊是Container內的路徑<br>按下Enter後我們就建立了一個新的Container，並可在Docker內讀取到我們的專案，於Kitematic中可以重整Containers List看我們剛剛建立的容器(Mac就按 <strong>Cmd+R</strong>)</p>
+<blockquote>
+<p>這裡也有個插曲，當按重整沒有任何新的容器出現時，我要用管理員權限打開Kitematic才看得到剛剛建立的Container，但Postgres/Adminer就看不到了<br><img src="https://i.imgur.com/W4H8f0t.png" alt="New Container"></p>
+</blockquote>
+<h2 id="Step-3"><a href="#Step-3" class="headerlink" title="Step 3"></a>Step 3</h2><p>接著在Scrapy的Container輸入<code>ls</code>就看得到twse資料夾，我們先<code>cd</code>進去，然後先安裝要用的Module<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install -r requirements.txt</div></pre></td></tr></table></figure></p>
+<p>再到專案底下的/twse/twse/settings.py 底部的DATABASE填入我們<code>Postgres</code>的設定</p>
+<blockquote>
+<p>如果發現你的DB和Scrapy是不同的Published IP<br>那你Scrapy要連DB就輸入Postgres的Published IP:Port<br>如果都一樣者只要先用<code>ip address</code>找Postgres內網ip再輸入即可<br><img src="https://i.imgur.com/hFO32iA.png" alt="IP:Port"></p>
+</blockquote>
+<p>記得到adminer去新建一個<strong>database</strong>，在此預設名字為<em>twse</em></p>
+<h2 id="Step-4"><a href="#Step-4" class="headerlink" title="Step 4"></a>Step 4</h2><p>最後輸入以下指令，就會開始抓2017/10/18 電子工業的資料了<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scrapy crawl stock</div></pre></td></tr></table></figure></p>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>以上是個人認為剛開始用Docker會想嘗試的地方，Docker還有很多強大的用途直得我們去學習<br>也歡迎有興趣的人可以一起完成這twse專案</p>
+<h1 id="參考連結"><a href="#參考連結" class="headerlink" title="參考連結"></a>參考連結</h1><p><a href="https://philipzheng.gitbooks.io/docker_practice/content/" target="_blank" rel="external">Docker Gitbook</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2017/10/24/husky/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/24/husky/" itemprop="url">husky + git hook</a></h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/tancc/" itemprop="url" rel="index">
+              <span itemprop="name">tancc</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-10-24T10:44:02+08:00">
+                2017-10-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>git中，許多的操作指令都有所謂的<code>hook</code>，提供給我們先做一些前置作業再去真正執行git的指令。較常用<code>hook</code>的像是<code>pre-commit</code>, <code>pre-push</code>等等，通常會用這些<code>hook</code>搭配其他套件來做程式碼的規範檢查和自動化測試，來避免不好的程式碼推上repository。</p>
+<p>git所提供的<code>hook</code>放在<code>&lt;project&gt;/.git/hooks</code>裡面，可以自行寫<code>shell</code>或是其他腳本語言去修改。不過這樣的方式比較麻煩，所以我們是透過<code>husky</code>，將指令定義在<code>package.json</code>來達成的。</p>
+<h1 id="husky"><a href="#husky" class="headerlink" title="husky"></a>husky</h1><p><a href="https://github.com/typicode/husky" target="_blank" rel="external">husky</a>的這套件的描述就是</p>
+<blockquote>
+<p>Git hooks made easy</p>
+</blockquote>
+<p>有多簡單呢？假設現在我們要在commit之前先通過lint檢查，push之前通過測試，只要兩個步驟</p>
+<ol>
+<li>安裝 <code>husky</code></li>
+</ol>
+<p><code>yarn add husky --dev</code></p>
+<ol>
+<li>修改<code>package.json</code>，定義<code>precommit</code> hook</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line"><span class="attr">"scripts"</span>: &#123;</div><div class="line"><span class="attr">"test"</span>: <span class="string">"jest"</span>,</div><div class="line"><span class="attr">"lint"</span>: <span class="string">"standard"</span>,</div><div class="line"><span class="attr">"precommit"</span>: <span class="string">"yarn lint"</span>,</div><div class="line"><span class="attr">"prepush"</span>: <span class="string">"yarn test"</span></div><div class="line">&#125;,</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="lint-staged"><a href="#lint-staged" class="headerlink" title="lint-staged"></a><code>lint-staged</code></h1><p>不過通常我們不會希望每次commit之前，都對所有的js檔案做lint，只要對這次修改的檔案去檢查即可。</p>
+<p>這時候就可以搭配<a href="https://github.com/okonet/lint-staged" target="_blank" rel="external"><code>lint-staged</code></a>來使用。</p>
+<ol>
+<li>安裝 <code>lint-staged</code></li>
+</ol>
+<p><code>yarn add lint-staged --dev</code></p>
+<ol>
+<li>修改<code>package.json</code>，加入<code>lint-staged</code>設定</li>
+</ol>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">"scripts": &#123;</div><div class="line">"test": "jest",</div><div class="line">"lint": "standard",</div><div class="line"><span class="addition">+   "precommit": "lint-staged",</span></div><div class="line">"prepush": "yarn test"</div><div class="line">&#125;,</div><div class="line"><span class="addition">+ "lint-staged": &#123;</span></div><div class="line"><span class="addition">+   "*.js": ["standard --fix", "git add"]</span></div><div class="line"><span class="addition">+ &#125;</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>lint-staded</code>可以不只做一件事，我們可以再順便加上css檔案的lint, format</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">"lint-staged": &#123;</div><div class="line"><span class="addition">+   "*.js": ["standard --fix", "git add"],</span></div><div class="line"><span class="addition">+   "*.&#123;css,less,scss,sss&#125;": [</span></div><div class="line"><span class="addition">+     "stylefmt",</span></div><div class="line"><span class="addition">+     "stylelint",</span></div><div class="line"><span class="addition">+     "git add"</span></div><div class="line"><span class="addition">+   ]</span></div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><ul>
+<li><a href="https://github.com/typicode/husky" target="_blank" rel="external">husky</a></li>
+<li><a href="https://github.com/okonet/lint-staged" target="_blank" rel="external"><code>lint-staged</code></a></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2017/10/17/immutablejs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/17/immutablejs/" itemprop="url">使用Immutable.js</a></h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/tancc/" itemprop="url" rel="index">
+              <span itemprop="name">tancc</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-10-17T18:26:55+08:00">
+                2017-10-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="解決的問題"><a href="#解決的問題" class="headerlink" title="解決的問題"></a>解決的問題</h1><ul>
+<li><p>mutable state<br>JavaScript中，變數的值預設是mutable的，所以在程式中的數值、狀態等等都是可變的。mutable這性質常會導致非預期的結果，而通常導致某數值或是狀態改變的地方太多了難以掌握，所以在追蹤和維護那些可變的狀態時，就是非常費工的任務了。</p>
+</li>
+<li><p>物件比對不便<br>JavaScript中在做相等判斷時通常會用<code>===</code>，但若比較的對象是物件，這只有做到shallow compare，無法知道其內層是否相等，需要自己再去做deep compare。但這過程就比較複雜且效能很差。</p>
+</li>
+<li><p><code>Object.assign</code>的效能問題<br>為了解決上述的問題，一個方法就是想辦法擁有immutability。為了達到此目的，原生JavaScript能使用的方法有幾個：<code>Object.freeze</code>，但會使得許多操作變得更加複雜麻煩；<br>在做有關物件改變的操作時使用<code>Object.assign</code>或是<code>spread operator</code>來返回全新的物件，間接得到物件的不可變性。但是<code>Object.assign</code>等方法需要做許多複製的行為，當物件龐大時效能問題就會出現了。</p>
+</li>
+</ul>
+<h1 id="特色及優點"><a href="#特色及優點" class="headerlink" title="特色及優點"></a>特色及優點</h1><ul>
+<li>persistent data structures</li>
+</ul>
+<p>對資料做改動時不會修改到資料本身，會保留舊資料回傳新資料。也就是FP中常提及的<code>immutability</code>的概念，所以少了<code>side-effect</code>所造成的困擾。</p>
+<ul>
+<li>使用Trie結構存放資料</li>
+</ul>
+<p><a href="https://en.wikipedia.org/wiki/Trie" target="_blank" rel="external">Trie資料結構的介紹</a>。因為使用了<code>Trie</code>所以在資料比對上十分便利，只需檢查hashcode是否相同即可，不用做如<code>deepCompare</code>這類耗資源的方式。</p>
+<ul>
+<li>structural sharing</li>
+</ul>
+<p><img src="https://cdn-images-1.medium.com/max/400/1*zYtOUrDIj0_-vLoBTbQGUQ.png" alt="structural_sharing"></p>
+<p>不像純JS的<code>Object.assign</code>的方式，將修改的物件整份複製。使用<code>Immutable.js</code>時，只有修改到的地方的節點會重新產生，而沒有變動的節點會共用。因此可以節省許多記憶體</p>
+<ul>
+<li>方便的API<br>提供了許多API如<code>updateIn</code>、<code>setIn</code>、<code>getIn</code>等等，讓我們在對巢狀資料的操作上方便許多</li>
+</ul>
+<h1 id="shouldComponentUpdate"><a href="#shouldComponentUpdate" class="headerlink" title="shouldComponentUpdate"></a>shouldComponentUpdate</h1><p>在開發React專案時，<code>immutable.js</code>是非常好用的工具。由於re-render是很耗效能的行為，所以常需要去撰寫<code>shouldComponentUpdate</code>中的比對邏輯，減少re-render的次數。<br>使用純JavaScript的話，須去寫許多客制的比較邏輯，難以避免的還有deep compare行為，這會使得光是判斷物件相等與否，就耗掉了需多運算資源。<br>而使用<code>immutable.js</code>的話，使用shallow compare就可以滿足所有需求了。因為在<code>immutable.js</code>中，若是物件彼此內部不同，必定會是不同的物件。</p>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><p><a href="https://medium.com/@dtinth/immutable-js-persistent-data-structures-and-structural-sharing-6d163fbd73d2" target="_blank" rel="external">Immutable.js, persistent data structures and structural sharing</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2017/10/16/currying/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/16/currying/" itemprop="url">Currying介紹</a></h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/tancc/" itemprop="url" rel="index">
+              <span itemprop="name">tancc</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-10-16T17:45:28+08:00">
+                2017-10-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="https://en.wikipedia.org/wiki/Currying" target="_blank" rel="external">節錄自wiki</a></p>
+<blockquote>
+<p>currying is the technique of translating the evaluation of a function that takes multiple arguments (or a tuple of arguments) into evaluating a sequence of functions, each with a single argument.</p>
+</blockquote>
+<p>舉例來說，若是有一函式<code>gn2</code>，他的input為某一需要多個參數的函式<code>fn</code>，output為需要一個參數的函式<code>fn2</code>而此函式亦回傳需要一個參數的函式…，直到原函式fn的參數皆被滿足。則<code>gn2</code>所做的就是<code>currying</code>函式<code>fn</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> curry = <span class="function"><span class="params">fn</span> =&gt;</span> &#123;</div><div class="line">    <span class="keyword">const</span> getCurriedFn = <span class="function"><span class="params">prev</span> =&gt;</span> arg =&gt; &#123;</div><div class="line">        <span class="keyword">const</span> args = [...prev, arg]</div><div class="line">        <span class="keyword">return</span> args.length &lt; fn.length ? getCurriedFn(args) : fn(...args)</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> getCurriedFn([])</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">const</span> add = <span class="function">(<span class="params">a, b, c</span>) =&gt;</span> a + b + c</div><div class="line"><span class="keyword">const</span> curriedAdd = curry(add)</div><div class="line"><span class="keyword">const</span> add2 = curriedAdd(<span class="number">2</span>)</div><div class="line"><span class="keyword">const</span> add2And3 = add2(<span class="number">3</span>)</div><div class="line"><span class="built_in">console</span>.log(add2And3(<span class="number">4</span>)) <span class="comment">// 9</span></div></pre></td></tr></table></figure>
+<h1 id="優點"><a href="#優點" class="headerlink" title="優點"></a>優點</h1><ul>
+<li><p>搭配partial application，寫出更泛用、復用性高的函數<br>若函數支援currying的話，我們可以只先放入某幾個參數(<code>partial application</code>)來製造出可以被其他情境使用的函數。而不用每次都把函數寫死，傳入完整的參數。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> add2 = add(<span class="number">2</span>) <span class="comment">// 用在需要加2的地方</span></div><div class="line"><span class="keyword">const</span> splitAt5 = splitAt(<span class="number">5</span>) <span class="comment">// 將字串從第5個字元處切開</span></div><div class="line"><span class="keyword">const</span> doubleList = map(<span class="function"><span class="params">x</span> =&gt;</span> x * <span class="number">2</span>) <span class="comment">// 將陣列中數字都兩倍</span></div><div class="line">...</div></pre></td></tr></table></figure>
+</li>
+<li><p>更為簡潔易讀的函數<br>因為搭配了<code>partial application</code>，只需傳入幾個特定的參數，可以寫出較為語易化且簡短的函數。<br>由上述可以看出，這種方式得到的函數，我們可以很清楚從字面上知道他想做什麼。</p>
+</li>
+<li><p>更方便去做 function composition<br>我們寫程式時，會只針對問題的各個小流程去定義函數。由於每個函數可被定義的很語易化，能清楚了解每個步驟的意圖，再藉由函數組合就能達到想要的結果</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 簡單範例 沒太大意義...</span></div><div class="line"><span class="keyword">const</span> joinWithDash = join(<span class="string">'-'</span>)</div><div class="line"><span class="keyword">const</span> strEq = eqBy(<span class="built_in">String</span>);</div><div class="line"><span class="keyword">const</span> uniqByStr = uniqWith(strEq)</div><div class="line"></div><div class="line"><span class="keyword">const</span> transStr = compose(</div><div class="line">    joinWithDash,</div><div class="line">    uniqByStr,</div><div class="line">    reverse</div><div class="line">) <span class="comment">// 先reverse，將重複的字刪除再用'-'連結</span></div><div class="line"></div><div class="line">map(transStr)([<span class="string">'apple'</span>, <span class="string">'banana'</span>, <span class="string">'cat'</span>, <span class="string">'door'</span>]) <span class="comment">// ["e-l-p-a","a-n-b","t-a-c","r-o-d"]</span></div></pre></td></tr></table></figure>
+<h1 id="使用關鍵"><a href="#使用關鍵" class="headerlink" title="使用關鍵"></a>使用關鍵</h1><ul>
+<li>撰寫函數時，欲操作的資料要放在最後一個參數<br>這也是<a href="https://www.youtube.com/watch?v=m3svKOdZijA" target="_blank" rel="external">Hey Underscore, You’re Doing It Wrong!</a>中提到的<code>Underscore</code>不好的地方，他所提供的函數將要操作的資料放在第一個參數，使得無法將其currying後去做composition。<br>所以較好的方式是，撰寫函數時能把要操作的那個變數，放在最後參數的最後一個。所以較方便我們去撰寫<code>pointfree style</code>的函數，然後去做<code>function composition</code>。</li>
+</ul>
+<h1 id="相關資料"><a href="#相關資料" class="headerlink" title="相關資料"></a>相關資料</h1><p><a href="https://www.youtube.com/watch?v=m3svKOdZijA" target="_blank" rel="external">Hey Underscore, You’re Doing It Wrong!</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2017/10/16/hoc-in-react/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/16/hoc-in-react/" itemprop="url">使用HOC</a></h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/tancc/" itemprop="url" rel="index">
+              <span itemprop="name">tancc</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-10-16T17:45:28+08:00">
+                2017-10-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>以往當我們要對component進行功能上的擴充時，以前常見的方法如<code>mixin</code>、<code>inheritance</code>等等，但現在都不推薦使用這些方式了。</p>
+<p>用<code>inheritance</code>的話，會使得複用性變低，且當你只想要簡單的功能時，所繼承的物件背後可能相依著一大串東西。如一句名言<a href="https://www.johndcook.com/blog/2011/07/19/you-wanted-banana/" target="_blank" rel="external">“You wanted a banana but you got a gorilla holding the banana”</a>。</p>
+<p><code>mixin</code>較大的問題在於不具有immutability，會去修改到原有的component。當在測試或是發生問題時，我們難以確認當前的狀態是component本身所導致的抑或是mixin的override所造成的。</p>
+<h1 id="什麼是-Higher-Order-Component"><a href="#什麼是-Higher-Order-Component" class="headerlink" title="什麼是 Higher-Order Component"></a>什麼是 Higher-Order Component</h1><p>是從 <a href="https://en.wikipedia.org/wiki/Higher-order_function" target="_blank" rel="external">Higher-order function</a> 這名字而來的</p>
+<p>而 Higher-Order Component 可簡單解釋為：</p>
+<blockquote>
+<p>a higher-order component is a function that accepts a component, and returns a new component that wraps the original</p>
+</blockquote>
+<p>也就是一個function，他的輸入是一個component，輸出一個新的component。</p>
+<p>簡單的形式大概會長這樣</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> hoc = <span class="function"><span class="params">WrappedComponent</span> =&gt;</span> <span class="class"><span class="keyword">class</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</div><div class="line">    <span class="comment">// do something...</span></div><div class="line">    render() &#123;</div><div class="line">        <span class="keyword">return</span> &lt;WrappedComponent &#123;...this.state&#125; &#123;...this.props&#125; /&gt;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h1><p>我們常會有一些頁面是有鎖權限的，例如只有登入的使用者才能進入，若沒有登入則跳到登入畫面</p>
+<p>假設現在有兩個頁面(Account, Setting)是必須登入才可看見，在沒有用HOC時，最直覺的方法會是這樣寫</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Account</span></div><div class="line"><span class="keyword">import</span> React, &#123;Component&#125; <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"><span class="keyword">import</span> Login <span class="keyword">from</span> <span class="string">'components/Login'</span></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">Account</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</div><div class="line">    render() &#123;</div><div class="line">        <span class="keyword">const</span> &#123;user&#125; = <span class="keyword">this</span>.props</div><div class="line">        <span class="keyword">if</span> (user.isLogin) &#123;</div><div class="line">            <span class="keyword">return</span> &lt;div&gt;Account&lt;/div&gt;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> &lt;Login /&gt;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">// Setting</div><div class="line">import React, &#123;Component&#125; from 'react';</div><div class="line">import Login from 'components/Login'</div><div class="line">export default class Setting extends Component &#123;</div><div class="line">    render() &#123;</div><div class="line">        const &#123;user&#125; = this.props</div><div class="line">        if (user.isLogin) &#123;</div><div class="line">            return &lt;div&gt;Setting&lt;/div&gt;</div><div class="line">        &#125; else &#123;</div><div class="line">            return &lt;Login /&gt;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以發現明顯會有兩個問題：</p>
+<ul>
+<li><p>檢查是否登入的邏輯重複了。這使得之後如果要改變驗證邏輯時，必須去更改每個component做了許多重複的步驟，也使得產生bug的機會變多了。</p>
+</li>
+<li><p>component除了畫面呈現的樣子外，還需額外關心”何時要呈現”這件事。可以想像到的是，若是邏輯變多且沒有抽出時，component的程式碼會變得相當龐大，會難以維護、debug。比較好的做法是component只關注在畫面上，其餘邏輯部分抽出。</p>
+</li>
+</ul>
+<h1 id="使用-HOC"><a href="#使用-HOC" class="headerlink" title="使用 HOC"></a>使用 HOC</h1><p>同樣實作上述例子，但這次用HOC去改寫，將確認是否登入的邏輯抽出。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// authorized.js</span></div><div class="line"><span class="keyword">import</span> React, &#123;Component&#125; <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"><span class="keyword">import</span> Login <span class="keyword">from</span> <span class="string">'components/Login'</span></div><div class="line"><span class="keyword">const</span> authorized = <span class="function"><span class="params">WrappedComponent</span> =&gt;</span> <span class="class"><span class="keyword">class</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</div><div class="line">    render() &#123;</div><div class="line">        <span class="keyword">const</span> &#123;user&#125; = <span class="keyword">this</span>.props</div><div class="line">        <span class="keyword">if</span> (user.isLogin) &#123;</div><div class="line">            <span class="keyword">return</span> &lt;WrappedComponent &#123;...this.props&#125; /&gt;</div><div class="line">        &#125; else &#123;</div><div class="line">            return &lt;Login /&gt;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">export default authorized</div><div class="line">// Account.js</div><div class="line">import React, &#123;Component&#125; from 'react';</div><div class="line">export default class Account extends Component &#123;</div><div class="line">    render() &#123;</div><div class="line">        return &lt;div&gt;Account&lt;/div&gt;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">// Setting.js</div><div class="line">import React, &#123;Component&#125; from 'react';</div><div class="line">export default class Setting extends Component &#123;</div><div class="line">    render() &#123;</div><div class="line">        return &lt;div&gt;Setting&lt;/div&gt;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">// 使用方法</div><div class="line">const authorizedAccount = authorized(Account)</div><div class="line">const authorizedSetting = authorized(Setting)</div><div class="line">// ...</div></pre></td></tr></table></figure>
+<h1 id="優點"><a href="#優點" class="headerlink" title="優點"></a>優點</h1><p>從上面例子可以看到幾個優點</p>
+<ul>
+<li><p>共用邏輯抽出，增加復用性、減少重複代碼<br>當把邏輯抽出時，可以省掉許多重複的代碼。且當我們的認證方法改變或是出問題時，只須去更動或檢查<code>authorized.js</code>這檔案即可，在維護以及修改上方便許多。</p>
+</li>
+<li><p>component專注在畫面呈現上</p>
+</li>
+<li><p>使用composition的方式，返回全新的component，具有immutability</p>
+</li>
+<li><p>較易測試<br>測試component時就只需測試他的畫面正確性，而不需考慮其他如商務邏輯的部分。而測商務邏輯就直接測其邏輯的正確性，不需考慮畫面的呈現。<br>且因為具有immutability的特性，測試時不會有如文章開頭所寫到的使用mixin，因為mutable state所造成的問題。</p>
+</li>
+<li><p>程式較具有彈性<br>當有其他的功能需要加上去時，我們只需要去定義各種對應的HOC，藉由函數的組合就能達到想要的效果，如<code>compose(hocA, hocB, hocC)(Comp)</code>，也就是FP中常提及的<code>function composition</code>。</p>
+</li>
+</ul>
+<h1 id="何時使用"><a href="#何時使用" class="headerlink" title="何時使用"></a>何時使用</h1><p>當在撰寫component時，發現了許多重複的程式碼，如重複的邏輯條件判斷或是重複的前置動作等等，或是夾雜了畫面以外的商業邏輯時，就代表是可以嘗試使用HOC做進一步抽象的時機了！</p>
+<p>許多library也都有用到HOC這技巧，常見如<code>react-redux</code>中的<code>connect</code>、<code>react-router</code>中的<code>withRouter</code>，以及<code>recompose</code>等等。</p>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><p><a href="https://www.sitepen.com/blog/2017/08/15/higher-order-components-in-react/" target="_blank" rel="external">Higher Order Components in React</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2017/10/12/react-purecomponent/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/12/react-purecomponent/" itemprop="url">React PureComponent and Performance</a></h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/Tu-Szu-Chi/" itemprop="url" rel="index">
+              <span itemprop="name">Tu-Szu-Chi</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-10-12T10:04:16+08:00">
+                2017-10-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>React在15.3.0新增了<code>PureComponent</code>的類別，我們基本上可以直接無痛從<code>extends Component</code>轉到<code>extends PureComponent</code><br>大部分情況下直接使用<strong>PureComponent</strong>會是較方便的做法，省去了自己寫<strong>shouldComponentUpdate</strong> (自己寫的話還會報錯)<br>但也不代表用了<strong>PureComponent</strong>整個效能就會提升，根本的療法還是要將Component寫的<code>pure-render</code>，意指假如傳給Component的<strong>prop</strong> &amp; <strong>state</strong>都是一樣，那<strong>vDOM</strong>回傳的結果也該是一樣</p>
+<h1 id="Non-pure"><a href="#Non-pure" class="headerlink" title="Non-pure"></a>Non-pure</h1><p>最常見的non-pure寫法就像是以下</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 每次render傳進去的都是新的Object</span></div><div class="line">&lt;Button style=&#123;&#123;<span class="attr">color</span>: <span class="string">'red'</span>&#125;&#125; /&gt;</div><div class="line"></div><div class="line">&lt;Children data=&#123;&#123;<span class="attr">x</span>: <span class="number">1</span>, <span class="attr">y</span>: <span class="number">2</span>&#125;&#125; /&gt;</div><div class="line"></div><div class="line"><span class="comment">// inline-function, 每次render傳進去的都是新的Function</span></div><div class="line">&lt;Button2 onClick=&#123;e =&gt; <span class="built_in">console</span>.log(e)&#125; /&gt;</div></pre></td></tr></table></figure>
+<p>這樣的<strong>inline</strong>寫法，雖然會造成每次一有變動，每個<code>Children Component</code>都會去檢查一次，很多東西要檢查「理論上」耗費的時間也會變多，但我們真的就該改掉這樣的寫法嗎？<a href="https://cdb.reacttraining.com/react-inline-functions-and-performance-bdff784f5578" target="_blank" rel="external">這篇文章</a>給了我們些值得探討的問題，程式變慢真的是這些<strong>non-pure</strong>造成的嗎？</p>
+<h1 id="實驗"><a href="#實驗" class="headerlink" title="實驗"></a>實驗</h1><p>我在<a href="https://github.com/sovmedcare/react-purecomponent-test" target="_blank" rel="external">Github</a>上開了一個用來實作<code>PureComponent</code>的專案，有興趣的人也可以直接到<a href="https://sovmedcare.github.io/react-purecomponent-test/">這</a>打開log看看<br>其中的一個結論是</p>
+<blockquote>
+<p>當傳給<code>Children Component</code>的props「是」pure，更新children會觸發children的ComponentDidUpdate &amp; render，但畫面上不會有任何改變，真的被skip掉了；而<code>Parent Component</code>的更新，並不會觸發children的ComponentDidUpdate &amp; render</p>
+</blockquote>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p><strong><em>「不要過早開始優化」</em></strong>，這是文章中作者很強調的一點，當你要做優化時，要好好做實測；是<strong>inline-style</strong>造成的嗎？還是有更大的問題在Code裡？<br>優化沒辦法一次到位，從使用的過程中逐漸察覺出可加強的部分，首要關注的還是專案本身的產出<br><a href="https://reactjs.org/docs/react-api.html#reactpurecomponent" target="_blank" rel="external">官方</a>也有建議到，因<code>PureComponent</code>做的是<strong>shallow compare</strong>，所以較複雜的data structures可以用<code>immutable objects</code>來加快比對速度<em>(ex. Immutable.js)</em></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://cdb.reacttraining.com/react-inline-functions-and-performance-bdff784f5578" target="_blank" rel="external">React, Inline Functions, and Performance</a><br><a href="https://segmentfault.com/a/1190000006741060" target="_blank" rel="external">React PureComponent 源码解析</a><br><a href="https://github.com/sovmedcare/react-purecomponent-test" target="_blank" rel="external">我的實驗</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2017/09/29/upgrade-to-react-16/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/29/upgrade-to-react-16/" itemprop="url">webpack upgrade to 16</a></h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/jackypan1989/" itemprop="url" rel="index">
+              <span itemprop="name">jackypan1989</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-09-29T16:43:08+08:00">
+                2017-09-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Facebook just announced the release of React v16.0.</p>
+<h1 id="New-features"><a href="#New-features" class="headerlink" title="New features"></a>New features</h1><ol>
+<li>fragments</li>
+<li>error boundaries</li>
+<li>portals</li>
+<li>custom DOM attributes</li>
+<li>improved server-side rendering</li>
+<li>small lib size</li>
+<li><p>better render perf (with react-fiber)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">https://github.com/facebook/react/issues/10686</div><div class="line"></div><div class="line">v15</div><div class="line">render functional component tree x 115,932 ops/sec ±4.10% (55 runs sampled)</div><div class="line">render class based component tree x 255,407 ops/sec ±4.46% (58 runs sampled)</div><div class="line">render class that renders functional components x 252,045 ops/sec ±5.47% (56 runs sampled)</div><div class="line">Fastest is render class based component tree,render class that renders functional components</div><div class="line"></div><div class="line">v16</div><div class="line">render functional component tree x 204,931 ops/sec ±2.21% (59 runs sampled)</div><div class="line">render class based component tree x 339,215 ops/sec ±2.98% (58 runs sampled)</div><div class="line">render class that renders functional components x 326,880 ops/sec ±4.51% (56 runs sampled)</div><div class="line">Fastest is render class based component tree,render class that renders functional components</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h1><p>  Just update your <strong>package.json</strong><br>  No other configurations, and no migration issues :D<br>  (It’s true !!!!!)</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yarn add react react-dom</div></pre></td></tr></table></figure>
+<h1 id="Pratical-performance-in-chrome-devtool"><a href="#Pratical-performance-in-chrome-devtool" class="headerlink" title="Pratical performance (in chrome devtool)"></a>Pratical performance (in chrome devtool)</h1><p>v16<br><img src="https://i.imgur.com/t0s1dys.png" alt="img"></p>
+<p>v15<br><img src="https://i.imgur.com/U3XNKFd.png" alt="img"></p>
+<h1 id="You-maybe-also-need-to-update-optional"><a href="#You-maybe-also-need-to-update-optional" class="headerlink" title="You maybe also need to update (optional)"></a>You maybe also need to update (optional)</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yarn add prop-types recompose redux</div></pre></td></tr></table></figure>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
+<li><a href="https://facebook.github.io/react/blog/2017/09/26/react-v16.0.html" target="_blank" rel="external">React v16.0</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2017/09/28/webpack-production-tuning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/28/webpack-production-tuning/" itemprop="url">Webpack production bundle 優化 (72x)</a></h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/jackypan1989/" itemprop="url" rel="index">
+              <span itemprop="name">jackypan1989</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-09-28T15:43:08+08:00">
+                2017-09-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>本篇將會介紹 webpack 3 中常見的優化方式<br>包含問題分析，plugin介紹等等</p>
+<h1 id="優化成效"><a href="#優化成效" class="headerlink" title="優化成效"></a>優化成效</h1><ol>
+<li><p>大部分的情境下，使用者用量(專案為內部使用者為主)<br>從 3.6 MB 降到 51 KB (app)<br>降為原本的 <strong>1.38 % (縮減 98.62 %)</strong></p>
+</li>
+<li><p>在完全沒有 cache 機制，必須重拉 vendor 情況下<br>也是從 3.6 MB 降到 726 KB (app + vendor)<br>降為原本的 <strong>19.6 % (縮減 80.4 %)</strong></p>
+</li>
+</ol>
+<p><img src="https://i.imgur.com/39u6xKz.png" alt=""></p>
+<h1 id="優化流程"><a href="#優化流程" class="headerlink" title="優化流程"></a>優化流程</h1><h2 id="1-觀察現有狀況與問題"><a href="#1-觀察現有狀況與問題" class="headerlink" title="1. 觀察現有狀況與問題"></a>1. 觀察現有狀況與問題</h2><p>  僅使用 DefinePlugin(with production), UglifyJsPlugin(with minimize)<br>  bundle 出來的大小為 3.6MB, 存在很大改善空間(3G網路讀取時間過長)<br>  因為不是所有 module 都在每次 build 都改動到</p>
+<p>  <img src="https://i.imgur.com/2cfimJS.png" alt="imgur"></p>
+<h2 id="2-利用-BundleAnalyzerPlugin-分析-bundle-成分"><a href="#2-利用-BundleAnalyzerPlugin-分析-bundle-成分" class="headerlink" title="2. 利用 BundleAnalyzerPlugin 分析 bundle 成分"></a>2. 利用 BundleAnalyzerPlugin 分析 bundle 成分</h2><p>  <a href="https://github.com/th0r/webpack-bundle-analyzer" target="_blank" rel="external">BundleAnalyzerPlugin</a> 會協助解析 bundle 中有哪些單元<br>  他會生成一個網頁，透過該網頁可以看到用到的 module 以及它的大小</p>
+<p>  <img src="https://cloud.githubusercontent.com/assets/302213/20628702/93f72404-b338-11e6-92d4-9a365550a701.gif" alt=""></p>
+<h2 id="3-利用-CommonsChunkPlugin-抽出-lib"><a href="#3-利用-CommonsChunkPlugin-抽出-lib" class="headerlink" title="3. 利用 CommonsChunkPlugin 抽出 lib"></a>3. 利用 CommonsChunkPlugin 抽出 lib</h2><p>  透過分析發現，第三方 lib 佔了大部分的成分(例如 react, rxjs, redux, moment, antd …etc)<br>  但這些 lib 的改動(例如升級 react 版本)，在 production build cycle 中次數是很少的<br>  因此透過 CommonsChunkPlugin 把所有第三方都抽出來，與我們自己的 code 分開<br>  (例如產生出 app.js, vendor.js 這樣一來就每次只更新 app.js 即可)</p>
+<p>  ps: 也可以在 entry 中，指定那些比較大的 lib</p>
+<h2 id="4-Uglyify-優化"><a href="#4-Uglyify-優化" class="headerlink" title="4. Uglyify 優化"></a>4. Uglyify 優化</h2><p>  除了調整 minify, souceMap 外，compress選項也可以另外調整<br>  (例如不要在生成支援 ie8 的 code, 去掉 dead code, comment等)</p>
+<h2 id="5-IgnorePlugin"><a href="#5-IgnorePlugin" class="headerlink" title="5. IgnorePlugin"></a>5. IgnorePlugin</h2><p>  如果有使用 momentJS 可以發現，他會 bundle 所有的語言包<br>  這時就可以利用 IgnorePlugin 去掉沒用到的語言包</p>
+<h2 id="6-ModuleConcatenationPlugin-amp-HashedModuleIdsPlugin"><a href="#6-ModuleConcatenationPlugin-amp-HashedModuleIdsPlugin" class="headerlink" title="6. ModuleConcatenationPlugin &amp; HashedModuleIdsPlugin"></a>6. ModuleConcatenationPlugin &amp; HashedModuleIdsPlugin</h2><ol>
+<li><p>ModuleConcatenationPlugin<br>參考 RollupJS 將有相關的 module 放在同一個閉包裡面，所以會減少閉包數量</p>
+</li>
+<li><p>HashedModuleIdsPlugin<br>給打包的 module 一個穩定 hash 值 (如果沒啟用，抽出第三方 lib 就會大打折扣)</p>
+</li>
+</ol>
+<h2 id="7-Gzip-非常有效降低大小"><a href="#7-Gzip-非常有效降低大小" class="headerlink" title="7. Gzip (非常有效降低大小)"></a>7. Gzip (非常有效降低大小)</h2><p>  利用 CompressionPlugin 先 prebuild 好 gzip 檔案<br>  而 gzip 需要 server side 支持<br>  下面列幾種方法</p>
+<ol>
+<li>express 的 middleware 插件</li>
+<li>nginx 設定 static gzip file 支持</li>
+<li>server on-the-fly 支持(不建議，因為會吃系統效能)</li>
+</ol>
+<h2 id="8-利用-chunkhash-與-htmlWebpackPlugin-來達到-cache"><a href="#8-利用-chunkhash-與-htmlWebpackPlugin-來達到-cache" class="headerlink" title="8. 利用 chunkhash 與 htmlWebpackPlugin 來達到 cache"></a>8. 利用 chunkhash 與 htmlWebpackPlugin 來達到 cache</h2><p>  修改 output 裡面的 chunkhash 來達到確認是否有更新<br>  因為只要有添加新的模組或修改 chunkhash 就會改變<br>  (app.38d8273182132939.js -&gt; app.38d8d73182139823.js)</p>
+<p>  但是問題在於原本 express 的 view template 中是固定的<br>  因此透過 htmlWebpackPlugin 把新的得到的 chunkhash inject 回去<br>  這樣就能完美使用瀏覽器的 cache 機制</p>
+<h1 id="真實案例"><a href="#真實案例" class="headerlink" title="真實案例"></a>真實案例</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 優化前</span></div><div class="line">plugins: [</div><div class="line">  <span class="keyword">new</span> webpack.LoaderOptionsPlugin(&#123;</div><div class="line">    minimize: <span class="literal">true</span>,</div><div class="line">    debug: <span class="literal">false</span></div><div class="line">  &#125;),</div><div class="line">  <span class="keyword">new</span> webpack.DefinePlugin(&#123;</div><div class="line">    <span class="string">'process.env'</span>: &#123;</div><div class="line">      <span class="string">'NODE_ENV'</span>: <span class="built_in">JSON</span>.stringify(<span class="string">'production'</span>)</div><div class="line">    &#125;</div><div class="line">  &#125;),</div><div class="line">  <span class="keyword">new</span> webpack.optimize.UglifyJsPlugin()</div><div class="line">]</div><div class="line"></div><div class="line"><span class="comment">// 優化後</span></div><div class="line">plugins: [</div><div class="line">  <span class="comment">// new BundleAnalyzerPlugin(),</span></div><div class="line">  <span class="keyword">new</span> webpack.DefinePlugin(&#123;</div><div class="line">    <span class="string">'process.env'</span>: &#123;</div><div class="line">      <span class="string">'NODE_ENV'</span>: <span class="built_in">JSON</span>.stringify(<span class="string">'production'</span>)</div><div class="line">    &#125;</div><div class="line">  &#125;),</div><div class="line">  <span class="keyword">new</span> CleanWebpackPlugin(path.join(__dirname, <span class="string">'dist'</span>)),</div><div class="line">  <span class="keyword">new</span> webpack.optimize.ModuleConcatenationPlugin(),</div><div class="line">  <span class="keyword">new</span> webpack.optimize.CommonsChunkPlugin(&#123;</div><div class="line">    name: <span class="string">'vendor'</span>,</div><div class="line">    filename: <span class="string">'vendor.[chunkhash].js'</span>,</div><div class="line">    minChunks: <span class="function"><span class="params">module</span> =&gt;</span> <span class="built_in">module</span>.context &amp;&amp; <span class="built_in">module</span>.context.indexOf(<span class="string">'node_modules'</span>) &gt;= <span class="number">0</span></div><div class="line">  &#125;),</div><div class="line">  <span class="keyword">new</span> webpack.IgnorePlugin(<span class="regexp">/^\.\/locale$/</span>, /moment$/),</div><div class="line">  <span class="keyword">new</span> webpack.optimize.UglifyJsPlugin(&#123;</div><div class="line">    compress: &#123;</div><div class="line">      warnings: <span class="literal">false</span>,</div><div class="line">      screw_ie8: <span class="literal">true</span>,</div><div class="line">      conditionals: <span class="literal">true</span>,</div><div class="line">      unused: <span class="literal">true</span>,</div><div class="line">      comparisons: <span class="literal">true</span>,</div><div class="line">      sequences: <span class="literal">true</span>,</div><div class="line">      dead_code: <span class="literal">true</span>,</div><div class="line">      evaluate: <span class="literal">true</span>,</div><div class="line">      if_return: <span class="literal">true</span>,</div><div class="line">      join_vars: <span class="literal">true</span></div><div class="line">    &#125;,</div><div class="line">    output: &#123;</div><div class="line">      comments: <span class="literal">false</span></div><div class="line">    &#125;,</div><div class="line">    sourceMap: <span class="literal">true</span></div><div class="line">  &#125;),</div><div class="line">  <span class="keyword">new</span> webpack.LoaderOptionsPlugin(&#123;</div><div class="line">    minimize: <span class="literal">true</span>,</div><div class="line">    debug: <span class="literal">false</span></div><div class="line">  &#125;),</div><div class="line">  <span class="keyword">new</span> webpack.HashedModuleIdsPlugin(),</div><div class="line">  <span class="keyword">new</span> CompressionPlugin(&#123;</div><div class="line">    asset: <span class="string">'[path].gz[query]'</span>,</div><div class="line">    algorithm: <span class="string">'gzip'</span>,</div><div class="line">    test: <span class="regexp">/\.(js|html)$/</span>,</div><div class="line">    threshold: <span class="number">10240</span>,</div><div class="line">    minRatio: <span class="number">0.8</span></div><div class="line">  &#125;),</div><div class="line">  <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</div><div class="line">    template: path.join(__dirname, <span class="string">'src'</span>, <span class="string">'server'</span>, <span class="string">'view'</span>, <span class="string">'template.html'</span>),</div><div class="line">    inject: <span class="literal">true</span>,</div><div class="line">    filename: path.join(__dirname, <span class="string">'src'</span>, <span class="string">'server'</span>, <span class="string">'view'</span>, <span class="string">'index-prod.html'</span>)</div><div class="line">  &#125;)</div><div class="line">]</div></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://webpack.js.org/" target="_blank" rel="external">webpack 官方</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2017/09/27/js-es6-generator/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/27/js-es6-generator/" itemprop="url">Javascript ES6 Generator 介紹</a></h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/Tu-Szu-Chi/" itemprop="url" rel="index">
+              <span itemprop="name">Tu-Szu-Chi</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-09-27T17:42:49+08:00">
+                2017-09-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在ES6中，Promise將我們從「<strong>Callback Hell</strong>」稍微解放出來</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">asyncFun1(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">  <span class="comment">// do something...</span></div><div class="line">  <span class="keyword">return</span> result</div><div class="line">&#125;)</div><div class="line">.then(asyncFun2)</div><div class="line">.then(asyncFun3)</div><div class="line"><span class="comment">// ...more and more asyncFun</span></div></pre></td></tr></table></figure>
+<p>但Promise也有缺點，例如當<strong>asyncFun3</strong>需要調用<strong>asyncFun1</strong>的result時，該怎做呢？可能會用巢狀式Promise，或者用變數暫存每一次的result之類，我們都知道這些不是個好方法</p>
+<h1 id="Generator"><a href="#Generator" class="headerlink" title="Generator"></a>Generator</h1><p><strong>generator</strong>可讓我們的異步流程寫得更synchronous-style，免除了之前的困擾<br>先用個範例將Promise小改成Generator</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span>* <span class="title">logGen</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">  <span class="keyword">const</span> url = <span class="string">'https://api.github.com/users/'</span> + <span class="string">'name'</span></div><div class="line">  <span class="keyword">const</span> result1 = <span class="keyword">yield</span> fetch(url)</div><div class="line">&#125;</div><div class="line"><span class="keyword">const</span> gen = logGen(<span class="string">'sov'</span>)</div><div class="line"></div><div class="line"><span class="keyword">const</span> result = gen.next()</div><div class="line">result.value</div><div class="line">  .then(<span class="function"><span class="params">data</span> =&gt;</span> data.json())</div><div class="line">  .then(<span class="function"><span class="params">data</span> =&gt;</span> gen.next(data))</div></pre></td></tr></table></figure>
+<p><em>Ln:7</em>的result會收到<em>Ln:3</em> yield回傳的Promise<br>待API回傳後，<em>Ln:10</em> <strong>gen.next(data)</strong> 會將API回傳的data賦值給result1</p>
+<p>但我們不可能一直<em>.then</em>下去，這樣又回到地獄了，所以我們需要一個Function幫我們管理這整個流程，可以自動接著下去做事的傢伙<br><a href="https://github.com/tj/co" target="_blank" rel="external">Co</a> - 知名的TJ大神在幾年前就實現了Generator概念，有興趣的可以參考他的實踐方式，在此我們先寫一個簡易版的管理器用用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> co = <span class="function">(<span class="params">gen, parameter</span>) =&gt;</span> &#123;</div><div class="line">  <span class="keyword">const</span> g = gen(parameter)</div><div class="line"></div><div class="line">  next = <span class="function">(<span class="params">data, err</span>) =&gt;</span> &#123;</div><div class="line">    <span class="keyword">let</span> res</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (err) &#123;</div><div class="line">      <span class="keyword">return</span> g.throw(err)</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      res = g.next(data)</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (!res.done) &#123;</div><div class="line">      res.value</div><div class="line">        .then(<span class="function"><span class="params">data</span> =&gt;</span> data.json())</div><div class="line">        .then(<span class="function"><span class="params">data</span> =&gt;</span> &#123; next(data) &#125;)</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      <span class="built_in">console</span>.log(<span class="string">'DONE! '</span>,res.value)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  next()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>這簡易版的可以協助我們連續的Promise請求，可在這<a href="https://jsbin.com/puxurihewi/2/edit?js,console" target="_blank" rel="external">JS Bin</a> Run看看，在此也附上我設定的「任務」Code</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span>* <span class="title">logGen</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">  <span class="keyword">const</span> url = <span class="string">'https://api.github.com/users/'</span></div><div class="line"></div><div class="line">  <span class="keyword">const</span> result1 = <span class="keyword">yield</span> fetch(url + name)</div><div class="line">  <span class="keyword">const</span> result2 = <span class="keyword">yield</span> fetch(url + <span class="string">'abc'</span>)</div><div class="line">  <span class="keyword">const</span> result3 = <span class="keyword">yield</span> fetch(url + <span class="string">'def'</span>)</div><div class="line"></div><div class="line">  <span class="keyword">return</span> result1.id + <span class="string">'~'</span> + result3.id</div><div class="line">&#125;</div><div class="line"></div><div class="line">co(logGen, <span class="string">'sov'</span>)</div></pre></td></tr></table></figure>
+<p>但這樣的流程管理器只能處理都是<em>yield Promise</em>的需求，固我們可以加個工具幫我們判斷是否為Promise</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> isPromise = <span class="function"><span class="params">obj</span> =&gt;</span> <span class="built_in">Boolean</span>(obj) &amp;&amp; (<span class="keyword">typeof</span> obj.then === <span class="string">'function'</span>)</div></pre></td></tr></table></figure>
+<p>將<em>isPromise</em>加入到我們的流程管理器 - <a href="https://jsbin.com/niguxijuye/1/edit?js,console" target="_blank" rel="external">JS Bin</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(!res.done) &#123;</div><div class="line">  isPromise(res.value)</div><div class="line">    ? res.value</div><div class="line">        .then(<span class="function"><span class="params">data</span> =&gt;</span> data.json())</div><div class="line">        .then(<span class="function"><span class="params">data</span> =&gt;</span> &#123; next(data) &#125;)</div><div class="line">    : next(<span class="string">'It is not Promise'</span>)</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'DONE! '</span>,res.value)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>對應任務的不同再將流程管理器改造一下就可以用了</p>
+</blockquote>
+<h1 id="進階-Observable-style"><a href="#進階-Observable-style" class="headerlink" title="進階 (Observable-style)"></a>進階 (Observable-style)</h1><p>接下來這章節主要是想將Generator的Iterable-style寫成Observable-style的方式</p>
+<p><img src="https://cdn-images-1.medium.com/max/1400/1*7ZdFWFlA9dSRCv2naCjihA.png" alt="GTOR" title="Kris Kowal&#39;s - A General Theory of Reactivity"></p>
+<p>這表格來自於<em>Kris Kowal’s</em> - <a href="https://github.com/kriskowal/gtor" target="_blank" rel="external">GTOR: A General Theory of Reactivity</a>，比較不好理解的部分是Iterable/Observable的差別</p>
+<blockquote>
+<p>Iterable是<strong>pull</strong> value，Observable是<strong>push</strong> value</p>
+</blockquote>
+<h2 id="Interable"><a href="#Interable" class="headerlink" title="Interable"></a>Interable</h2><p>Generator通過<strong>next()</strong>來pull value</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> gen = <span class="function"><span class="keyword">function</span>* (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">yield</span> <span class="number">1</span>;</div><div class="line">  <span class="keyword">yield</span> <span class="number">2</span>;</div><div class="line">  <span class="keyword">yield</span> <span class="number">3</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">const</span> iterator = gen();</div><div class="line"></div><div class="line">iterator.next(); <span class="comment">// &#123; value: 1, done: false &#125;</span></div><div class="line">iterator.next(); <span class="comment">// &#123; value: 2, done: false &#125;</span></div><div class="line">iterator.next(); <span class="comment">// &#123; value: 3, done: false &#125;</span></div><div class="line">iterator.next(); <span class="comment">// &#123; value: undefined, done: true &#125;</span></div></pre></td></tr></table></figure>
+<h2 id="Observable"><a href="#Observable" class="headerlink" title="Observable"></a>Observable</h2><p>而所謂的Observable通常是指Value「可使用」後，會有通知/訂閱機制(subscription/notification)將Value送出去<br>在此我們要將流程管理器抽象化成Observable模式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> co = <span class="function">(<span class="params">gen</span>) =&gt;</span> (...args) =&gt; (&#123;</div><div class="line">  subscribe: <span class="function">(<span class="params">onNext, onError, onCompleted</span>) =&gt;</span> &#123;</div><div class="line">    next(gen(...args), &#123;onNext, onError, onCompleted&#125;)</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>co管理器多了<em><code>.subscribe()</code></em>，就跟Rx’Library中的Observable一樣，並且接收三個Function作為參數<br>原本的迭代器<code>next()</code>也要改動一下</p>
+<blockquote>
+<p>因為是簡易版，所以沒有加上errorHandler</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> next = <span class="function">(<span class="params">iter, callbacks, prevData = <span class="literal">undefined</span></span>) =&gt;</span> &#123;</div><div class="line">  <span class="keyword">const</span> &#123; onNext, onCompleted &#125; = callbacks</div><div class="line">  <span class="keyword">const</span> res = iter.next(prevData)</div><div class="line">  <span class="keyword">const</span> value = res.value</div><div class="line"></div><div class="line">  <span class="keyword">if</span>(!res.done) &#123;</div><div class="line">    <span class="keyword">if</span>(isPromise(value)) &#123;</div><div class="line">      value</div><div class="line">        .then(<span class="function"><span class="params">data</span> =&gt;</span> data.json())</div><div class="line">        .then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</div><div class="line">          onNext(data)</div><div class="line">          next(iter, callbacks, data)</div><div class="line">        &#125;)</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      onNext(value)</div><div class="line">      next(iter, callbacks, value)</div><div class="line">    &#125;</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">return</span> onCompleted()</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>這樣當每次Value「可使用」後，我們會直接push到<code>onNext()</code>去，這邊任務的範例是會接收一個Array of name，去call API得到這個name的Github user</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span>* <span class="title">logGen</span>(<span class="params">...names</span>) </span>&#123;</div><div class="line">  <span class="keyword">const</span> url = <span class="string">'https://api.github.com/users/'</span></div><div class="line"></div><div class="line">  <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; names.length; i++) &#123;</div><div class="line">    <span class="keyword">yield</span> fetch(url + names[i])</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>再來是產生一個<code>偽-Observable</code>對象</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> asyncFun = co(logGen)</div><div class="line"></div><div class="line">asyncFun(<span class="string">'sov'</span>,<span class="string">'abc'</span>, <span class="string">'ww'</span>, <span class="string">'tt'</span>)</div><div class="line">  .subscribe(</div><div class="line">    (val) =&gt; <span class="built_in">console</span>.log(<span class="string">'Success: '</span>, val.login + <span class="string">'-'</span> + val.id),</div><div class="line">    (err) =&gt; <span class="built_in">console</span>.log(<span class="string">'Error: '</span>, err),</div><div class="line">    () =&gt; <span class="built_in">console</span>.log(<span class="string">'Completed!'</span>)</div><div class="line">)</div></pre></td></tr></table></figure>
+<p>這樣就完成了(完整的<a href="https://jsbin.com/xusekusaka/1/edit?js,console" target="_blank" rel="external">JS Bin</a>)!而這樣做的好處就是…</p>
+<blockquote>
+<p>你會發現RxJS原來這麼好用</p>
+</blockquote>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>其實<code>co()</code>在這就是個「迭代器(Iterator)」角色，讓我們不用一直像以下這樣做</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">generatorFun.next()</div><div class="line">generatorFun.next()</div><div class="line">generatorFun.next()</div><div class="line"><span class="comment">// ... more and more next()</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>也可以直接看Co.js的<a href="https://github.com/tj/co/blob/master/index.js" target="_blank" rel="external">原始碼</a>，並不複雜</p>
+</blockquote>
+<p>看到這裡，希望你對Generator有更深的認識，或許也會對<code>ES7 async/await</code> 和 <code>RxJS</code>存在的用意更有感觸~</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://medium.com/javascript-scene/the-hidden-power-of-es6-generators-observable-async-flow-control-cfa4c7f31435" target="_blank" rel="external">The Hidden Power of ES6 Generators</a><br><a href="https://www.ericponto.com/blog/2016/12/05/teaching-rxjs/" target="_blank" rel="external">Teaching RxJS</a><br><a href="http://www.codedata.com.tw/javascript/es6-3-generator/" target="_blank" rel="external">初探ES6 Generators</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="https://avatars1.githubusercontent.com/u/31230110"
+              alt="SOVMedCare" />
+          
+            <p class="site-author-name" itemprop="name">SOVMedCare</p>
+            <p class="site-description motion-element" itemprop="description">Full Stack JS #FRP #RxJS #Redux #React</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">文章</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">標籤</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/sovmedcare" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:jackypan1989@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/sovtw" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.instagram.com/sovmedtw/" target="_blank" title="Instagram">
+                  
+                    <i class="fa fa-fw fa-instagram"></i>Instagram</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SOVMedCare</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

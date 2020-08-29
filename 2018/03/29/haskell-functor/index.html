@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-tw">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="FP,Haskell,type,category theory,functor," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="map 函數如果之前是寫 javascript 的，那你一定會用過 map 這個 function舉個例子 12345678910const add1 = x =&amp;gt; x + 1add1(5) // 答案是6add1([5]) // 有error 因為add1 無法應用在array上[5].map(add1) // 答案是[6]// 更甚者, 採用ramda.js之類的libconst map">
+<meta name="keywords" content="FP,Haskell,type,category theory,functor">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Haskell 系列 - Functor (函子)">
+<meta property="og:url" content="http://sovmedcare.github.io/2018/03/29/haskell-functor/index.html">
+<meta property="og:site_name" content="SOVMedCare Tech">
+<meta property="og:description" content="map 函數如果之前是寫 javascript 的，那你一定會用過 map 這個 function舉個例子 12345678910const add1 = x =&amp;gt; x + 1add1(5) // 答案是6add1([5]) // 有error 因為add1 無法應用在array上[5].map(add1) // 答案是[6]// 更甚者, 採用ramda.js之類的libconst map">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:updated_time" content="2020-07-31T10:42:01.095Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Haskell 系列 - Functor (函子)">
+<meta name="twitter:description" content="map 函數如果之前是寫 javascript 的，那你一定會用過 map 這個 function舉個例子 12345678910const add1 = x =&amp;gt; x + 1add1(5) // 答案是6add1([5]) // 有error 因為add1 無法應用在array上[5].map(add1) // 答案是[6]// 更甚者, 採用ramda.js之類的libconst map">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://sovmedcare.github.io/2018/03/29/haskell-functor/"/>
+
+
+
+
+
+  <title>Haskell 系列 - Functor (函子) | SOVMedCare Tech</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SOVMedCare Tech</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">@sovmedcare</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-authors">
+          <a href="/authors/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            作者群
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2018/03/29/haskell-functor/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Haskell 系列 - Functor (函子)</h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/jackypan1989/" itemprop="url" rel="index">
+              <span itemprop="name">jackypan1989</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-03-29T18:26:55+08:00">
+                2018-03-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="map-函數"><a href="#map-函數" class="headerlink" title="map 函數"></a>map 函數</h1><p>如果之前是寫 javascript 的，那你一定會用過 map 這個 function<br>舉個例子</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> add1 = <span class="function"><span class="params">x</span> =&gt;</span> x + <span class="number">1</span></div><div class="line"></div><div class="line">add1(<span class="number">5</span>) <span class="comment">// 答案是6</span></div><div class="line">add1([<span class="number">5</span>]) <span class="comment">// 有error 因為add1 無法應用在array上</span></div><div class="line"></div><div class="line">[<span class="number">5</span>].map(add1) <span class="comment">// 答案是[6]</span></div><div class="line"></div><div class="line"><span class="comment">// 更甚者, 採用ramda.js之類的lib</span></div><div class="line"><span class="keyword">const</span> mappedAdd1 = R.map(add1)</div><div class="line">mappedAdd1([<span class="number">5</span>]) <span class="comment">// 答案一樣是[6], 但add1已經轉成了mappedAdd1</span></div></pre></td></tr></table></figure>
+<p>可以發現這map函數可以讓我們把原本一個只能處理int的函數<br>變成一個可以處理[int]，也就是說其實他可以穿越[]這個所代表的意義<br>將這個context裡面的值取出，套用add1，再把他放回context</p>
+<h1 id="Functor-函子"><a href="#Functor-函子" class="headerlink" title="Functor (函子)"></a>Functor (函子)</h1><p>如同剛剛所說 functor 其實就是把許多type中可以map這件事給抽象出來<br>看看 haskell 中的實作</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&gt; :i <span class="type">Functor</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="type">Functor</span> (<span class="title">f</span> :: * -&gt; *) <span class="keyword">where</span></span></div><div class="line">    fmap :: (a -&gt; b) -&gt; f a -&gt; f b</div><div class="line">    (&lt;$) :: a -&gt; f b -&gt; f a</div><div class="line">    <span class="meta">&#123;-# MINIMAL fmap #-&#125;</span></div><div class="line">    <span class="comment">-- Defined in ‘GHC.Base’</span></div></pre></td></tr></table></figure>
+<p>這 fmap 就是我們常看到的 map 函數</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(a -&gt; b) -&gt; f a -&gt; f b</div></pre></td></tr></table></figure>
+<p>看看他的意思<br>傳進一個 function 跟一個帶有context的值再回傳另一個帶有context值<br>對照一開始的範例，傳進一個 x=x+1, [5], 再回傳另一個 [6]<br>所以有些人會把 functor 比喻成盒子, 不能說錯<br>但他其實就是很簡單的把 function 提升(lift)成 可以處理context的 function而已<br>是 function 的處理能力提升而不是真正有一個容器或是box在 (可能是因為list太適合用box解釋)</p>
+<p>在數學上就是，兩個Hask範疇之間的轉換<br>而且也讓原本範疇(Hask範疇)中的物件(type)與態射(function)都提升成帶有上下文或處理上下文</p>
+<h1 id="List-Functor"><a href="#List-Functor" class="headerlink" title="List Functor"></a>List Functor</h1><p>這我們剛剛舉例過了，直接看看實作</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Functor</span> [] <span class="keyword">where</span></span></div><div class="line">    <span class="meta">&#123;-# INLINE fmap #-&#125;</span></div><div class="line">    fmap = map</div></pre></td></tr></table></figure>
+<p>fmap 果然就是 map 函數</p>
+<h1 id="Maybe-Functor"><a href="#Maybe-Functor" class="headerlink" title="Maybe Functor"></a>Maybe Functor</h1><p>再來看看 Maybe<br>maybe a 包含了 just a 跟 nothing<br>其中 nothing 代表可能為空值這個 context</p>
+<p>用想像力想一下<br>如果是 just 6 那我們就把 6 從 just 這個 context 取出來，做完運算再用just包回去<br>如果是 nothing 那就根本不用管直接 nothing 因為 nothing 怎麼操作都是 nothing</p>
+<p>回去看看原始碼</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">instance</span>  <span class="type">Functor</span> <span class="type">Maybe</span>  <span class="keyword">where</span></span></div><div class="line">    fmap _ <span class="type">Nothing</span>       = <span class="type">Nothing</span></div><div class="line">    fmap f (<span class="type">Just</span> a)      = <span class="type">Just</span> (f a)</div></pre></td></tr></table></figure>
+<p>果然我們想的一樣<br>以maybe來說，我們也可以直接針對他進行fmap操作<br>fmap我們又把他用 &lt;$&gt; 來代表</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&gt;:&#123;</div><div class="line"><span class="title">add1</span> :: <span class="type">Int</span> -&gt; <span class="type">Int</span></div><div class="line"><span class="title">add1</span> x = x + <span class="number">1</span></div><div class="line">:&#125;</div><div class="line"></div><div class="line">&gt; add1 &lt;$&gt; [<span class="number">1</span>, <span class="number">2</span>]</div><div class="line">[<span class="number">2</span>,<span class="number">3</span>]</div><div class="line"></div><div class="line">&gt; add &lt;$&gt; <span class="type">Just</span> <span class="number">3</span></div><div class="line"><span class="type">Just</span> <span class="number">4</span></div></pre></td></tr></table></figure>
+<p>這就對了，原本只能處理Int的function<br>變成可以處理[Int], 連Maybe Int也可以了<br>所以 [], Maybe 都是 functor</p>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><ol>
+<li>haskell wiki</li>
+<li>learn you a haskell</li>
+<li>hoogle</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/FP/" rel="tag"># FP</a>
+          
+            <a href="/tags/Haskell/" rel="tag"># Haskell</a>
+          
+            <a href="/tags/type/" rel="tag"># type</a>
+          
+            <a href="/tags/category-theory/" rel="tag"># category theory</a>
+          
+            <a href="/tags/functor/" rel="tag"># functor</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/28/haskell-monoid/" rel="next" title="Haskell 系列 - Monoid (ㄠ半群)">
+                <i class="fa fa-chevron-left"></i> Haskell 系列 - Monoid (ㄠ半群)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/30/reader-monad/" rel="prev" title="Reader monad">
+                Reader monad <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="https://avatars1.githubusercontent.com/u/31230110"
+              alt="SOVMedCare" />
+          
+            <p class="site-author-name" itemprop="name">SOVMedCare</p>
+            <p class="site-description motion-element" itemprop="description">Full Stack JS #FRP #RxJS #Redux #React</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">文章</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">標籤</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/sovmedcare" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:jackypan1989@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/sovtw" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.instagram.com/sovmedtw/" target="_blank" title="Instagram">
+                  
+                    <i class="fa fa-fw fa-instagram"></i>Instagram</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#map-函數"><span class="nav-number">1.</span> <span class="nav-text">map 函數</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Functor-函子"><span class="nav-number">2.</span> <span class="nav-text">Functor (函子)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#List-Functor"><span class="nav-number">3.</span> <span class="nav-text">List Functor</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Maybe-Functor"><span class="nav-number">4.</span> <span class="nav-text">Maybe Functor</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#參考資料"><span class="nav-number">5.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SOVMedCare</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

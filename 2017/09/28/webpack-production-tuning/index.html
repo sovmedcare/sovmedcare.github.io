@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-tw">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="javascript,webpack,optimization,production,優化," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="本篇將會介紹 webpack 3 中常見的優化方式包含問題分析，plugin介紹等等 優化成效 大部分的情境下，使用者用量(專案為內部使用者為主)從 3.6 MB 降到 51 KB (app)降為原本的 1.38 % (縮減 98.62 %)  在完全沒有 cache 機制，必須重拉 vendor 情況下也是從 3.6 MB 降到 726 KB (app + vendor)降為原本的 19.6 %">
+<meta name="keywords" content="javascript,webpack,optimization,production,優化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Webpack production bundle 優化 (72x)">
+<meta property="og:url" content="http://sovmedcare.github.io/2017/09/28/webpack-production-tuning/index.html">
+<meta property="og:site_name" content="SOVMedCare Tech">
+<meta property="og:description" content="本篇將會介紹 webpack 3 中常見的優化方式包含問題分析，plugin介紹等等 優化成效 大部分的情境下，使用者用量(專案為內部使用者為主)從 3.6 MB 降到 51 KB (app)降為原本的 1.38 % (縮減 98.62 %)  在完全沒有 cache 機制，必須重拉 vendor 情況下也是從 3.6 MB 降到 726 KB (app + vendor)降為原本的 19.6 %">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:image" content="https://i.imgur.com/39u6xKz.png">
+<meta property="og:image" content="https://i.imgur.com/2cfimJS.png">
+<meta property="og:image" content="https://cloud.githubusercontent.com/assets/302213/20628702/93f72404-b338-11e6-92d4-9a365550a701.gif">
+<meta property="og:updated_time" content="2020-07-31T10:42:01.101Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Webpack production bundle 優化 (72x)">
+<meta name="twitter:description" content="本篇將會介紹 webpack 3 中常見的優化方式包含問題分析，plugin介紹等等 優化成效 大部分的情境下，使用者用量(專案為內部使用者為主)從 3.6 MB 降到 51 KB (app)降為原本的 1.38 % (縮減 98.62 %)  在完全沒有 cache 機制，必須重拉 vendor 情況下也是從 3.6 MB 降到 726 KB (app + vendor)降為原本的 19.6 %">
+<meta name="twitter:image" content="https://i.imgur.com/39u6xKz.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://sovmedcare.github.io/2017/09/28/webpack-production-tuning/"/>
+
+
+
+
+
+  <title>Webpack production bundle 優化 (72x) | SOVMedCare Tech</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SOVMedCare Tech</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">@sovmedcare</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-authors">
+          <a href="/authors/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            作者群
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2017/09/28/webpack-production-tuning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Webpack production bundle 優化 (72x)</h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/jackypan1989/" itemprop="url" rel="index">
+              <span itemprop="name">jackypan1989</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-09-28T15:43:08+08:00">
+                2017-09-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本篇將會介紹 webpack 3 中常見的優化方式<br>包含問題分析，plugin介紹等等</p>
+<h1 id="優化成效"><a href="#優化成效" class="headerlink" title="優化成效"></a>優化成效</h1><ol>
+<li><p>大部分的情境下，使用者用量(專案為內部使用者為主)<br>從 3.6 MB 降到 51 KB (app)<br>降為原本的 <strong>1.38 % (縮減 98.62 %)</strong></p>
+</li>
+<li><p>在完全沒有 cache 機制，必須重拉 vendor 情況下<br>也是從 3.6 MB 降到 726 KB (app + vendor)<br>降為原本的 <strong>19.6 % (縮減 80.4 %)</strong></p>
+</li>
+</ol>
+<p><img src="https://i.imgur.com/39u6xKz.png" alt=""></p>
+<h1 id="優化流程"><a href="#優化流程" class="headerlink" title="優化流程"></a>優化流程</h1><h2 id="1-觀察現有狀況與問題"><a href="#1-觀察現有狀況與問題" class="headerlink" title="1. 觀察現有狀況與問題"></a>1. 觀察現有狀況與問題</h2><p>  僅使用 DefinePlugin(with production), UglifyJsPlugin(with minimize)<br>  bundle 出來的大小為 3.6MB, 存在很大改善空間(3G網路讀取時間過長)<br>  因為不是所有 module 都在每次 build 都改動到</p>
+<p>  <img src="https://i.imgur.com/2cfimJS.png" alt="imgur"></p>
+<h2 id="2-利用-BundleAnalyzerPlugin-分析-bundle-成分"><a href="#2-利用-BundleAnalyzerPlugin-分析-bundle-成分" class="headerlink" title="2. 利用 BundleAnalyzerPlugin 分析 bundle 成分"></a>2. 利用 BundleAnalyzerPlugin 分析 bundle 成分</h2><p>  <a href="https://github.com/th0r/webpack-bundle-analyzer" target="_blank" rel="external">BundleAnalyzerPlugin</a> 會協助解析 bundle 中有哪些單元<br>  他會生成一個網頁，透過該網頁可以看到用到的 module 以及它的大小</p>
+<p>  <img src="https://cloud.githubusercontent.com/assets/302213/20628702/93f72404-b338-11e6-92d4-9a365550a701.gif" alt=""></p>
+<h2 id="3-利用-CommonsChunkPlugin-抽出-lib"><a href="#3-利用-CommonsChunkPlugin-抽出-lib" class="headerlink" title="3. 利用 CommonsChunkPlugin 抽出 lib"></a>3. 利用 CommonsChunkPlugin 抽出 lib</h2><p>  透過分析發現，第三方 lib 佔了大部分的成分(例如 react, rxjs, redux, moment, antd …etc)<br>  但這些 lib 的改動(例如升級 react 版本)，在 production build cycle 中次數是很少的<br>  因此透過 CommonsChunkPlugin 把所有第三方都抽出來，與我們自己的 code 分開<br>  (例如產生出 app.js, vendor.js 這樣一來就每次只更新 app.js 即可)</p>
+<p>  ps: 也可以在 entry 中，指定那些比較大的 lib</p>
+<h2 id="4-Uglyify-優化"><a href="#4-Uglyify-優化" class="headerlink" title="4. Uglyify 優化"></a>4. Uglyify 優化</h2><p>  除了調整 minify, souceMap 外，compress選項也可以另外調整<br>  (例如不要在生成支援 ie8 的 code, 去掉 dead code, comment等)</p>
+<h2 id="5-IgnorePlugin"><a href="#5-IgnorePlugin" class="headerlink" title="5. IgnorePlugin"></a>5. IgnorePlugin</h2><p>  如果有使用 momentJS 可以發現，他會 bundle 所有的語言包<br>  這時就可以利用 IgnorePlugin 去掉沒用到的語言包</p>
+<h2 id="6-ModuleConcatenationPlugin-amp-HashedModuleIdsPlugin"><a href="#6-ModuleConcatenationPlugin-amp-HashedModuleIdsPlugin" class="headerlink" title="6. ModuleConcatenationPlugin &amp; HashedModuleIdsPlugin"></a>6. ModuleConcatenationPlugin &amp; HashedModuleIdsPlugin</h2><ol>
+<li><p>ModuleConcatenationPlugin<br>參考 RollupJS 將有相關的 module 放在同一個閉包裡面，所以會減少閉包數量</p>
+</li>
+<li><p>HashedModuleIdsPlugin<br>給打包的 module 一個穩定 hash 值 (如果沒啟用，抽出第三方 lib 就會大打折扣)</p>
+</li>
+</ol>
+<h2 id="7-Gzip-非常有效降低大小"><a href="#7-Gzip-非常有效降低大小" class="headerlink" title="7. Gzip (非常有效降低大小)"></a>7. Gzip (非常有效降低大小)</h2><p>  利用 CompressionPlugin 先 prebuild 好 gzip 檔案<br>  而 gzip 需要 server side 支持<br>  下面列幾種方法</p>
+<ol>
+<li>express 的 middleware 插件</li>
+<li>nginx 設定 static gzip file 支持</li>
+<li>server on-the-fly 支持(不建議，因為會吃系統效能)</li>
+</ol>
+<h2 id="8-利用-chunkhash-與-htmlWebpackPlugin-來達到-cache"><a href="#8-利用-chunkhash-與-htmlWebpackPlugin-來達到-cache" class="headerlink" title="8. 利用 chunkhash 與 htmlWebpackPlugin 來達到 cache"></a>8. 利用 chunkhash 與 htmlWebpackPlugin 來達到 cache</h2><p>  修改 output 裡面的 chunkhash 來達到確認是否有更新<br>  因為只要有添加新的模組或修改 chunkhash 就會改變<br>  (app.38d8273182132939.js -&gt; app.38d8d73182139823.js)</p>
+<p>  但是問題在於原本 express 的 view template 中是固定的<br>  因此透過 htmlWebpackPlugin 把新的得到的 chunkhash inject 回去<br>  這樣就能完美使用瀏覽器的 cache 機制</p>
+<h1 id="真實案例"><a href="#真實案例" class="headerlink" title="真實案例"></a>真實案例</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 優化前</span></div><div class="line">plugins: [</div><div class="line">  <span class="keyword">new</span> webpack.LoaderOptionsPlugin(&#123;</div><div class="line">    minimize: <span class="literal">true</span>,</div><div class="line">    debug: <span class="literal">false</span></div><div class="line">  &#125;),</div><div class="line">  <span class="keyword">new</span> webpack.DefinePlugin(&#123;</div><div class="line">    <span class="string">'process.env'</span>: &#123;</div><div class="line">      <span class="string">'NODE_ENV'</span>: <span class="built_in">JSON</span>.stringify(<span class="string">'production'</span>)</div><div class="line">    &#125;</div><div class="line">  &#125;),</div><div class="line">  <span class="keyword">new</span> webpack.optimize.UglifyJsPlugin()</div><div class="line">]</div><div class="line"></div><div class="line"><span class="comment">// 優化後</span></div><div class="line">plugins: [</div><div class="line">  <span class="comment">// new BundleAnalyzerPlugin(),</span></div><div class="line">  <span class="keyword">new</span> webpack.DefinePlugin(&#123;</div><div class="line">    <span class="string">'process.env'</span>: &#123;</div><div class="line">      <span class="string">'NODE_ENV'</span>: <span class="built_in">JSON</span>.stringify(<span class="string">'production'</span>)</div><div class="line">    &#125;</div><div class="line">  &#125;),</div><div class="line">  <span class="keyword">new</span> CleanWebpackPlugin(path.join(__dirname, <span class="string">'dist'</span>)),</div><div class="line">  <span class="keyword">new</span> webpack.optimize.ModuleConcatenationPlugin(),</div><div class="line">  <span class="keyword">new</span> webpack.optimize.CommonsChunkPlugin(&#123;</div><div class="line">    name: <span class="string">'vendor'</span>,</div><div class="line">    filename: <span class="string">'vendor.[chunkhash].js'</span>,</div><div class="line">    minChunks: <span class="function"><span class="params">module</span> =&gt;</span> <span class="built_in">module</span>.context &amp;&amp; <span class="built_in">module</span>.context.indexOf(<span class="string">'node_modules'</span>) &gt;= <span class="number">0</span></div><div class="line">  &#125;),</div><div class="line">  <span class="keyword">new</span> webpack.IgnorePlugin(<span class="regexp">/^\.\/locale$/</span>, /moment$/),</div><div class="line">  <span class="keyword">new</span> webpack.optimize.UglifyJsPlugin(&#123;</div><div class="line">    compress: &#123;</div><div class="line">      warnings: <span class="literal">false</span>,</div><div class="line">      screw_ie8: <span class="literal">true</span>,</div><div class="line">      conditionals: <span class="literal">true</span>,</div><div class="line">      unused: <span class="literal">true</span>,</div><div class="line">      comparisons: <span class="literal">true</span>,</div><div class="line">      sequences: <span class="literal">true</span>,</div><div class="line">      dead_code: <span class="literal">true</span>,</div><div class="line">      evaluate: <span class="literal">true</span>,</div><div class="line">      if_return: <span class="literal">true</span>,</div><div class="line">      join_vars: <span class="literal">true</span></div><div class="line">    &#125;,</div><div class="line">    output: &#123;</div><div class="line">      comments: <span class="literal">false</span></div><div class="line">    &#125;,</div><div class="line">    sourceMap: <span class="literal">true</span></div><div class="line">  &#125;),</div><div class="line">  <span class="keyword">new</span> webpack.LoaderOptionsPlugin(&#123;</div><div class="line">    minimize: <span class="literal">true</span>,</div><div class="line">    debug: <span class="literal">false</span></div><div class="line">  &#125;),</div><div class="line">  <span class="keyword">new</span> webpack.HashedModuleIdsPlugin(),</div><div class="line">  <span class="keyword">new</span> CompressionPlugin(&#123;</div><div class="line">    asset: <span class="string">'[path].gz[query]'</span>,</div><div class="line">    algorithm: <span class="string">'gzip'</span>,</div><div class="line">    test: <span class="regexp">/\.(js|html)$/</span>,</div><div class="line">    threshold: <span class="number">10240</span>,</div><div class="line">    minRatio: <span class="number">0.8</span></div><div class="line">  &#125;),</div><div class="line">  <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</div><div class="line">    template: path.join(__dirname, <span class="string">'src'</span>, <span class="string">'server'</span>, <span class="string">'view'</span>, <span class="string">'template.html'</span>),</div><div class="line">    inject: <span class="literal">true</span>,</div><div class="line">    filename: path.join(__dirname, <span class="string">'src'</span>, <span class="string">'server'</span>, <span class="string">'view'</span>, <span class="string">'index-prod.html'</span>)</div><div class="line">  &#125;)</div><div class="line">]</div></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://webpack.js.org/" target="_blank" rel="external">webpack 官方</a></li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+            <a href="/tags/webpack/" rel="tag"># webpack</a>
+          
+            <a href="/tags/optimization/" rel="tag"># optimization</a>
+          
+            <a href="/tags/production/" rel="tag"># production</a>
+          
+            <a href="/tags/優化/" rel="tag"># 優化</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/27/js-es6-generator/" rel="next" title="Javascript ES6 Generator 介紹">
+                <i class="fa fa-chevron-left"></i> Javascript ES6 Generator 介紹
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/29/upgrade-to-react-16/" rel="prev" title="webpack upgrade to 16">
+                webpack upgrade to 16 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="https://avatars1.githubusercontent.com/u/31230110"
+              alt="SOVMedCare" />
+          
+            <p class="site-author-name" itemprop="name">SOVMedCare</p>
+            <p class="site-description motion-element" itemprop="description">Full Stack JS #FRP #RxJS #Redux #React</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">文章</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">標籤</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/sovmedcare" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:jackypan1989@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/sovtw" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.instagram.com/sovmedtw/" target="_blank" title="Instagram">
+                  
+                    <i class="fa fa-fw fa-instagram"></i>Instagram</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#優化成效"><span class="nav-number">1.</span> <span class="nav-text">優化成效</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#優化流程"><span class="nav-number">2.</span> <span class="nav-text">優化流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-觀察現有狀況與問題"><span class="nav-number">2.1.</span> <span class="nav-text">1. 觀察現有狀況與問題</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-利用-BundleAnalyzerPlugin-分析-bundle-成分"><span class="nav-number">2.2.</span> <span class="nav-text">2. 利用 BundleAnalyzerPlugin 分析 bundle 成分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-利用-CommonsChunkPlugin-抽出-lib"><span class="nav-number">2.3.</span> <span class="nav-text">3. 利用 CommonsChunkPlugin 抽出 lib</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Uglyify-優化"><span class="nav-number">2.4.</span> <span class="nav-text">4. Uglyify 優化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-IgnorePlugin"><span class="nav-number">2.5.</span> <span class="nav-text">5. IgnorePlugin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-ModuleConcatenationPlugin-amp-HashedModuleIdsPlugin"><span class="nav-number">2.6.</span> <span class="nav-text">6. ModuleConcatenationPlugin & HashedModuleIdsPlugin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-Gzip-非常有效降低大小"><span class="nav-number">2.7.</span> <span class="nav-text">7. Gzip (非常有效降低大小)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-利用-chunkhash-與-htmlWebpackPlugin-來達到-cache"><span class="nav-number">2.8.</span> <span class="nav-text">8. 利用 chunkhash 與 htmlWebpackPlugin 來達到 cache</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#真實案例"><span class="nav-number">3.</span> <span class="nav-text">真實案例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">3.1.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SOVMedCare</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

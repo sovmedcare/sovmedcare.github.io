@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-tw">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="CSS," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="想要在網頁上達成特定的視覺效果，做法很多而且建議同樣的結果，可以多學幾種做法，當情境限縮選擇時，至少還有其他路可以選擇但，也不是所有做法都值得學習  做法仍有好有壞   什麼是較好的做法？ 不用寫太多屬性精簡：margin-top, margin-right, margin-bottom, margin-left 可被精簡成 margin 易讀相關的樣式集中、不分散在其他元素 具 RWD 性質在裝">
+<meta name="keywords" content="CSS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用 CSS 完成常見網頁版型">
+<meta property="og:url" content="http://sovmedcare.github.io/2020/08/25/basic-website-layout/index.html">
+<meta property="og:site_name" content="SOVMedCare Tech">
+<meta property="og:description" content="想要在網頁上達成特定的視覺效果，做法很多而且建議同樣的結果，可以多學幾種做法，當情境限縮選擇時，至少還有其他路可以選擇但，也不是所有做法都值得學習  做法仍有好有壞   什麼是較好的做法？ 不用寫太多屬性精簡：margin-top, margin-right, margin-bottom, margin-left 可被精簡成 margin 易讀相關的樣式集中、不分散在其他元素 具 RWD 性質在裝">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:updated_time" content="2020-08-29T07:00:29.041Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用 CSS 完成常見網頁版型">
+<meta name="twitter:description" content="想要在網頁上達成特定的視覺效果，做法很多而且建議同樣的結果，可以多學幾種做法，當情境限縮選擇時，至少還有其他路可以選擇但，也不是所有做法都值得學習  做法仍有好有壞   什麼是較好的做法？ 不用寫太多屬性精簡：margin-top, margin-right, margin-bottom, margin-left 可被精簡成 margin 易讀相關的樣式集中、不分散在其他元素 具 RWD 性質在裝">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://sovmedcare.github.io/2020/08/25/basic-website-layout/"/>
+
+
+
+
+
+  <title>用 CSS 完成常見網頁版型 | SOVMedCare Tech</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SOVMedCare Tech</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">@sovmedcare</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-authors">
+          <a href="/authors/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            作者群
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2020/08/25/basic-website-layout/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">用 CSS 完成常見網頁版型</h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/dannnyliang/" itemprop="url" rel="index">
+              <span itemprop="name">dannnyliang</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2020-08-25T12:45:22+08:00">
+                2020-08-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>想要在網頁上達成特定的視覺效果，做法很多<br>而且建議同樣的結果，可以多學幾種做法，當情境限縮選擇時，至少還有其他路可以選擇<br>但，也不是所有做法都值得學習</p>
+<blockquote>
+<p>做法仍有好有壞</p>
+</blockquote>
+<p><br></p>
+<h1 id="什麼是較好的做法？"><a href="#什麼是較好的做法？" class="headerlink" title="什麼是較好的做法？"></a>什麼是較好的做法？</h1><ul>
+<li><strong>不用寫太多</strong><br>屬性精簡：<code>margin-top</code>, <code>margin-right</code>, <code>margin-bottom</code>, <code>margin-left</code> 可被精簡成 <code>margin</code></li>
+<li><strong>易讀</strong><br>相關的樣式集中、不分散在其他元素</li>
+<li><strong>具 RWD 性質</strong><br>在裝置寬度改變時，仍保持原比例</li>
+<li><strong>具擴展性</strong><br>元素被重複使用，或是有其他元素加入時，原本的樣式不需要改動</li>
+<li><strong>樣式不相依</strong><br>元素本身要達成的效果，不需要其他元素配合，也不影響其他元素  </li>
+</ul>
+<p>本篇主要會針對樣式的「擴展性」、「相依性」進行討論，找出即使介面設計修改，仍能穩定的樣式寫法</p>
+<p><br></p>
+<h1 id="遇到的問題"><a href="#遇到的問題" class="headerlink" title="遇到的問題"></a>遇到的問題</h1>  
+<p><strong>需求：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">- Header1, Header2 固定出現在上方</div><div class="line">- Header1 向下捲動時收合，向上捲動時展開</div></pre></td></tr></table></figure></p>
+<p><strong>實作：</strong>  </p>
+<ol>
+<li>建立一個 state 紀錄 <code>Header</code> 高度</li>
+<li>頁面渲染、滾動事件觸發時，更新此 state</li>
+<li>將 state 傳到 <code>Header</code> 元件、<code>Content</code> 元件</li>
+</ol>
+<p>這樣的實作會出現些問題：</p>
+<ul>
+<li>需 state, props，且若無 styled-component 配合會更難達成</li>
+<li>需多個元件配合才能達到效果</li>
+<li>更新邏輯複雜，容易有 bug</li>
+</ul>
+<h1 id="練習-I-Fixed-Header"><a href="#練習-I-Fixed-Header" class="headerlink" title="練習 I - Fixed Header"></a>練習 I - Fixed Header</h1><p>先不用想得那麼複雜，從一個簡單的範例開始 (<a href="https://codesandbox.io/s/before-fixed-header-s8nlj" target="_blank" rel="external">CodeSandbox</a>)</p>
+<p><strong>需求：</strong></p>
+<ul>
+<li>(Required) <code>Header</code> 固定在畫面上方不動</li>
+<li>(Required) 其他的內容可上下捲動</li>
+<li>(Optional) 擴展性：多複製一個 <code>&lt;Header /&gt;</code> 時，仍符合需求</li>
+<li>(Optional) 低相依：<code>Content</code> 元件的樣式，不需要使用 <code>menuHeight</code></li>
+</ul>
+<p><br></p>
+<h2 id="做法1-Pass-Height"><a href="#做法1-Pass-Height" class="headerlink" title="做法1 - Pass Height"></a>做法1 - Pass Height</h2><p>(<a href="https://codesandbox.io/s/after-fixed-header-pass-height-szpqp" target="_blank" rel="external">CodeSandbox</a>)  </p>
+<ul>
+<li>複製 <code>&lt;Header /&gt;</code> 時，會跟原本的 <code>Header</code> 重疊，沒有擴展性</li>
+<li><code>Content</code> 的樣式需要知道 <code>Header</code> 的高度，相依度高</li>
+<li><code>Header</code> 的背景有透明度的話會發現，<code>Content</code> 捲動時會跑到 <code>Header</code> 的下面<br>如果這是其中一項視覺需求，雖然沒達成 Optional 項目，但仍可考慮採用此作法</li>
+</ul>
+<p><br></p>
+<h2 id="做法2-Seperate-Area"><a href="#做法2-Seperate-Area" class="headerlink" title="做法2 - Seperate Area"></a>做法2 - Seperate Area</h2><p>(<a href="https://codesandbox.io/s/after-fixed-header-separate-area-b6eb3" target="_blank" rel="external">CodeSandbox</a>)  </p>
+<ul>
+<li>在 <code>Content</code> 外多包一層 <code>Wrapper</code>，用來定義 <code>Content</code> 存在的空間，如此一來 <code>Content</code> 就不需要知道 <code>Header</code> 的高度，可以達到低相依  </li>
+<li>但複製 <code>&lt;Header /&gt;</code> 時，仍需調整 <code>Wrapper</code> 的實作，擴展性仍不佳</li>
+</ul>
+<p><br></p>
+<h2 id="做法3-Grid"><a href="#做法3-Grid" class="headerlink" title="做法3 - Grid"></a>做法3 - Grid</h2><ul>
+<li>grid 的強項除了二維排列以外，也能輕鬆規劃版型  </li>
+<li>作法2 實際上就是先規劃區塊，再將元素放入個區塊中，因此用 grid 可以輕鬆重現</li>
+<li>但是缺點和作法2 相同</li>
+</ul>
+<p><br></p>
+<h2 id="做法4-Flex"><a href="#做法4-Flex" class="headerlink" title="做法4 - Flex"></a>做法4 - Flex</h2><p>(<a href="https://codesandbox.io/s/after-fixed-header-flex-fwge4" target="_blank" rel="external">CodeSandbox</a>)  </p>
+<ul>
+<li>一樣是從「先規劃區塊」的想法出發，flex 本身的特性會用子元素填滿父元素，因此只需要定義 <code>Header</code> 高度後，<code>Content</code> 就會自動撐滿空間</li>
+<li>複製 <code>&lt;Header /&gt;</code> 時，<code>Content</code> 仍會自動撐滿空間，滿足擴充性</li>
+<li>不只是 <code>Content</code>，連父元素都不需要知道 <code>Header</code> 的高度，滿足低相依性</li>
+<li>四種做法中最好的一個（ flex 會成為主流不是沒有道理的👍</li>
+</ul>
+<p><br></p>
+<h1 id="狀況-2-多區塊滾動"><a href="#狀況-2-多區塊滾動" class="headerlink" title="狀況 2 - 多區塊滾動"></a>狀況 2 - 多區塊滾動</h1><p>除了 Fixed Header 以外，另一個要會的版型是「多區塊滾動」<br><strong>上下:</strong> 在前面的練習的 <code>Header</code> 中加入 <code>overflow: scroll</code> 就可以直接達成，上下區塊各自滾動的效果<br><strong>左右:</strong> 也就是常見的 SideMenu，從這個 <strong><a href="https://codesandbox.io/s/before-independent-scroll-xb6pu" target="_blank" rel="external">範例</a></strong> 開始試著實作吧！</p>
+<p><strong>需求：</strong></p>
+<ul>
+<li>(Required) <code>Menu</code> 和 <code>Content</code> 元素左右排列</li>
+<li>(Required) <code>Menu</code> 和 <code>Content</code> 元素可以各自滾動</li>
+</ul>
+<p><br></p>
+<h2 id="作法-1-fixed-width"><a href="#作法-1-fixed-width" class="headerlink" title="作法 1 - fixed width"></a>作法 1 - fixed width</h2><ul>
+<li>直接訂死寬度 <code>${MenuWidth}px</code>, <code>calc(100% - ${MenuWidth}px)</code></li>
+<li>最直觀的做法，但擴展性不足，且相依度高</li>
+</ul>
+<p><br></p>
+<h2 id="作法-2-padding-width"><a href="#作法-2-padding-width" class="headerlink" title="作法 2 - padding width"></a>作法 2 - padding width</h2><ul>
+<li><code>Menu</code> 元素 <code>${MenuWidth}px + position: fixed</code>、<code>Content</code> 元素 <code>paddding-left: ${MenuWidth}px</code></li>
+<li>和做法1 大同小異</li>
+</ul>
+<p><br></p>
+<h2 id="作法-3-inline-block"><a href="#作法-3-inline-block" class="headerlink" title="作法 3 - inline block"></a>作法 3 - <del>inline block</del></h2><ul>
+<li>要把元素排入同一列中，一定會想到 <code>inline-block</code>，但筆者嘗試了許久，頂多做到「左右同步滾動」，沒辦法「分區塊滾動」</li>
+<li>猜測無法達成「分區塊滾動」的效果，因為 <code>inline-block</code> 是定義在父元素，讓子元素可以排在同一列。實際上是對父元素滾動，不是對子元素觸發滾動，因此無法分區</li>
+</ul>
+<p><br></p>
+<h2 id="作法-4-grid"><a href="#作法-4-grid" class="headerlink" title="作法 4 - grid"></a>作法 4 - grid</h2><p>(<a href="https://codesandbox.io/s/after-independent-scroll-grid-fp9dz" target="_blank" rel="external">CodeSandbox</a>)  </p>
+<ul>
+<li>一樣從規劃版型的觀念出發，先畫好 Menu 區域與 Content 區域</li>
+<li>低相依，但擴展性低</li>
+</ul>
+<p><br></p>
+<h2 id="作法-5-flex"><a href="#作法-5-flex" class="headerlink" title="作法 5 - flex"></a>作法 5 - flex</h2><p>(<a href="https://codesandbox.io/s/after-independent-scroll-flex-p060t" target="_blank" rel="external">CodeSandbox</a>)  </p>
+<ul>
+<li>兼具低相依、高擴展</li>
+</ul>
+<p><br></p>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>上面兩個練習都列出了多種做法，不是說一定要滿足「高擴展」、「低相依」才是唯一正解，每種做法的結果都有些微差異，要找出最符合自己開發情境及需求的做法。flex 看似強大，但如果遇到無法使用 flex 的狀況，這時其他做法就派上用場了。<br>如果還有其他更好、更有創意的作法，歡迎告訴我們喔 🎉</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CSS/" rel="tag"># CSS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/02/state-monad/" rel="next" title="state_monad">
+                <i class="fa fa-chevron-left"></i> state_monad
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="https://avatars1.githubusercontent.com/u/31230110"
+              alt="SOVMedCare" />
+          
+            <p class="site-author-name" itemprop="name">SOVMedCare</p>
+            <p class="site-description motion-element" itemprop="description">Full Stack JS #FRP #RxJS #Redux #React</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">文章</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">標籤</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/sovmedcare" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:jackypan1989@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/sovtw" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.instagram.com/sovmedtw/" target="_blank" title="Instagram">
+                  
+                    <i class="fa fa-fw fa-instagram"></i>Instagram</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什麼是較好的做法？"><span class="nav-number">1.</span> <span class="nav-text">什麼是較好的做法？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#遇到的問題"><span class="nav-number">2.</span> <span class="nav-text">遇到的問題</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#練習-I-Fixed-Header"><span class="nav-number">3.</span> <span class="nav-text">練習 I - Fixed Header</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#做法1-Pass-Height"><span class="nav-number">3.1.</span> <span class="nav-text">做法1 - Pass Height</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#做法2-Seperate-Area"><span class="nav-number">3.2.</span> <span class="nav-text">做法2 - Seperate Area</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#做法3-Grid"><span class="nav-number">3.3.</span> <span class="nav-text">做法3 - Grid</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#做法4-Flex"><span class="nav-number">3.4.</span> <span class="nav-text">做法4 - Flex</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#狀況-2-多區塊滾動"><span class="nav-number">4.</span> <span class="nav-text">狀況 2 - 多區塊滾動</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作法-1-fixed-width"><span class="nav-number">4.1.</span> <span class="nav-text">作法 1 - fixed width</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#作法-2-padding-width"><span class="nav-number">4.2.</span> <span class="nav-text">作法 2 - padding width</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#作法-3-inline-block"><span class="nav-number">4.3.</span> <span class="nav-text">作法 3 - inline block</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#作法-4-grid"><span class="nav-number">4.4.</span> <span class="nav-text">作法 4 - grid</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#作法-5-flex"><span class="nav-number">4.5.</span> <span class="nav-text">作法 5 - flex</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#結語"><span class="nav-number">5.</span> <span class="nav-text">結語</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SOVMedCare</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

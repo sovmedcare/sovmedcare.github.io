@@ -1,0 +1,2205 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-tw">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Full Stack JS #FRP #RxJS #Redux #React">
+<meta property="og:type" content="website">
+<meta property="og:title" content="SOVMedCare Tech">
+<meta property="og:url" content="http://sovmedcare.github.io/index.html">
+<meta property="og:site_name" content="SOVMedCare Tech">
+<meta property="og:description" content="Full Stack JS #FRP #RxJS #Redux #React">
+<meta property="og:locale" content="zh-tw">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SOVMedCare Tech">
+<meta name="twitter:description" content="Full Stack JS #FRP #RxJS #Redux #React">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://sovmedcare.github.io/"/>
+
+
+
+
+
+  <title>SOVMedCare Tech</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+  page-home">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SOVMedCare Tech</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">@sovmedcare</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-authors">
+          <a href="/authors/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            作者群
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2020/08/25/basic-website-layout/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/08/25/basic-website-layout/" itemprop="url">用 CSS 完成常見網頁版型</a></h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/dannnyliang/" itemprop="url" rel="index">
+              <span itemprop="name">dannnyliang</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2020-08-25T12:45:22+08:00">
+                2020-08-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>想要在網頁上達成特定的視覺效果，做法很多<br>而且建議同樣的結果，可以多學幾種做法，當情境限縮選擇時，至少還有其他路可以選擇<br>但，也不是所有做法都值得學習</p>
+<blockquote>
+<p>做法仍有好有壞</p>
+</blockquote>
+<p><br></p>
+<h1 id="什麼是較好的做法？"><a href="#什麼是較好的做法？" class="headerlink" title="什麼是較好的做法？"></a>什麼是較好的做法？</h1><ul>
+<li><strong>不用寫太多</strong><br>屬性精簡：<code>margin-top</code>, <code>margin-right</code>, <code>margin-bottom</code>, <code>margin-left</code> 可被精簡成 <code>margin</code></li>
+<li><strong>易讀</strong><br>相關的樣式集中、不分散在其他元素</li>
+<li><strong>具 RWD 性質</strong><br>在裝置寬度改變時，仍保持原比例</li>
+<li><strong>具擴展性</strong><br>元素被重複使用，或是有其他元素加入時，原本的樣式不需要改動</li>
+<li><strong>樣式不相依</strong><br>元素本身要達成的效果，不需要其他元素配合，也不影響其他元素  </li>
+</ul>
+<p>本篇主要會針對樣式的「擴展性」、「相依性」進行討論，找出即使介面設計修改，仍能穩定的樣式寫法</p>
+<p><br></p>
+<h1 id="遇到的問題"><a href="#遇到的問題" class="headerlink" title="遇到的問題"></a>遇到的問題</h1>  
+<p><strong>需求：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">- Header1, Header2 固定出現在上方</div><div class="line">- Header1 向下捲動時收合，向上捲動時展開</div></pre></td></tr></table></figure></p>
+<p><strong>實作：</strong>  </p>
+<ol>
+<li>建立一個 state 紀錄 <code>Header</code> 高度</li>
+<li>頁面渲染、滾動事件觸發時，更新此 state</li>
+<li>將 state 傳到 <code>Header</code> 元件、<code>Content</code> 元件</li>
+</ol>
+<p>這樣的實作會出現些問題：</p>
+<ul>
+<li>需 state, props，且若無 styled-component 配合會更難達成</li>
+<li>需多個元件配合才能達到效果</li>
+<li>更新邏輯複雜，容易有 bug</li>
+</ul>
+<h1 id="練習-I-Fixed-Header"><a href="#練習-I-Fixed-Header" class="headerlink" title="練習 I - Fixed Header"></a>練習 I - Fixed Header</h1><p>先不用想得那麼複雜，從一個簡單的範例開始 (<a href="https://codesandbox.io/s/before-fixed-header-s8nlj" target="_blank" rel="external">CodeSandbox</a>)</p>
+<p><strong>需求：</strong></p>
+<ul>
+<li>(Required) <code>Header</code> 固定在畫面上方不動</li>
+<li>(Required) 其他的內容可上下捲動</li>
+<li>(Optional) 擴展性：多複製一個 <code>&lt;Header /&gt;</code> 時，仍符合需求</li>
+<li>(Optional) 低相依：<code>Content</code> 元件的樣式，不需要使用 <code>menuHeight</code></li>
+</ul>
+<p><br></p>
+<h2 id="做法1-Pass-Height"><a href="#做法1-Pass-Height" class="headerlink" title="做法1 - Pass Height"></a>做法1 - Pass Height</h2><p>(<a href="https://codesandbox.io/s/after-fixed-header-pass-height-szpqp" target="_blank" rel="external">CodeSandbox</a>)  </p>
+<ul>
+<li>複製 <code>&lt;Header /&gt;</code> 時，會跟原本的 <code>Header</code> 重疊，沒有擴展性</li>
+<li><code>Content</code> 的樣式需要知道 <code>Header</code> 的高度，相依度高</li>
+<li><code>Header</code> 的背景有透明度的話會發現，<code>Content</code> 捲動時會跑到 <code>Header</code> 的下面<br>如果這是其中一項視覺需求，雖然沒達成 Optional 項目，但仍可考慮採用此作法</li>
+</ul>
+<p><br></p>
+<h2 id="做法2-Seperate-Area"><a href="#做法2-Seperate-Area" class="headerlink" title="做法2 - Seperate Area"></a>做法2 - Seperate Area</h2><p>(<a href="https://codesandbox.io/s/after-fixed-header-separate-area-b6eb3" target="_blank" rel="external">CodeSandbox</a>)  </p>
+<ul>
+<li>在 <code>Content</code> 外多包一層 <code>Wrapper</code>，用來定義 <code>Content</code> 存在的空間，如此一來 <code>Content</code> 就不需要知道 <code>Header</code> 的高度，可以達到低相依  </li>
+<li>但複製 <code>&lt;Header /&gt;</code> 時，仍需調整 <code>Wrapper</code> 的實作，擴展性仍不佳</li>
+</ul>
+<p><br></p>
+<h2 id="做法3-Grid"><a href="#做法3-Grid" class="headerlink" title="做法3 - Grid"></a>做法3 - Grid</h2><ul>
+<li>grid 的強項除了二維排列以外，也能輕鬆規劃版型  </li>
+<li>作法2 實際上就是先規劃區塊，再將元素放入個區塊中，因此用 grid 可以輕鬆重現</li>
+<li>但是缺點和作法2 相同</li>
+</ul>
+<p><br></p>
+<h2 id="做法4-Flex"><a href="#做法4-Flex" class="headerlink" title="做法4 - Flex"></a>做法4 - Flex</h2><p>(<a href="https://codesandbox.io/s/after-fixed-header-flex-fwge4" target="_blank" rel="external">CodeSandbox</a>)  </p>
+<ul>
+<li>一樣是從「先規劃區塊」的想法出發，flex 本身的特性會用子元素填滿父元素，因此只需要定義 <code>Header</code> 高度後，<code>Content</code> 就會自動撐滿空間</li>
+<li>複製 <code>&lt;Header /&gt;</code> 時，<code>Content</code> 仍會自動撐滿空間，滿足擴充性</li>
+<li>不只是 <code>Content</code>，連父元素都不需要知道 <code>Header</code> 的高度，滿足低相依性</li>
+<li>四種做法中最好的一個（ flex 會成為主流不是沒有道理的👍</li>
+</ul>
+<p><br></p>
+<h1 id="狀況-2-多區塊滾動"><a href="#狀況-2-多區塊滾動" class="headerlink" title="狀況 2 - 多區塊滾動"></a>狀況 2 - 多區塊滾動</h1><p>除了 Fixed Header 以外，另一個要會的版型是「多區塊滾動」<br><strong>上下:</strong> 在前面的練習的 <code>Header</code> 中加入 <code>overflow: scroll</code> 就可以直接達成，上下區塊各自滾動的效果<br><strong>左右:</strong> 也就是常見的 SideMenu，從這個 <strong><a href="https://codesandbox.io/s/before-independent-scroll-xb6pu" target="_blank" rel="external">範例</a></strong> 開始試著實作吧！</p>
+<p><strong>需求：</strong></p>
+<ul>
+<li>(Required) <code>Menu</code> 和 <code>Content</code> 元素左右排列</li>
+<li>(Required) <code>Menu</code> 和 <code>Content</code> 元素可以各自滾動</li>
+</ul>
+<p><br></p>
+<h2 id="作法-1-fixed-width"><a href="#作法-1-fixed-width" class="headerlink" title="作法 1 - fixed width"></a>作法 1 - fixed width</h2><ul>
+<li>直接訂死寬度 <code>${MenuWidth}px</code>, <code>calc(100% - ${MenuWidth}px)</code></li>
+<li>最直觀的做法，但擴展性不足，且相依度高</li>
+</ul>
+<p><br></p>
+<h2 id="作法-2-padding-width"><a href="#作法-2-padding-width" class="headerlink" title="作法 2 - padding width"></a>作法 2 - padding width</h2><ul>
+<li><code>Menu</code> 元素 <code>${MenuWidth}px + position: fixed</code>、<code>Content</code> 元素 <code>paddding-left: ${MenuWidth}px</code></li>
+<li>和做法1 大同小異</li>
+</ul>
+<p><br></p>
+<h2 id="作法-3-inline-block"><a href="#作法-3-inline-block" class="headerlink" title="作法 3 - inline block"></a>作法 3 - <del>inline block</del></h2><ul>
+<li>要把元素排入同一列中，一定會想到 <code>inline-block</code>，但筆者嘗試了許久，頂多做到「左右同步滾動」，沒辦法「分區塊滾動」</li>
+<li>猜測無法達成「分區塊滾動」的效果，因為 <code>inline-block</code> 是定義在父元素，讓子元素可以排在同一列。實際上是對父元素滾動，不是對子元素觸發滾動，因此無法分區</li>
+</ul>
+<p><br></p>
+<h2 id="作法-4-grid"><a href="#作法-4-grid" class="headerlink" title="作法 4 - grid"></a>作法 4 - grid</h2><p>(<a href="https://codesandbox.io/s/after-independent-scroll-grid-fp9dz" target="_blank" rel="external">CodeSandbox</a>)  </p>
+<ul>
+<li>一樣從規劃版型的觀念出發，先畫好 Menu 區域與 Content 區域</li>
+<li>低相依，但擴展性低</li>
+</ul>
+<p><br></p>
+<h2 id="作法-5-flex"><a href="#作法-5-flex" class="headerlink" title="作法 5 - flex"></a>作法 5 - flex</h2><p>(<a href="https://codesandbox.io/s/after-independent-scroll-flex-p060t" target="_blank" rel="external">CodeSandbox</a>)  </p>
+<ul>
+<li>兼具低相依、高擴展</li>
+</ul>
+<p><br></p>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>上面兩個練習都列出了多種做法，不是說一定要滿足「高擴展」、「低相依」才是唯一正解，每種做法的結果都有些微差異，要找出最符合自己開發情境及需求的做法。flex 看似強大，但如果遇到無法使用 flex 的狀況，這時其他做法就派上用場了。<br>如果還有其他更好、更有創意的作法，歡迎告訴我們喔 🎉</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2018/04/02/state-monad/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/02/state-monad/" itemprop="url">state_monad</a></h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/tancc/" itemprop="url" rel="index">
+              <span itemprop="name">tancc</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-04-02T15:28:10+08:00">
+                2018-04-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>許多的程式應用情境，是要依賴隨著時間或是運算而不停變換的狀態而進行。Haskell 中沒有變數，數值都是不可變的。</p>
+<p>Haskell 要達到這種需求，同樣也是靠函數。藉由傳入 state 作為輸入參數，經過運算後回傳最後的結果以及更新後的 mewState。</p>
+<p>原本的 state 並沒有被修改到，而我們也同樣達到了根據 state 做計算並且變換 state 的目的了</p>
+<p>而在 Haskell 中，這種需要處理狀態性問題時，常用到的工具就是 State monad。</p>
+<hr>
+<h1 id="範例"><a href="#範例" class="headerlink" title="範例"></a>範例</h1><p>一般會用躑骰子當範例</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> System.Random</div><div class="line"></div><div class="line"><span class="title">rollDie5Times</span> :: <span class="type">StdGen</span> -&gt; (<span class="type">Int</span>, <span class="type">Int</span>, <span class="type">Int</span>, <span class="type">Int</span>, <span class="type">Int</span>)</div><div class="line"><span class="title">rollDie5Times</span> g =</div><div class="line">  <span class="keyword">let</span></div><div class="line">    (one, g1) = randomR (<span class="number">1</span>, <span class="number">6</span>) g</div><div class="line">    (two, g2) = randomR (<span class="number">1</span>, <span class="number">6</span>) g1</div><div class="line">    (three, g3) = randomR (<span class="number">1</span>, <span class="number">6</span>) g2</div><div class="line">    (four, g4) = randomR (<span class="number">1</span>, <span class="number">6</span>) g3</div><div class="line">    (five, _) = randomR (<span class="number">1</span>, <span class="number">6</span>) g4</div><div class="line">  <span class="keyword">in</span></div><div class="line">    (one, two, three, four, five)</div></pre></td></tr></table></figure>
+<p>目前這種模擬躑五次骰子的方法看起來很不舒服，原因在於 generator 他必須手動取出和傳入，多了很多重複的步驟。</p>
+<p>如果使用了 State monad，我們就可以將 generator 作為 state 來改善目前的範例。</p>
+<hr>
+<h1 id="定義-State-monad"><a href="#定義-State-monad" class="headerlink" title="定義 State monad"></a>定義 State monad</h1><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">newtype</span> <span class="type">State</span> s a = <span class="type">State</span> &#123;<span class="title">runState</span> :: <span class="title">s</span> -&gt; (<span class="title">a</span>, <span class="title">s</span>)&#125;</span></div></pre></td></tr></table></figure>
+<p><code>State</code> 包裹著一個函數型別為<code>s -&gt; (a, s)</code>。其意義就是如一開始所說的，傳入 state，經過運算回傳結果以及新的 state。</p>
+<p>State monad 的<code>Functor</code> <code>Applicative</code> <code>Monad</code> instance 我們可以如此定義</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Functor</span> (<span class="type">State</span> <span class="title">s</span>) <span class="keyword">where</span></span></div><div class="line">  fmap f (<span class="type">State</span> g) = <span class="type">State</span> $ \s -&gt; <span class="keyword">let</span> (a, s1) = g s</div><div class="line">                                   <span class="keyword">in</span>  (f a, s1)</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Applicative</span> (<span class="type">State</span> <span class="title">s</span>) <span class="keyword">where</span></span></div><div class="line">  pure a = <span class="type">State</span> $ \s -&gt; (a, s)</div><div class="line">  (<span class="type">State</span> fab) &lt;*&gt; (<span class="type">State</span> fa) = <span class="type">State</span> $ \s -&gt; <span class="keyword">let</span> (a, s1) = fa s</div><div class="line">                                                 (ab, s2) = fab s1</div><div class="line">                                             <span class="keyword">in</span>  (ab a, s2)</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Monad</span> (<span class="type">State</span> <span class="title">s</span>) <span class="keyword">where</span></span></div><div class="line">  return = pure</div><div class="line">  <span class="type">State</span> f &gt;&gt;= k = <span class="type">State</span> $ \s -&gt; <span class="keyword">let</span> (a, s1) = f s</div><div class="line">                                <span class="keyword">in</span> runState (k a) s1</div></pre></td></tr></table></figure>
+<p>從實作中可以看到 state 會不斷的更新然後傳遞下去。</p>
+<hr>
+<h1 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h1><p>一般的 State monad 還會提供幾個方便的 method</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 將函數包進 State 中，變為 State monad</span></div><div class="line"><span class="title">state</span> :: (s -&gt; (a, s)) -&gt; <span class="type">State</span> s a</div><div class="line"><span class="title">state</span> = <span class="type">State</span></div><div class="line"></div><div class="line"><span class="comment">-- 取的當前的 state</span></div><div class="line"><span class="title">get</span> :: <span class="type">State</span> s s</div><div class="line"><span class="title">get</span> = <span class="type">State</span> $ \s -&gt; (s, s)</div><div class="line"></div><div class="line"><span class="comment">-- 更新 state</span></div><div class="line"><span class="title">put</span> :: s -&gt; <span class="type">State</span> s ()</div><div class="line"><span class="title">put</span> x = <span class="type">State</span> $ const ((), x)</div><div class="line"></div><div class="line"><span class="comment">-- 傳入 state 執行 State monad 並回傳最後的 state</span></div><div class="line"><span class="title">execState</span> :: <span class="type">State</span> s a -&gt; s -&gt; s</div><div class="line"><span class="title">execState</span> (<span class="type">State</span> sa) s = snd $ sa s</div><div class="line"></div><div class="line"><span class="comment">-- 傳入 state 執行 State monad 並回傳最後的運算結果 a</span></div><div class="line"><span class="title">evalState</span> :: <span class="type">State</span> s a -&gt; s -&gt; a</div><div class="line"><span class="title">evalState</span> (<span class="type">State</span> sa) s = fst $ sa s</div><div class="line"></div><div class="line"><span class="comment">-- 對 state 做轉換</span></div><div class="line"><span class="title">modify</span> :: (s -&gt; s) -&gt; <span class="type">State</span> s ()</div><div class="line"><span class="title">modify</span> f = <span class="type">State</span> $ \s -&gt; ((), f s)</div></pre></td></tr></table></figure>
+<hr>
+<h1 id="範例改寫"><a href="#範例改寫" class="headerlink" title="範例改寫"></a>範例改寫</h1><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="title">rollDie</span> :: <span class="type">State</span> <span class="type">StdGen</span> <span class="type">Int</span></div><div class="line"><span class="title">rollDie</span> = state $ randomR (<span class="number">1</span>, <span class="number">6</span>)</div><div class="line"></div><div class="line"><span class="title">rollDieNTimes</span> :: <span class="type">Int</span> -&gt; <span class="type">State</span> <span class="type">StdGen</span> [<span class="type">Int</span>]</div><div class="line"><span class="title">rollDieNTimes</span> n = replicateM n rollDie</div><div class="line"></div><div class="line">&gt; evalState (rollDieNTimes <span class="number">5</span>) (mkStdGen <span class="number">0</span>)</div><div class="line">[<span class="number">5</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">6</span>]</div></pre></td></tr></table></figure>
+<p>如此一來可以定義“躑 n 次骰子”的函數，而且看起來還比原先範例更為精簡。</p>
+<hr>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>如同 Reader monad，一般在使用時，同樣會直接使用現成的 library 像 <a href="https://hackage.haskell.org/package/mtl" target="_blank" rel="external"><code>mtl</code></a>或<a href="https://hackage.haskell.org/package/transformers" target="_blank" rel="external"><code>transformers</code></a>。</p>
+<p>可以去看看這些 library 是如何實作的，藉此來學習。</p>
+<p>此外通常看到或是使用時，因為會需搭配其他的 Monad 一起使用，並不會用<code>State</code>而是使用<code>StateT</code>。而去看原始碼可以發現 <code>State s a</code> 其實也就是<code>StateT s Identity a</code>的type alias。</p>
+<hr>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><ol>
+<li><a href="https://en.wikibooks.org/wiki/Haskell/Understanding_monads/State" target="_blank" rel="external">Haskell/Understanding monads/State - Wikibooks, open books for an open world</a></li>
+<li><a href="http://learnyouahaskell.com/" target="_blank" rel="external">Learn You a Haskell for Great Good!</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2018/03/30/reader-monad/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/30/reader-monad/" itemprop="url">Reader monad</a></h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/tancc/" itemprop="url" rel="index">
+              <span itemprop="name">tancc</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-03-30T14:54:11+08:00">
+                2018-03-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>程式中時常有許多函數是需要去使用共用的常數(shared environment)，常見的像是設定檔(config)之類的東西。</p>
+<p>此時函數的參數就是這些使用到的如 config，我們必須在 type signature 寫出需要的參數型別，此外在使用時必須顯式的寫出要傳入的東西<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 假設此時的 configs 中有 name age weight height 等等</span></div><div class="line"><span class="title">myFunc1</span> :: <span class="type">Name</span> -&gt; <span class="type">Age</span> -&gt; ...</div><div class="line"><span class="title">myFunc2</span> :: <span class="type">Name</span> -&gt;...</div><div class="line"><span class="title">myFunc3</span> :: <span class="type">Weight</span> -&gt; <span class="type">Height</span> -&gt; ...</div><div class="line"><span class="comment">-- ...</span></div><div class="line"><span class="title">myFunc1</span> name age</div><div class="line"><span class="title">myFunc2</span> name </div><div class="line"><span class="title">myFunc3</span> weight height</div><div class="line"><span class="comment">-- ...</span></div></pre></td></tr></table></figure></p>
+<p>這樣的壞處很明顯就是我們必須重複寫很多東西。<br>要解決這問題的一個直覺想法就是，讓這些函數所在的 scope，可以自由地取得共用的資料，如此一來就不需由我們手動傳入了。<br>而在 functional programming 中，就是使用函數去達成。只要將這些函數做良好的定義，並塞到一個更大的函數裡，將共享資源傳入這個大函數中，裡頭的小函數們就都可以去取得了。</p>
+<p>Reader monad 就是可以幫我們做這件事情的工具，因此他又有另外的名稱，Environment monad。<br>而最簡單的 Reader monad 其實就是一個函數的新名稱罷了。</p>
+<hr>
+<h1 id="範例"><a href="#範例" class="headerlink" title="範例"></a>範例</h1><p>這裡用一段沒什麼用處的程式碼來舉例。<br>這裡的函數用返回執行別用<code>Maybe</code>，只是為了要用<code>do notation</code>而已<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">type</span> <span class="type">Name</span> = <span class="type">String</span></span></div><div class="line"><span class="class"><span class="keyword">type</span> <span class="type">Age</span> = <span class="type">Int</span></span></div><div class="line"><span class="class"><span class="keyword">type</span> <span class="type">Height</span> = <span class="type">Double</span></span></div><div class="line"><span class="class"><span class="keyword">type</span> <span class="type">Weight</span> = <span class="type">Double</span></span></div><div class="line"><span class="class"><span class="keyword">type</span> <span class="type">Result</span> = (<span class="type">String</span>, <span class="type">String</span>, <span class="type">String</span>, <span class="type">Double</span>)</span></div><div class="line"></div><div class="line"><span class="title">revName</span> :: <span class="type">Name</span> -&gt; <span class="type">Maybe</span> <span class="type">String</span></div><div class="line"><span class="title">revName</span> n = <span class="type">Just</span> $ <span class="string">"Reverse Name: "</span> ++ reverse n</div><div class="line"></div><div class="line"><span class="title">nameAndAge</span> :: <span class="type">Name</span> -&gt; <span class="type">Age</span> -&gt; <span class="type">Maybe</span> <span class="type">String</span></div><div class="line"><span class="title">nameAndAge</span> n a = <span class="type">Just</span> $ <span class="string">"Name &amp; Age: "</span> ++ n ++ <span class="string">" "</span> ++ show a</div><div class="line"></div><div class="line"><span class="title">weightAndHeight</span> :: <span class="type">Weight</span> -&gt; <span class="type">Height</span> -&gt; <span class="type">Maybe</span> <span class="type">String</span></div><div class="line"><span class="title">weightAndHeight</span> w h = <span class="type">Just</span> $ <span class="string">"Weight &amp; Height: "</span> ++ show w ++ <span class="string">" "</span> ++ show h</div><div class="line"></div><div class="line"><span class="title">calBmi</span> :: <span class="type">Height</span> -&gt; <span class="type">Weight</span> -&gt; <span class="type">Maybe</span> <span class="type">Double</span></div><div class="line"><span class="title">calBmi</span> h w = <span class="type">Just</span> $ w / (h / <span class="number">100</span>)^<span class="number">2</span></div><div class="line"></div><div class="line"><span class="title">go</span> = </div><div class="line">  <span class="keyword">let</span></div><div class="line">    name   = <span class="string">"Tom"</span></div><div class="line">    age    = <span class="number">20</span></div><div class="line">    height = <span class="number">180</span></div><div class="line">    weight = <span class="number">100</span></div><div class="line">  <span class="keyword">in</span></div><div class="line">    <span class="keyword">do</span></div><div class="line">      na &lt;- nameAndAge name age</div><div class="line">      n  &lt;- revName name</div><div class="line">      wh &lt;- weightAndHeight weight height</div><div class="line">      b  &lt;- calBmi height weight</div><div class="line">      return (na, n, wh, b)</div></pre></td></tr></table></figure></p>
+<p>可以發現 <code>nameAndAge</code>, <code>revName</code>, <code>weightAndHeight</code>, <code>calBmi</code>等函數，我們需要定義、傳地重複的東西進去，使程式碼看起來較為繁冗。<br>而他們用到的這些 input 就可以將其想像成 shared environment 這種在程式執行時並不會去改變且很多地方都會用到的東西。</p>
+<hr>
+<h1 id="定義-Reader-monad"><a href="#定義-Reader-monad" class="headerlink" title="定義 Reader monad"></a>定義 Reader monad</h1><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">newtype</span> <span class="type">Reader</span> r a = <span class="type">Reader</span> &#123; <span class="title">runReader</span> :: <span class="title">r</span> -&gt; <span class="title">a</span> &#125;</span></div></pre></td></tr></table></figure>
+<p>也就是說，<code>Reader</code> 就是包裹了一個函數 <code>r -&gt; a</code> ，其中 <code>r</code> 就是我們要傳入的共用資料，有些地方也會用<code>e</code>來表示(environment)；<code>a</code> 表示吃進 <code>r</code> 後，會回傳的東西是什麼。</p>
+<p>再來我們可以自己定義他一系列的<code>Functor</code> <code>Applicative</code> <code>Monad</code> instance</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Functor</span> (<span class="type">Reader</span> <span class="title">r</span>) <span class="keyword">where</span></span></div><div class="line">  fmap :: (a -&gt; b) -&gt; <span class="type">Reader</span> r a -&gt; <span class="type">Reader</span> r b</div><div class="line">  fmap f (<span class="type">Reader</span> ra) = <span class="type">Reader</span> $ f . ra</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Applicative</span> (<span class="type">Reader</span> <span class="title">r</span>) <span class="keyword">where</span></span></div><div class="line">  pure :: a -&gt; <span class="type">Reader</span> r a</div><div class="line">  pure a = <span class="type">Reader</span> $ const a</div><div class="line">  (&lt;*&gt;) :: <span class="type">Reader</span> r (a -&gt; b) -&gt; <span class="type">Reader</span> r a -&gt; <span class="type">Reader</span> r b</div><div class="line">  (<span class="type">Reader</span> rab) &lt;*&gt; (<span class="type">Reader</span> ra) =</div><div class="line">    <span class="type">Reader</span> $ \r -&gt; rab r (ra r)</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Monad</span> (<span class="type">Reader</span> <span class="title">r</span>) <span class="keyword">where</span></span></div><div class="line">  return = pure</div><div class="line">  (&gt;&gt;=) :: <span class="type">Reader</span> r a -&gt; (a -&gt; <span class="type">Reader</span> r b) -&gt; <span class="type">Reader</span> r b</div><div class="line">  (<span class="type">Reader</span> ra) &gt;&gt;= aRb =</div><div class="line">    <span class="type">Reader</span> $ \r -&gt; runReader (aRb (ra r)) r</div></pre></td></tr></table></figure>
+<p>可以看到這裡的 structure 是 <code>Reader r</code> 也就是 <code>(-&gt;) r</code> (function type) 這部分。而且在實作當中可以看到，<code>r</code>是保持著原來的值被傳遞，並沒有被做其他transform，因此可以確保 Reader monad 可以拿到相同的<code>r</code></p>
+<p>對照 <code>(-&gt;) r</code> 在<a href="https://hackage.haskell.org/package/base-4.11.0.0/docs/src/GHC.Base.html#line-794" target="_blank" rel="external">原始碼</a>中定義的<code>Functor</code> <code>Applicative</code> <code>Monad</code> instance，可以發現基本上是一樣的，只是多了 <code>Reader</code> 這一層包裝。</p>
+<p>若將型別定義中的 <code>Reader r</code> 用 <code>(-&gt;) r</code> 替換，可以看到更明顯的結果<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="title">fmap</span> :: (a -&gt; b) -&gt; <span class="type">Reader</span> r a -&gt; <span class="type">Reader</span> r b</div><div class="line">      = (a -&gt; b) -&gt;  (-&gt;)  r a -&gt;  (-&gt;)  r b</div><div class="line">      = (a -&gt; b) -&gt;  (r -&gt; a)  -&gt;  (r -&gt; b)</div><div class="line">      </div><div class="line">(&lt;*&gt;) :: <span class="type">Reader</span> r (a -&gt; b) -&gt; <span class="type">Reader</span> r a -&gt; <span class="type">Reader</span> r b</div><div class="line">      =   (-&gt;)  r (a -&gt; b) -&gt;  (-&gt;)  r a -&gt;  (-&gt;)  r b</div><div class="line">      =      (r -&gt; a -&gt; b) -&gt;  (r -&gt; a)  -&gt;  (r -&gt; b)</div><div class="line">      </div><div class="line">(&gt;&gt;=) :: <span class="type">Reader</span> r a -&gt; (a -&gt; <span class="type">Reader</span> r b) -&gt; <span class="type">Reader</span> r b</div><div class="line">      =    (-&gt;) r a -&gt; (a -&gt; ((-&gt;) r b)) -&gt; (-&gt;) r b</div><div class="line">      =    (r -&gt; a) -&gt; (a -&gt; (r -&gt; b)    -&gt; (r -&gt; b)</div></pre></td></tr></table></figure></p>
+<p>所以其實 Reader monad 的概念，就是跟 function type <code>(-&gt;) r</code> 是一樣的。</p>
+<hr>
+<h1 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h1><p>使用了<code>newtype Reader</code>將 function 包裝後，還沒有什麼用。<br>還需要一些小工具使我們可以方便地拿到想要的資料，<code>ask</code>與<code>asks</code>以及<code>local</code><br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 取得 shared environment</span></div><div class="line"><span class="title">ask</span> :: <span class="type">Reader</span> a a</div><div class="line"><span class="title">ask</span> = <span class="type">Reader</span> id</div><div class="line"> <span class="comment">-- = Reader $ \r -&gt; r</span></div><div class="line"></div><div class="line"><span class="title">asks</span> :: (r -&gt; a) -&gt; <span class="type">Reader</span> r a</div><div class="line"><span class="title">asks</span> = <span class="type">Reader</span></div></pre></td></tr></table></figure></p>
+<p><code>ask</code>就是一個<code>id</code>，也就是傳什麼就吐一樣的東西回來。所以就是可以拿到<code>Reader r a</code>中的<code>r</code>。<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="title">ex</span> :: <span class="type">Reader</span> <span class="type">Config</span> <span class="type">String</span></div><div class="line"><span class="title">ex</span> = <span class="keyword">do</span> </div><div class="line">  config &lt;- ask</div><div class="line">  <span class="comment">-- ...</span></div></pre></td></tr></table></figure></p>
+<p><code>asks</code>的參數是一個函數，這個函數的作用就類似 selector，用來塞選取得在 shared environment 中想要的資料。<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="title">ex</span> :: <span class="type">Reader</span> <span class="type">Config</span> <span class="type">String</span></div><div class="line"><span class="title">ex</span> = <span class="keyword">do</span> </div><div class="line">  n &lt;- asks $ lookup <span class="string">"name"</span></div><div class="line">  <span class="comment">-- ...</span></div></pre></td></tr></table></figure></p>
+<p><code>local</code>是用來修改 Reader content，但他不是修改全域的內容，而是只有在<code>local</code> scope 裡面的 Reader Monad 才會被影響。<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="title">local</span> :: (r -&gt; r) -&gt; <span class="type">Reader</span> r a -&gt; <span class="type">Reader</span> r a</div><div class="line"><span class="title">local</span> f (<span class="type">Reader</span> ra) = <span class="type">Reader</span> $ \r -&gt; ra (f r)</div><div class="line"></div><div class="line"><span class="comment">-- example</span></div><div class="line"><span class="title">ex</span> :: <span class="type">Reader</span> <span class="type">Int</span> (<span class="type">Int</span>, <span class="type">Int</span>)</div><div class="line"><span class="title">ex</span> = <span class="keyword">do</span></div><div class="line">  i &lt;- local (+<span class="number">1</span>) $ <span class="keyword">do</span></div><div class="line">    i &lt;- ask</div><div class="line">    return i</div><div class="line">  j &lt;- ask</div><div class="line">  return (i, j)</div><div class="line">  </div><div class="line">&gt; runReader ex <span class="number">10</span></div><div class="line">(<span class="number">11</span>, <span class="number">10</span>)</div></pre></td></tr></table></figure></p>
+<p>從<code>ex</code>的執行範例可以看到，<code>i</code>也就是經過<code>local</code>後 Reader content 的確是被修改了，但是用<code>ask</code>拿到的 Reader content <code>j</code>，還是為 10 沒有改變。<br>所以<code>local</code>的作用是區域修改而不會影響到其 scope 外的地方，所以總的來說其實 Reader content並沒有發生改變。</p>
+<hr>
+<h1 id="範例改寫"><a href="#範例改寫" class="headerlink" title="範例改寫"></a>範例改寫</h1><p>原本的範例程式可以用 Reader monad 如此改寫<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">type</span> <span class="type">Result</span> = (<span class="type">String</span>, <span class="type">String</span>, <span class="type">String</span>, <span class="type">Double</span>)</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">data</span> <span class="type">Config</span> = <span class="type">Config</span> &#123; <span class="title">name</span>   :: <span class="type">String</span></span></div><div class="line"><span class="class">                      , <span class="title">age</span>    :: <span class="type">Int</span></span></div><div class="line"><span class="class">                      , <span class="title">height</span> :: <span class="type">Double</span></span></div><div class="line"><span class="class">                      , <span class="title">weight</span> :: <span class="type">Double</span></span></div><div class="line"><span class="class">                      &#125;</span></div><div class="line"></div><div class="line"><span class="title">revName</span> :: <span class="type">Reader</span> <span class="type">Config</span> <span class="type">String</span></div><div class="line"><span class="title">revName</span> = <span class="keyword">do</span></div><div class="line">  n &lt;- asks name</div><div class="line">  return $ <span class="string">"Reverse Name: "</span> ++ reverse n</div><div class="line"></div><div class="line"><span class="title">nameAndAge</span> :: <span class="type">Reader</span> <span class="type">Config</span> <span class="type">String</span></div><div class="line"><span class="title">nameAndAge</span> = <span class="keyword">do</span></div><div class="line">  n &lt;- asks name</div><div class="line">  a &lt;- asks age</div><div class="line">  return $ <span class="string">"Name &amp; Age: "</span> ++ n ++ <span class="string">" "</span> ++ show a</div><div class="line"></div><div class="line"><span class="title">weightAndHeight</span> :: <span class="type">Reader</span> <span class="type">Config</span> <span class="type">String</span></div><div class="line"><span class="title">weightAndHeight</span> = <span class="keyword">do</span></div><div class="line">  w &lt;- asks weight</div><div class="line">  h &lt;- asks height</div><div class="line">  return $ <span class="string">"Weight &amp; Height: "</span> ++ show w ++ <span class="string">" "</span> ++ show h</div><div class="line"></div><div class="line"><span class="title">calBmi</span> :: <span class="type">Reader</span> <span class="type">Config</span> <span class="type">Double</span></div><div class="line"><span class="title">calBmi</span> = <span class="keyword">do</span></div><div class="line">  w &lt;- asks weight</div><div class="line">  h &lt;- asks height</div><div class="line">  return $ w / (h / <span class="number">100</span>)^<span class="number">2</span></div><div class="line"></div><div class="line"><span class="title">go</span> :: <span class="type">Reader</span> <span class="type">Config</span> <span class="type">Result</span></div><div class="line"><span class="title">go</span> = <span class="keyword">do</span></div><div class="line">    na &lt;- nameAndAge</div><div class="line">    n  &lt;- revName</div><div class="line">    wh &lt;- weightAndHeight</div><div class="line">    b  &lt;- calBmi</div><div class="line">    return (na, n, wh, b)</div><div class="line"></div><div class="line"><span class="title">showResult</span> = runReader go $ <span class="type">Config</span> &#123;name = <span class="string">"WOW"</span>, age = <span class="number">20</span>, height = <span class="number">190</span>, weight = <span class="number">100</span>&#125;</div></pre></td></tr></table></figure></p>
+<p>主要的差別在於，每個函數的 type signature 是一致的 <code>Reader Config [回傳型別]</code>，大家是共享一份 config。<br>各函數在其內部自行定義要取得什麼資料，如此一來在使用的時候就不需要顯示的傳遞進去了。</p>
+<hr>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>一般情況在使用 Reader Monad 時並不會自行去定義，可能會用一些 library 像 <a href="https://hackage.haskell.org/package/mtl" target="_blank" rel="external"><code>mtl</code></a>或<a href="https://hackage.haskell.org/package/transformers" target="_blank" rel="external"><code>transformers</code></a>，<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Control.Monad.Reader</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">data</span> <span class="type">MyContext</span> = <span class="type">MyContext</span></span></div><div class="line">  &#123; foo :: <span class="type">String</span></div><div class="line">  , bar :: <span class="type">Int</span></div><div class="line">  &#125; <span class="keyword">deriving</span> (<span class="type">Show</span>)</div><div class="line"></div><div class="line"><span class="title">computation</span> :: <span class="type">Reader</span> <span class="type">MyContext</span> (<span class="type">Maybe</span> <span class="type">String</span>)</div><div class="line"><span class="title">computation</span> = <span class="keyword">do</span></div><div class="line">  n &lt;- asks bar</div><div class="line">  x &lt;- asks foo</div><div class="line">  <span class="keyword">if</span> n &gt; <span class="number">0</span></div><div class="line">    <span class="keyword">then</span> return (<span class="type">Just</span> x)</div><div class="line">    <span class="keyword">else</span> return <span class="type">Nothing</span></div><div class="line"></div><div class="line"><span class="title">ex1</span> :: <span class="type">Maybe</span> <span class="type">String</span></div><div class="line"><span class="title">ex1</span> = runReader computation $ <span class="type">MyContext</span> <span class="string">"hello"</span> <span class="number">1</span></div><div class="line"></div><div class="line"><span class="title">ex2</span> :: <span class="type">Maybe</span> <span class="type">String</span></div><div class="line"><span class="title">ex2</span> = runReader computation $ <span class="type">MyContext</span> <span class="string">"haskell"</span> <span class="number">0</span></div></pre></td></tr></table></figure></p>
+<p>他們同樣也都提供了基本的像是<code>ask</code>, <code>asks</code>, <code>local</code>，可以去看看這些 library 是如何實作的，藉此來學習。</p>
+<p>此外通常看到或是使用時，因為會需搭配其他的 Monad 一起使用，並不會用<code>Reader</code>而是使用<code>ReaderT</code>，<code>T</code>表示 transformer。</p>
+<hr>
+<h1 id="參考資料及更多資源"><a href="#參考資料及更多資源" class="headerlink" title="參考資料及更多資源"></a>參考資料及更多資源</h1><ol>
+<li><a href="https://hackage.haskell.org/package/mtl" target="_blank" rel="external">mtl</a></li>
+<li><a href="https://hackage.haskell.org/package/transformers" target="_blank" rel="external">transformers</a></li>
+<li><a href="http://adit.io/posts/2013-06-10-three-useful-monads.html" target="_blank" rel="external">Three Useful Monads - adit.io</a></li>
+<li><a href="http://dev.stephendiehl.com/hask/#reader-monad" target="_blank" rel="external">What I Wish I Knew When Learning Haskell 2.3 ( Stephen Diehl )</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2018/03/29/haskell-functor/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/29/haskell-functor/" itemprop="url">Haskell 系列 - Functor (函子)</a></h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/jackypan1989/" itemprop="url" rel="index">
+              <span itemprop="name">jackypan1989</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-03-29T18:26:55+08:00">
+                2018-03-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="map-函數"><a href="#map-函數" class="headerlink" title="map 函數"></a>map 函數</h1><p>如果之前是寫 javascript 的，那你一定會用過 map 這個 function<br>舉個例子</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> add1 = <span class="function"><span class="params">x</span> =&gt;</span> x + <span class="number">1</span></div><div class="line"></div><div class="line">add1(<span class="number">5</span>) <span class="comment">// 答案是6</span></div><div class="line">add1([<span class="number">5</span>]) <span class="comment">// 有error 因為add1 無法應用在array上</span></div><div class="line"></div><div class="line">[<span class="number">5</span>].map(add1) <span class="comment">// 答案是[6]</span></div><div class="line"></div><div class="line"><span class="comment">// 更甚者, 採用ramda.js之類的lib</span></div><div class="line"><span class="keyword">const</span> mappedAdd1 = R.map(add1)</div><div class="line">mappedAdd1([<span class="number">5</span>]) <span class="comment">// 答案一樣是[6], 但add1已經轉成了mappedAdd1</span></div></pre></td></tr></table></figure>
+<p>可以發現這map函數可以讓我們把原本一個只能處理int的函數<br>變成一個可以處理[int]，也就是說其實他可以穿越[]這個所代表的意義<br>將這個context裡面的值取出，套用add1，再把他放回context</p>
+<h1 id="Functor-函子"><a href="#Functor-函子" class="headerlink" title="Functor (函子)"></a>Functor (函子)</h1><p>如同剛剛所說 functor 其實就是把許多type中可以map這件事給抽象出來<br>看看 haskell 中的實作</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&gt; :i <span class="type">Functor</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="type">Functor</span> (<span class="title">f</span> :: * -&gt; *) <span class="keyword">where</span></span></div><div class="line">    fmap :: (a -&gt; b) -&gt; f a -&gt; f b</div><div class="line">    (&lt;$) :: a -&gt; f b -&gt; f a</div><div class="line">    <span class="meta">&#123;-# MINIMAL fmap #-&#125;</span></div><div class="line">    <span class="comment">-- Defined in ‘GHC.Base’</span></div></pre></td></tr></table></figure>
+<p>這 fmap 就是我們常看到的 map 函數</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(a -&gt; b) -&gt; f a -&gt; f b</div></pre></td></tr></table></figure>
+<p>看看他的意思<br>傳進一個 function 跟一個帶有context的值再回傳另一個帶有context值<br>對照一開始的範例，傳進一個 x=x+1, [5], 再回傳另一個 [6]<br>所以有些人會把 functor 比喻成盒子, 不能說錯<br>但他其實就是很簡單的把 function 提升(lift)成 可以處理context的 function而已<br>是 function 的處理能力提升而不是真正有一個容器或是box在 (可能是因為list太適合用box解釋)</p>
+<p>在數學上就是，兩個Hask範疇之間的轉換<br>而且也讓原本範疇(Hask範疇)中的物件(type)與態射(function)都提升成帶有上下文或處理上下文</p>
+<h1 id="List-Functor"><a href="#List-Functor" class="headerlink" title="List Functor"></a>List Functor</h1><p>這我們剛剛舉例過了，直接看看實作</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Functor</span> [] <span class="keyword">where</span></span></div><div class="line">    <span class="meta">&#123;-# INLINE fmap #-&#125;</span></div><div class="line">    fmap = map</div></pre></td></tr></table></figure>
+<p>fmap 果然就是 map 函數</p>
+<h1 id="Maybe-Functor"><a href="#Maybe-Functor" class="headerlink" title="Maybe Functor"></a>Maybe Functor</h1><p>再來看看 Maybe<br>maybe a 包含了 just a 跟 nothing<br>其中 nothing 代表可能為空值這個 context</p>
+<p>用想像力想一下<br>如果是 just 6 那我們就把 6 從 just 這個 context 取出來，做完運算再用just包回去<br>如果是 nothing 那就根本不用管直接 nothing 因為 nothing 怎麼操作都是 nothing</p>
+<p>回去看看原始碼</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">instance</span>  <span class="type">Functor</span> <span class="type">Maybe</span>  <span class="keyword">where</span></span></div><div class="line">    fmap _ <span class="type">Nothing</span>       = <span class="type">Nothing</span></div><div class="line">    fmap f (<span class="type">Just</span> a)      = <span class="type">Just</span> (f a)</div></pre></td></tr></table></figure>
+<p>果然我們想的一樣<br>以maybe來說，我們也可以直接針對他進行fmap操作<br>fmap我們又把他用 &lt;$&gt; 來代表</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&gt;:&#123;</div><div class="line"><span class="title">add1</span> :: <span class="type">Int</span> -&gt; <span class="type">Int</span></div><div class="line"><span class="title">add1</span> x = x + <span class="number">1</span></div><div class="line">:&#125;</div><div class="line"></div><div class="line">&gt; add1 &lt;$&gt; [<span class="number">1</span>, <span class="number">2</span>]</div><div class="line">[<span class="number">2</span>,<span class="number">3</span>]</div><div class="line"></div><div class="line">&gt; add &lt;$&gt; <span class="type">Just</span> <span class="number">3</span></div><div class="line"><span class="type">Just</span> <span class="number">4</span></div></pre></td></tr></table></figure>
+<p>這就對了，原本只能處理Int的function<br>變成可以處理[Int], 連Maybe Int也可以了<br>所以 [], Maybe 都是 functor</p>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><ol>
+<li>haskell wiki</li>
+<li>learn you a haskell</li>
+<li>hoogle</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2018/03/28/haskell-monoid/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/28/haskell-monoid/" itemprop="url">Haskell 系列 - Monoid (ㄠ半群)</a></h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/jackypan1989/" itemprop="url" rel="index">
+              <span itemprop="name">jackypan1989</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-03-28T18:26:55+08:00">
+                2018-03-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Monoid-ㄠ半群"><a href="#Monoid-ㄠ半群" class="headerlink" title="Monoid (ㄠ半群)"></a>Monoid (ㄠ半群)</h1><p>Haskell 是跟純數學息息相關的程式語言，有許多抽象化的方式都來自數學理論(例如範疇論跟群論)<br>這裡的 typeclass Monoid 正是代表某些 data 的特性，首先看看在 haskell 中的 Monoid</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&gt; :i <span class="type">Monoid</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="type">Monoid</span> a <span class="keyword">where</span></span></div><div class="line">  mempty :: a</div><div class="line">  mappend :: a -&gt; a -&gt; a</div><div class="line">  mconcat :: [a] -&gt; a</div><div class="line">  <span class="meta">&#123;-# MINIMAL mempty, mappend #-&#125;</span></div></pre></td></tr></table></figure>
+<p>我們可以發現 Monoid 必須至少實作兩個方法，一個為 mempty，另一個是 mappend<br>在數學理論中，定義如下，滿足以下兩個特徵的稱為 monoid</p>
+<ol>
+<li>有單位元</li>
+<li>有一個二元operator滿足結合律</li>
+</ol>
+<p>1的意思是裡面有個元素，其他元素跟他結合都還是自己<br>2的意思是 a op (b op c) = (a op b) op c，表示括號不影響結果</p>
+<p>用你的想像力，String是不是就是一個最明顯的例子，單位元是空字串(“”)，其他字串怎麼跟他前後結合都不會影響結果，那二元operator自然而然就是字串串接了(++)，下面用String舉例</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt; <span class="string">""</span> ++ <span class="string">"ABC"</span> ++ <span class="string">""</span></div><div class="line"><span class="string">"ABC"</span></div><div class="line"></div><div class="line">&gt; (<span class="string">"HELLO"</span> ++ <span class="string">"ABC"</span>) ++ <span class="string">"!"</span> == <span class="string">"HELLO"</span> ++ (<span class="string">"ABC"</span> ++ <span class="string">"!"</span>)</div><div class="line"><span class="type">True</span></div></pre></td></tr></table></figure>
+<p>所以String還有haskell裡面一些代表或是處理字串的type基本上一定都是Monoid，當然更廣義的來看[]都是monoid，有空的array跟array的串接的話就是monoid</p>
+<h1 id="list-monoid"><a href="#list-monoid" class="headerlink" title="list monoid ([])"></a>list monoid ([])</h1><p>看一下 [] 的實作</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="type">Semigroup</span> a =&gt; <span class="type">Monoid</span> a <span class="keyword">where</span></span></div><div class="line">    <span class="comment">-- | Identity of 'mappend'</span></div><div class="line">    mempty  :: a</div><div class="line"></div><div class="line">    <span class="comment">-- | An associative operation</span></div><div class="line">    <span class="comment">--</span></div><div class="line">    <span class="comment">-- __NOTE__: This method is redundant and has the default</span></div><div class="line">    <span class="comment">-- implementation @'mappend' = '(&lt;&gt;)'@ since /base-4.11.0.0/.</span></div><div class="line">    mappend :: a -&gt; a -&gt; a</div><div class="line">    mappend = (&lt;&gt;)</div><div class="line">    <span class="meta">&#123;-# INLINE mappend #-&#125;</span></div><div class="line"></div><div class="line">    <span class="comment">-- | Fold a list using the monoid.</span></div><div class="line">    <span class="comment">--</span></div><div class="line">    <span class="comment">-- For most types, the default definition for 'mconcat' will be</span></div><div class="line">    <span class="comment">-- used, but the function is included in the class definition so</span></div><div class="line">    <span class="comment">-- that an optimized version can be provided for specific types.</span></div><div class="line">    mconcat :: [a] -&gt; a</div><div class="line">    mconcat = foldr mappend mempty</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Semigroup</span> [a] <span class="keyword">where</span></span></div><div class="line">    (&lt;&gt;) = (++)</div><div class="line">    <span class="meta">&#123;-# INLINE (&lt;&gt;) #-&#125;</span></div><div class="line"></div><div class="line">    stimes = stimesList</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Monoid</span> [a] <span class="keyword">where</span></span></div><div class="line">    <span class="meta">&#123;-# INLINE mempty #-&#125;</span></div><div class="line">    mempty  = []</div><div class="line">    <span class="meta">&#123;-# INLINE mconcat #-&#125;</span></div><div class="line">    mconcat xss = [x | xs &lt;- xss, x &lt;- xs]</div></pre></td></tr></table></figure>
+<p>可以看到 Monoid 因為有 superclass Semigroup 定義了 mappend = (&lt;&gt;)<br>所以他裡面就不用重複實作，直接用 Semigroup 的 mappend<br>因此可以發現 mempty  = [] (單位元), mappend  = (++) = (&lt;&gt;)</p>
+<p>用monoid方式的抽象來操作看看</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt; <span class="keyword">import</span> Data.Monoid</div><div class="line">&gt; <span class="string">""</span> &lt;&gt; <span class="string">"ABC"</span></div><div class="line"><span class="string">"ABC"</span></div></pre></td></tr></table></figure>
+<h1 id="Sum-monoid-跟-Product-monoid"><a href="#Sum-monoid-跟-Product-monoid" class="headerlink" title="Sum monoid 跟 Product monoid"></a>Sum monoid 跟 Product monoid</h1><p>我第一次看到 monoid 定義的時候<br>我就想到了，數字也是這樣<br>例如</p>
+<ol>
+<li><p>加法的時候<br>單位元是 0<br>二元的operator 是 (+)</p>
+<p>任何數加上0都沒差,而且括號不影響 (1+2)+3 == 1+(2+3)</p>
+</li>
+<li><p>乘法的時候<br>單位元是 1<br>二元的operator 是 (*)</p>
+<p>任何數乘上1都沒差,而且括號不影響 (1*2)*3 == 1*(2*3)</p>
+</li>
+</ol>
+<p>不過因為單位元不同，而且 instance 只能有一種實作<br>所以 Haskell 創造了 Sum 跟 Product 這兩個 newtype 來代表我剛剛說的</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- Sum Monoid</span></div><div class="line"><span class="class"><span class="keyword">newtype</span> <span class="type">Sum</span> a = <span class="type">Sum</span> &#123; <span class="title">getSum</span> :: <span class="title">a</span> &#125;</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Num</span> a =&gt; <span class="type">Semigroup</span> (<span class="type">Sum</span> <span class="title">a</span>) <span class="keyword">where</span></span></div><div class="line">    (&lt;&gt;) = coerce ((+) :: a -&gt; a -&gt; a)</div><div class="line">    stimes n (<span class="type">Sum</span> a) = <span class="type">Sum</span> (fromIntegral n * a)</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Num</span> a =&gt; <span class="type">Monoid</span> (<span class="type">Sum</span> <span class="title">a</span>) <span class="keyword">where</span></span></div><div class="line">    mempty = <span class="type">Sum</span> <span class="number">0</span></div><div class="line"></div><div class="line"><span class="comment">-- Product Monoid</span></div><div class="line"><span class="class"><span class="keyword">newtype</span> <span class="type">Product</span> a = <span class="type">Product</span> &#123; <span class="title">getProduct</span> :: <span class="title">a</span> &#125;</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Num</span> a =&gt; <span class="type">Semigroup</span> (<span class="type">Product</span> <span class="title">a</span>) <span class="keyword">where</span></span></div><div class="line">    (&lt;&gt;) = coerce ((*) :: a -&gt; a -&gt; a)</div><div class="line">    stimes n (<span class="type">Product</span> a) = <span class="type">Product</span> (a ^ n)</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Num</span> a =&gt; <span class="type">Monoid</span> (<span class="type">Product</span> <span class="title">a</span>) <span class="keyword">where</span></span></div><div class="line">    mempty = <span class="type">Product</span> <span class="number">1</span></div></pre></td></tr></table></figure>
+<p>我一開始會覺得說為何會需要這些東西<br>但其實 Haskell 就是不斷利用數學一些抽象的技巧來層層疊疊<br>來幫助大家去優化最佳化，而不是每個data都有自己獨特實際實作很長的api</p>
+<p>例如 String, [], Sum, Product 的這種monoid特性<br>不就隱含了一件常見的事情，這些事情是可以分開去做的，而且不會影響結果<br>所以我們也可以作一個分散式的function<br>例如 getData(xxx) &lt;&gt; getData(yyy) &lt;&gt; getData(zzz)<br>可以讓這三個function由不同cpu去跑，反正執行順序根本沒差<br>而這個 typeclass 正是把這種特性給抽象出來</p>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><ol>
+<li>haskell wiki</li>
+<li>learn you a haskell</li>
+<li><a href="https://www.zhihu.com/question/25406710" target="_blank" rel="external">知乎：為何需要monoid</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2018/03/28/monad/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/28/monad/" itemprop="url">Monad</a></h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/tancc/" itemprop="url" rel="index">
+              <span itemprop="name">tancc</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-03-28T17:39:04+08:00">
+                2018-03-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><code>Monad</code>對工程師而言，如果沒牽扯到數學相關的範疇其實不是那麼可怕難懂的東西。</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="title">fmap</span> :: (a -&gt; b) -&gt; f a -&gt; f b</div></pre></td></tr></table></figure>
+<p><code>Functor</code>實作了<code>fmap</code>，使得可將普通函數<code>(a -&gt; b)</code>lift到<code>f a -&gt; f b</code>；</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(&lt;*&gt;) :: f (a -&gt; b) -&gt; f a -&gt; f b</div></pre></td></tr></table></figure>
+<p><code>Applicative</code>實作了<code>&lt;*&gt;</code>，讓我們可以將保裹在某 structure 中的函數<code>f (a -&gt; b)</code>，apply 到同樣含有相同結構的數值中<code>f a -&gt; f b</code></p>
+<p>他們做的事情其實都是 function application，只是應用的情境不同而已。而從工程面來看，Monad 其實也是一樣的，也為我們做了某情境下的函數調用的抽象。</p>
+<hr>
+<h1 id="Monad-TypeClass"><a href="#Monad-TypeClass" class="headerlink" title="Monad TypeClass"></a>Monad TypeClass</h1><p>Monad typeClass 的部分定義如下<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="type">Applicative</span> m =&gt; <span class="type">Monad</span> m <span class="keyword">where</span></span></div><div class="line">    <span class="meta">&#123;-# MINIMAL (&gt;&gt;=) #-&#125;</span></div><div class="line">    return :: a -&gt; m a</div><div class="line">    return = pure</div><div class="line">    (&gt;&gt;=)  :: m a -&gt; (a -&gt; m b) -&gt; m b</div><div class="line">    join   :: m m a -&gt; m a</div></pre></td></tr></table></figure></p>
+<p>其中可以看到 Monad 必須是 Applicative，所以<code>return</code>的預設定義就是<code>pure</code>，將一個數值包進 monadic structure <code>m</code>。</p>
+<p><code>&gt;&gt;=</code>(bind)，是使用monad進行操作時十分常看到的東西。<br>從他的 type signature 不難發現，他要做的事也是 function application，只是這次要應用的函數是<code>(a -&gt; m b)</code>，而這函數會所 return 的值是將 input 包上一個額外的結構<code>m</code>，而最終<code>&gt;&gt;=</code>所返回值<code>m b</code>會跟輸入<code>m a</code>是具有相同結構的。</p>
+<hr>
+<h1 id="Monad-laws"><a href="#Monad-laws" class="headerlink" title="Monad laws"></a>Monad laws</h1><p>如同<code>Applicative Functor</code>，就算一個型別實作了<code>&gt;&gt;=</code>成為了 Monad 的instance了，也還不能夠說是一個<code>Monad</code>。</p>
+<p>必須還要在滿足三個 Monad laws<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 1. right identity</span></div><div class="line"><span class="title">m</span> &gt;&gt;= return    = m</div><div class="line"><span class="comment">-- 2. left identity</span></div><div class="line"><span class="title">return</span> x &gt;&gt;= f  = f x</div><div class="line"><span class="comment">-- 3. associativity</span></div><div class="line">(m &gt;&gt;= f) &gt;&gt;= g = m &gt;&gt;= (\x -&gt; f x &gt;&gt;= g)</div></pre></td></tr></table></figure></p>
+<p>這部分可以自行拿一些已知的Monad去驗證(List, Maybe, Either Monad)，而這在自行定義 Monad 時也是要自己去確保滿足的，Haskell compiler 並不會跟你說符不符合。</p>
+<hr>
+<h1 id="Maybe-Monad"><a href="#Maybe-Monad" class="headerlink" title="Maybe Monad"></a>Maybe Monad</h1><p>當在做除法運算的時候，會不希望除數為 0，否則後續運算可能會出現非預期的結果，因此定義了一個<code>safeDivide</code><br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="title">safeDivide</span> :: <span class="type">Double</span> -&gt; <span class="type">Double</span> -&gt; <span class="type">Maybe</span> <span class="type">Double</span></div><div class="line"><span class="title">safeDivide</span> _ <span class="number">0</span> = <span class="type">Nothing</span></div><div class="line"><span class="title">safeDivide</span> a b = <span class="type">Just</span> (a / b)</div></pre></td></tr></table></figure></p>
+<p><code>safeDivide</code>會回傳<code>Maybe Double</code>，這樣子的話做其他的運算或者說在做函數組合時，其他函數 input 型別都也要改成<code>Maybe</code>型別，才可以拿其結果作為輸入來使用。<br>所以在其他函數內部，都需根據 Maybe 的兩種可能性<code>Just a</code>與<code>Nothing</code>做不同的運算。</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="title">maybeFunc1</span> ::<span class="type">Num</span> a =&gt; <span class="type">Maybe</span> a -&gt; <span class="type">Maybe</span> a</div><div class="line"><span class="title">maybeFunc1</span> n =</div><div class="line">  <span class="keyword">case</span> <span class="keyword">of</span> n <span class="keyword">of</span></div><div class="line">    <span class="type">Nothing</span> -&gt; <span class="type">Nothing</span></div><div class="line">    <span class="type">Just</span> a -&gt; ...</div></pre></td></tr></table></figure>
+<p>可以想像，每個 maybeFunc 都要去做這些判斷是會非常麻煩，要寫很多重複的程式碼。</p>
+<p>Maybe Monad 就可以幫我們將判斷這些<code>case ... of</code>的工作抽象出來</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Monad</span> <span class="type">Maybe</span> <span class="keyword">where</span></span></div><div class="line">  return = pure</div><div class="line">  <span class="comment">-- &gt;&gt;= ::  Maybe a -&gt; (a -&gt; Maybe b) -&gt; Maybe b</span></div><div class="line">  (<span class="type">Just</span> x) &gt;&gt;= k = k x</div><div class="line">  <span class="type">Nothing</span>  &gt;&gt;= _ = <span class="type">Nothing</span></div></pre></td></tr></table></figure>
+<p>其<code>&gt;&gt;=</code>的定義，幫我們做掉判斷<code>Nothing</code>跟<code>Just</code>然後做不同任務的工作。<br>當是 Nothing 時，就不理會後續的函數<code>k</code>，直接返回 Nothing。<br>若是 Just 時，則將其中的值<code>a</code>，傳進後續要執行的函數<code>k</code>中。</p>
+<p>也可以看到，以<code>Maybe</code>而言，使用<code>&gt;&gt;=</code>我們就可以不斷串接有這種<code>a -&gt; Maybe b</code>型別的函式，因為<code>(Just x) &gt;&gt;= k</code>回傳的也還是<code>Maybe</code>型別的數值，可以繼續用<code>&gt;&gt;=</code>串接下一步的運算。</p>
+<p>事實上就是，如果我們有一系列的函數<code>a -&gt; m b</code>，我們可以藉由<code>&gt;&gt;=</code>將這些相依的運算做序列組合。</p>
+<p>所以原本的函數組合就很容易可以這樣寫<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="title">safeDivide</span> &gt;&gt;= maybeFunc1 &gt;&gt;= maybeFunc2...</div><div class="line"></div><div class="line"><span class="comment">--  (safeDivide 10 0) &gt;&gt;=...</span></div><div class="line"><span class="comment">-- = Nothing &gt;&gt;= ...</span></div><div class="line"><span class="comment">-- = Nothing</span></div></pre></td></tr></table></figure></p>
+<p>同樣類似的行為，如<code>Either Monad</code> 也能幫助我們省下判斷<code>Left</code>和<code>Right</code>的<a href="https://hackage.haskell.org/package/base-4.10.1.0/docs/src/Data.Either.html#line-141" target="_blank" rel="external">程式碼</a></p>
+<hr>
+<h1 id="List-Monad"><a href="#List-Monad" class="headerlink" title="List Monad"></a>List Monad</h1><p>首先看一下如何定義 List Monad 內容<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Monad</span> [] <span class="keyword">where</span></span></div><div class="line">  return = pure</div><div class="line">  <span class="comment">-- &gt;&gt;= :: [a] -&gt; (a -&gt; [b]) -&gt; [b]</span></div><div class="line">  m  &gt;&gt;= f  =  concat (map f m)</div></pre></td></tr></table></figure></p>
+<p><code>return</code>和其在<code>Applicative</code>中<a href="https://hackage.haskell.org/package/base-4.10.1.0/docs/src/GHC.Base.html#line-807" target="_blank" rel="external">定義</a>的<code>pure</code>一樣，就是把值丟進一個 List 中。<br><code>&gt;&gt;=</code> 的行為是將<code>f</code> map 到 List 中，然後concat最終結果。</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="title">a</span> = [<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>]</div><div class="line"></div><div class="line"><span class="title">f</span> :: a -&gt; [a]</div><div class="line"><span class="title">f</span> = \x -&gt; [x, x]</div><div class="line"></div><div class="line"><span class="title">a</span> &gt;&gt;= f</div><div class="line">= [<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>] &gt;&gt;= \x -&gt; [x, x]</div><div class="line">= concat (map (\x -&gt; [x, x]) [<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>])</div><div class="line">= concat [[<span class="number">1</span>,<span class="number">1</span>],[<span class="number">3</span>,<span class="number">3</span>],[<span class="number">5</span>,<span class="number">5</span>],[<span class="number">7</span>,<span class="number">7</span>]]</div><div class="line">= [<span class="number">1</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">7</span>]</div></pre></td></tr></table></figure>
+<p>其實上面 List Monad 的bind<code>&gt;&gt;=</code>所做的事情，可以用List comprehension達到。<br>而實際上，<a href="https://hackage.haskell.org/package/base-4.10.1.0/docs/src/GHC.Base.html#line-820" target="_blank" rel="external">原始碼</a>中，List Monad 的<code>&gt;&gt;=</code>就是用 List comprehensions 實作的。</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Monad</span> []  <span class="keyword">where</span></span></div><div class="line">  xs &gt;&gt;= f = [y | x &lt;- xs, y &lt;- f x]</div><div class="line"></div><div class="line"><span class="title">a</span> &gt;&gt;= f</div><div class="line">= [y | x &lt;- [<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>], y &lt;- (\x -&gt; [x, x]) x]</div><div class="line">= [<span class="number">1</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">7</span>]</div></pre></td></tr></table></figure>
+<p>所以從List Monad來看，因為兩者行為的等價，也比較能明白為何有人會說 Monad 做的事情，其實就是 flatmap 或 concatmap。</p>
+<hr>
+<h1 id="Do-notation"><a href="#Do-notation" class="headerlink" title="Do notation"></a>Do notation</h1><p>如果只用<code>&gt;&gt;=</code>的話有可能會發生程式碼巢狀結構太深的問題<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="title">f</span> &gt;&gt;= \a -&gt;</div><div class="line">   (g a) &gt;&gt;= \b -&gt;</div><div class="line">     (h b) &gt;&gt;= \c -&gt;</div><div class="line">       return (a, b, c)</div></pre></td></tr></table></figure></p>
+<p>這時候可以使用do notation這個語法糖，來幫助用imperative programming的形式由上至下撰寫代碼，增加可讀性<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="title">do</span></div><div class="line">  a &lt;- f</div><div class="line">  b &lt;- g a</div><div class="line">  c &lt;- h b</div><div class="line">  return (a, b, c)</div></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="Type-signature"><a href="#Type-signature" class="headerlink" title="Type signature"></a>Type signature</h1><p>這段希望能從type signature來得到一些操作上的直覺</p>
+<h2 id="Function-Application"><a href="#Function-Application" class="headerlink" title="Function Application"></a>Function Application</h2><p>從 TypeClass 知道，若一個東西是 Monad，那他必然是 Applicative 亦即也必然是 Functor。</p>
+<p>所以Functor、Applicative、Monad在應用的行為上肯定有一定程度的一致性。<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;$&gt;        ::   (a -&gt; b) -&gt; f a -&gt; f b</div><div class="line">&lt;*&gt;        :: f (a -&gt; b) -&gt; f a -&gt; f b</div><div class="line"><span class="comment">-- 將 &gt;&gt;= 做flip</span></div><div class="line"><span class="comment">-- (&gt;&gt;=)  :: m a -&gt; (a -&gt; m b) -&gt; m b</span></div><div class="line"><span class="title">flip</span> . &gt;&gt;= :: (a -&gt; m b) -&gt; m a -&gt; m b</div></pre></td></tr></table></figure></p>
+<p>三者從 type signature 來比較，更有一開始所說的，都是將 function application 做不同應用情境的抽象。</p>
+<h2 id="Dependent-computation"><a href="#Dependent-computation" class="headerlink" title="Dependent computation"></a>Dependent computation</h2><p>同樣從<code>&gt;&gt;=</code>的型別去看<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(&gt;&gt;=)  :: m a -&gt; (a -&gt; m b) -&gt; m b</div></pre></td></tr></table></figure></p>
+<p><code>&gt;&gt;=</code>接受了<code>m a</code>，而第二個參數是個函數<code>(a -&gt; m b)</code>，其中的<code>a</code>從哪來，就是從<code>m a</code>的運算結果而來。</p>
+<p>因此<code>&gt;&gt;=</code>所做的事情，就是將一個 monadic structure 所包裹的 computation <code>m a</code>，傳遞到串接的函數中 <code>(a -&gt; m b)</code>，讓此函數根據傳遞進來的參數去做某些運算，最後再返回<code>m b</code>。而此<code>m b</code>又可搭配其他 monadic function <code>(a -&gt; m b)</code>，繼續根據函數返回值操作下去。</p>
+<p>而這種相依關係也是 Monad 較靈活的原因之一，因為它可以根據函數返回的值再去後續的運算。而這是 Applicative 無法做到的，<code>&lt;*&gt;</code>所串接的函數彼此是不相依的。</p>
+<h2 id="General-concatenation"><a href="#General-concatenation" class="headerlink" title="General concatenation"></a>General concatenation</h2><p>如果都是去 lift 普通函數並且 apply 到有額外結構的值中，如<code>f a</code>, <code>m a</code>，那麼用 fmap 就行了。<br>但如果這個函數<code>a -&gt; m b</code>，是返回一個有 monadic structure 的值時，使用fmap會發生什麼事情呢？<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 將 f 用 m 來表示</span></div><div class="line">&lt;$&gt; :: (a -&gt; b) -&gt; m a -&gt; m b</div><div class="line"><span class="comment">-- 將 b 代換成 m b</span></div><div class="line">&lt;$&gt; :: (a -&gt; m b) -&gt; m a -&gt; m (m b)</div><div class="line"></div><div class="line"><span class="comment">-- ex</span></div><div class="line"><span class="title">fmap</span> (\x -&gt; [x]) [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</div><div class="line">= [[<span class="number">1</span>], [<span class="number">2</span>], [<span class="number">3</span>]]</div></pre></td></tr></table></figure></p>
+<p>可以看到最終返回的結果是<code>m (m b)</code>，但我們並不想要有改變原有的架構，變成巢狀的結構，如巢狀的 List。所以要想辦法將 <code>m (m b)</code> 轉換成 <code>m b</code>，也就是去 flattern 或是 concate 這個雙層的結構。</p>
+<p>而這就是 Monad 的一個特色所在，<code>join</code>。<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="title">join</span> :: <span class="type">Monadm</span> m =&gt; m (m a) -&gt; m a</div></pre></td></tr></table></figure></p>
+<p>可以看到，<code>join</code>所做的事情就是去concate這兩層<code>m m</code>為一個<code>m</code>。因此也可以看出 Monad 其實提供了更 general 的 concat 方法。</p>
+<p>所以我們用<code>join</code>和<code>fmap</code>其實就可以構造出<code>&gt;&gt;=</code></p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(&gt;&gt;=) : m a -&gt; (a -&gt; m b) -&gt; m b</div><div class="line"><span class="title">m</span> &gt;&gt;= f = join $ fmap f m</div></pre></td></tr></table></figure>
+<p>因此可以看出，其實 Monad 就是提供一個方法，讓我們去 map 函數，最後再將其結果join起來。</p>
+<hr>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p><code>Monoid</code>, <code>Funtor</code>, <code>Applicative</code>, <code>Monad</code> … 這些 typeclass，都代表著某些行為的抽象。</p>
+<p>所以這些東西真的有存在的必要嗎？個人認為就工程的角度而言都沒有。<br>今天就算把名稱換成<code>Apple</code>, <code>Orange</code>, <code>Banana</code>, <code>Pineapple</code>也是可以(並且比較不會讓人畏懼？)，叫什麼名字都不是重點。並不是因為他是<code>Monad</code>我們才可以做到什麼什麼，一樣可以用其他方式來達成一樣的目的。<br>我們需要是程式行為上的抽象或是本質上的改變，使得程式碼的重用性和表達能力能夠提升，而這也正是 functional programming language 的強項。</p>
+<p>而因為這些被抽象的行為產生出來的輪廓 (type signature)，可以跟範疇論 (category theory) 去結合，所以拿範疇論的專有名詞作為 typeclass 的名稱，較能將數學與程式結合的意圖反應出來。</p>
+<p>除此之外我們可以看到，不同型別(Maybe, List, …)，在不同 typeclass instance 的定義中，儘管都有做<code>fmap</code>,<code>&lt;*&gt;</code>, <code>&gt;&gt;=</code>等等的函數存在，但他們所做的事情、邏輯是獨立的，但最終他們所具有的結構是一致的。</p>
+<p>我們其實也可以將其命名為<code>listFmap</code>, <code>maybeFmap</code> … 等等，但因為統一了 interface 大家的名稱保持一致，並且具有相同的結構，這帶來的好處就是能再更近一步的去重用這些代碼，建構更高層次的抽象方法。</p>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><p><a href="http://dev.stephendiehl.com/hask/" target="_blank" rel="external">What I Wish I Knew When Learning Haskell 2.3 ( Stephen Diehl )</a></p>
+<p><a href="https://wiki.haskell.org/Monad" target="_blank" rel="external">Monad - HaskellWiki</a></p>
+<p><a href="http://learnyouahaskell.com/" target="_blank" rel="external">Learn You a Haskell for Great Good!</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2018/03/27/haskell-typeclass/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/27/haskell-typeclass/" itemprop="url">Haskell 系列 - typeclass (類型類)</a></h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/jackypan1989/" itemprop="url" rel="index">
+              <span itemprop="name">jackypan1989</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-03-27T18:26:55+08:00">
+                2018-03-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Type-class-類型類"><a href="#Type-class-類型類" class="headerlink" title="Type class (類型類)"></a>Type class (類型類)</h1><p>首先看一下 (+) 這個 operator 的 type</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt; :t (+)</div><div class="line">(+) :: <span class="type">Num</span> a =&gt; a -&gt; a -&gt; a</div></pre></td></tr></table></figure>
+<p>可以發現除了原本的 a -&gt; a -&gt; a 之外<br>還多了一個大箭頭, 這裡的 Num a 代表後面類型 a 一定是 Num 這個 typeclass<br>我們又稱為類型約束, 如果用 oo 講法來看, 他就像是 interface<br>你必須實作一些 Num typeclass 的 function 才能屬於 Num</p>
+<p>在看一下 Num 的詳細資訊</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&gt; :i <span class="type">Num</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="type">Num</span> a <span class="keyword">where</span></span></div><div class="line">  (+) :: a -&gt; a -&gt; a</div><div class="line">  (-) :: a -&gt; a -&gt; a</div><div class="line">  (*) :: a -&gt; a -&gt; a</div><div class="line">  negate :: a -&gt; a</div><div class="line">  abs :: a -&gt; a</div><div class="line">  signum :: a -&gt; a</div><div class="line">  fromInteger :: <span class="type">Integer</span> -&gt; a</div><div class="line">  <span class="meta">&#123;-# MINIMAL (+), (*), abs, signum, fromInteger, (negate | (-)) #-&#125;</span></div><div class="line">  <span class="comment">-- Defined in ‘GHC.Num’</span></div><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Num</span> <span class="type">Word</span> <span class="comment">-- Defined in ‘GHC.Num’</span></span></div><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Num</span> <span class="type">Integer</span> <span class="comment">-- Defined in ‘GHC.Num’</span></span></div><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Num</span> <span class="type">Int</span> <span class="comment">-- Defined in ‘GHC.Num’</span></span></div><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Num</span> <span class="type">Float</span> <span class="comment">-- Defined in ‘GHC.Float’</span></span></div><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Num</span> <span class="type">Double</span> <span class="comment">-- Defined in ‘GHC.Float’</span></span></div></pre></td></tr></table></figure>
+<p>這裡表示 Num 這個 typeclass 底下必須<br>實作 (+), (*), abs, signum, fromInteger, (negate | (-)) ( | 代表至少一個要作)<br>目前有 Word, Integer, Int, Float, Double 這幾個 type 是 Num 的 instance</p>
+<h1 id="其他常用的內建-typeclass"><a href="#其他常用的內建-typeclass" class="headerlink" title="其他常用的內建 typeclass"></a>其他常用的內建 typeclass</h1><h2 id="Show"><a href="#Show" class="headerlink" title="Show"></a>Show</h2><p>將 值或是data 轉為String<br>例如</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt; :t show</div><div class="line"><span class="title">show</span> :: <span class="type">Show</span> a =&gt; a -&gt; <span class="type">String</span></div><div class="line"></div><div class="line">&gt; show <span class="number">1</span></div><div class="line"><span class="string">"1"</span></div></pre></td></tr></table></figure>
+<h2 id="Read"><a href="#Read" class="headerlink" title="Read"></a>Read</h2><p>跟 show 相反, 將String轉為對應的值或data<br>例如</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt; :t read</div><div class="line"><span class="title">read</span> :: <span class="type">Read</span> a =&gt; <span class="type">String</span> -&gt; a</div><div class="line"></div><div class="line">&gt; read <span class="string">"3"</span> :: <span class="type">Int</span> <span class="comment">-- 這裡給compile提示</span></div><div class="line"><span class="number">3</span></div></pre></td></tr></table></figure>
+<h2 id="Ord"><a href="#Ord" class="headerlink" title="Ord"></a>Ord</h2><p>實做了 compare 或是比較運算元<br>例如</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&gt; :t (&gt;)</div><div class="line">(&gt;) :: <span class="type">Ord</span> a =&gt; a -&gt; a -&gt; <span class="type">Bool</span></div><div class="line"></div><div class="line">&gt; (&gt;) <span class="number">3</span> <span class="number">4</span></div><div class="line"><span class="type">False</span></div><div class="line"></div><div class="line">&gt; compare <span class="number">3</span> <span class="number">4</span></div><div class="line"><span class="type">LT</span></div></pre></td></tr></table></figure>
+<p>其中 compare 會回傳 Ordering 這個 type</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt; :i <span class="type">Ordering</span></div><div class="line"><span class="class"><span class="keyword">data</span> <span class="type">Ordering</span> = <span class="type">LT</span> | <span class="type">EQ</span> | <span class="type">GT</span></span></div></pre></td></tr></table></figure>
+<p>分別代表小於, 等於, 跟大於</p>
+<h1 id="實作-instance-amp-自動派生-derive"><a href="#實作-instance-amp-自動派生-derive" class="headerlink" title="實作 instance &amp; 自動派生 (derive)"></a>實作 instance &amp; 自動派生 (derive)</h1><p>實作 instance 部分，舉個例子</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&gt; <span class="class"><span class="keyword">data</span> <span class="type">Grade</span> = <span class="type">A</span> | <span class="type">B</span> | <span class="type">C</span> | <span class="type">Fail</span></span></div><div class="line">&gt; show <span class="type">A</span></div><div class="line">&lt;interactive&gt;:<span class="number">32</span>:<span class="number">1</span>: error:</div><div class="line"></div><div class="line">&gt; :&#123;</div><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Show</span> <span class="type">Grade</span> <span class="keyword">where</span></span></div><div class="line">    show <span class="type">A</span> = <span class="string">"A"</span></div><div class="line">    show <span class="type">B</span> = <span class="string">"B"</span></div><div class="line">    show <span class="type">C</span> = <span class="string">"C"</span></div><div class="line">    show <span class="type">Fail</span> = <span class="string">"no grade!"</span></div><div class="line">:&#125;</div><div class="line"></div><div class="line">&gt; show <span class="type">A</span></div><div class="line"><span class="string">"A"</span></div><div class="line"></div><div class="line">&gt; show <span class="type">Fail</span></div><div class="line"><span class="string">"no grade!"</span></div></pre></td></tr></table></figure>
+<p>對於一些簡單的類型，haskell compiler 可以將他自動派生給一些 typeclass<br>像是 Read, Show, Bounded, Enum, Eq, Ord 都可以<br>他就會自己去產生一些行為</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&gt; :&#123;</div><div class="line"><span class="class"><span class="keyword">data</span> <span class="type">Grade</span> = <span class="type">A</span> | <span class="type">B</span> | <span class="type">C</span> | <span class="type">Fail</span></span></div><div class="line">    <span class="keyword">deriving</span> (<span class="type">Read</span>, <span class="type">Show</span>, <span class="type">Eq</span>, <span class="type">Ord</span>)</div><div class="line">:&#125;</div><div class="line"></div><div class="line">&gt; show <span class="type">A</span></div><div class="line"><span class="string">"A"</span></div><div class="line"></div><div class="line">&gt; show <span class="type">Fail</span></div><div class="line"><span class="string">"Fail"</span></div><div class="line"></div><div class="line">&gt; <span class="type">A</span> == <span class="type">C</span></div><div class="line"><span class="type">False</span></div><div class="line"></div><div class="line">&gt; compare <span class="type">A</span> <span class="type">B</span></div><div class="line"><span class="type">LT</span></div></pre></td></tr></table></figure>
+<h1 id="newtype"><a href="#newtype" class="headerlink" title="newtype"></a>newtype</h1><p>之前提到 data 關鍵字 可用來定義一個 type<br>但現在如果只有一個 data constructor (沒有 xx | oo) 又只有一個參數時<br>就可以用 newtype 取代</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">data MyType = MyType Int</div><div class="line">等於</div><div class="line">newtype MyType = MyType Int</div></pre></td></tr></table></figure>
+<p>差別在於編譯期 MyType 都是一個新的 type 編譯器會幫你檢查<br>但實際上執行時由於只有一個 data constructor 且 唯一參數<br>他就直接把 該參數型態 Int 當作 MyType 型態了, 也當然省去了 data constructor 的解構</p>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><ol>
+<li>haskell wiki</li>
+<li>learn you a haskell</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2018/03/27/haskell-with-module/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/27/haskell-with-module/" itemprop="url">在Haskell使用Module</a></h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/Tu-Szu-Chi/" itemprop="url" rel="index">
+              <span itemprop="name">Tu-Szu-Chi</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-03-27T10:42:05+08:00">
+                2018-03-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Module"><a href="#Module" class="headerlink" title="Module"></a>Module</h1><p>大部分的專案我們都會需要引入其他第三方或是自己寫的<code>Module</code>、<code>Package</code>，目的就是爲了讓許多函數可以重複操作<br>而最基本的一些操作都是在<code>Prelude</code>這模組裡，預設會自動載入，下<code>stack ghci</code>指令就會發現會是<code>Prelude&gt; ...</code>的prompt</p>
+<h2 id="Data-List"><a href="#Data-List" class="headerlink" title="Data.List"></a>Data.List</h2><p><code>Data.List</code>讓我們可以更方便的對<strong>List</strong>做處理，<strong>nub</strong>這Function可以幫我們從List取出不重複的數字</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- Main.hs</span></div><div class="line"><span class="keyword">module</span> Main (<span class="title">main</span>) <span class="keyword">where</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> Data.List</div><div class="line"></div><div class="line"><span class="title">main</span> :: <span class="type">IO</span> ()</div><div class="line"><span class="title">main</span> = print <span class="string">"Main"</span></div><div class="line"></div><div class="line"><span class="title">numUniques</span> :: (<span class="type">Eq</span> a) =&gt; [a] -&gt; <span class="type">Int</span></div><div class="line"><span class="title">numUniques</span> = length . nub</div></pre></td></tr></table></figure>
+<p>在ghci中<code>:l Main</code>後，呼叫<code>numUniques [1,2,2,3]</code>就會是<strong>3</strong>了<br>但在此個人建議指針對要用到的Function做引入，例如這邊只用到<strong>nub</strong>那我們就改寫一下import部分</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Data.List(<span class="title">nub</span>)</div></pre></td></tr></table></figure>
+<h2 id="System-Random"><a href="#System-Random" class="headerlink" title="System.Random"></a>System.Random</h2><p>都說Hakell是一個純函數語言，餵給一個函數相同的參數，不管怎樣都會回傳相同的結果，那要怎實作「隨機」的狀況呢？<br>就是利用這個<code>System.Random</code> Module，而要實做隨機的函數就叫做<code>random</code></p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="title">random</span> :: (<span class="type">RandomGen</span> g, <span class="type">Random</span> a) =&gt; g -&gt; (a, g)</div></pre></td></tr></table></figure>
+<p>來分別講解兩個參數，<strong>RandomGen</strong> typeclass是指作爲<strong>亂源</strong>的type(Gen是Generator縮寫)<br><strong>Random</strong> typeclass是指可以裝<strong>亂數</strong>的type(像是Int,Bool…)<br>首先我們要一個RandomGen的實例，在<code>System.Random</code>裡的<strong>StdGen</strong>就是了，剛好有個<code>mkStdGen</code>函數可以幫我們產生這實例，只要傳給他Int即可</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="title">mkStdGen</span> :: <span class="type">Int</span> -&gt; <span class="type">StdGen</span></div></pre></td></tr></table></figure>
+<p>跑跑看</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="title">random</span> (mkStdGen <span class="number">100</span>)</div><div class="line">&gt; (<span class="number">-3633736515773289454</span>,<span class="number">693699796</span> <span class="number">2103410263</span>)</div></pre></td></tr></table></figure>
+<p>剛有提到<code>random</code>會回傳的是一個Tuple<code>(Random, RandomGen)</code>，逗號右邊的確實是<strong>RandomGen</strong>(空格沒問題)，我們的值不一樣也很正常<br>在沒有指定回傳的type時，預設是Int，所以我們也可以指定成<em>Bool</em>、<em>Char</em></p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="title">random</span> (mkStdGen <span class="number">100</span>) :: (<span class="type">Bool</span>, <span class="type">StdGen</span>)</div><div class="line">&gt; (<span class="type">True</span>,<span class="number">4041414</span> <span class="number">40692</span>)</div></pre></td></tr></table></figure>
+<p>在這也可以發現兩次都有回傳不一樣的StdGen，如果要連續做好幾次random就可以接着用下去，所以剛好有個<code>randoms</code>函數，接收一個StdGen然後回傳無窮的List</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- randoms :: (RandomGen g, Random a) =&gt; g -&gt; [a]</span></div><div class="line"><span class="title">take</span> <span class="number">5</span> $ randoms (mkStdGen <span class="number">11</span>) :: [<span class="type">Bool</span>]</div><div class="line">&gt; [<span class="type">True</span>,<span class="type">True</span>,<span class="type">True</span>,<span class="type">True</span>,<span class="type">False</span>]</div></pre></td></tr></table></figure>
+<h2 id="自己的Module"><a href="#自己的Module" class="headerlink" title="自己的Module"></a>自己的Module</h2><p>該來自己寫個Moduel試試，在Main.hs當前目錄新增一個<strong>Lib.hs</strong>，並如下這樣寫，記得在Main裡<code>import Lib</code></p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">module</span> Lib</div><div class="line">    ( <span class="title">someFunc</span></div><div class="line">    ) <span class="keyword">where</span></div><div class="line"></div><div class="line"><span class="title">someFunc</span> :: <span class="type">IO</span> ()</div><div class="line"><span class="title">someFunc</span> = putStrLn <span class="string">"someFunc"</span></div><div class="line"></div><div class="line"><span class="title">someFunc'</span> :: <span class="type">IO</span> ()</div><div class="line"><span class="title">somwFunc'</span> = putStrLn <span class="string">"no no no..."</span></div></pre></td></tr></table></figure>
+<p><code>:r</code>重新載入後，分別呼叫<code>someFunc</code>、<code>someFunc&#39;</code>試試，會發現<code>someFunc&#39;</code>會報錯，因爲我們只有export出<code>someFunc</code>而已<br>通常專案還會有許多子資料夾，我們新建一個<code>Module</code>的資料夾，將我們的<code>Lib.hs</code>移進去，這時候重新載入可以，但呼叫<code>someFunc</code>就報錯，因爲找不到了，我們要改寫一下module的名字就可以了</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- /Module/Lib.hs</span></div><div class="line"><span class="keyword">module</span> Module.Lib</div><div class="line">    ( <span class="title">someFunc</span></div><div class="line">    ) <span class="keyword">where</span></div><div class="line"><span class="comment">-- /Main.hs</span></div><div class="line"><span class="keyword">import</span> Module.Lib</div></pre></td></tr></table></figure>
+<p>那會碰上不同Module可是Function name重複的問題，Haskell當然也有alias的方法，呼叫時只要用<code>Lib.someFunc</code>的形式就可以了</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> <span class="keyword">qualified</span> Module.Lib <span class="keyword">as</span> Lib</div><div class="line"><span class="keyword">import</span> <span class="keyword">qualified</span> Module.XXX <span class="keyword">as</span> XXX</div></pre></td></tr></table></figure>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a href="https://learnyoua.haskell.sg/content/zh-tw/ch07/module.html" target="_blank" rel="external">Learn your haskell</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2018/03/23/haskell-type/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/23/haskell-type/" itemprop="url">Haskell 系列 - type (類型)</a></h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/jackypan1989/" itemprop="url" rel="index">
+              <span itemprop="name">jackypan1989</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-03-23T18:26:55+08:00">
+                2018-03-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Type-類型"><a href="#Type-類型" class="headerlink" title="Type (類型)"></a>Type (類型)</h1><p>在 haskell 中我們是使用 data 關鍵字來定義所謂的類型<br>先看一個例子, Bool 是一個常見的類型, 包含兩個值(data), True 跟 False </p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">data</span> <span class="type">Bool</span> = <span class="type">True</span> | <span class="type">False</span></span></div></pre></td></tr></table></figure>
+<p>在這裡<br>= 號的左邊我們稱為 Type Constructor<br>= 號的右邊我們稱之為 Data Contructor (或者是 Value Contructor)</p>
+<p>所以 Bool 是 Type Constructor, 用 kind 可查看這 type 的特徵<br>:: 的後面代表他的類型<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt; :k <span class="type">Bool</span></div><div class="line"><span class="type">Bool</span> :: *</div></pre></td></tr></table></figure></p>
+<p>出現 * 表示他本身就是一個 Concrete type<br>所以 Bool 既是 type 同時也是 type constructor (但無參數)</p>
+<p>另一方面<br>True 跟 False 是 Data Contructor, 用 :t 可查看他是屬於什麼 type<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt; :t <span class="type">True</span></div><div class="line"><span class="type">True</span> :: <span class="type">Bool</span></div></pre></td></tr></table></figure></p>
+<p>True 是 Bool type 的data/value, 也不需要參數</p>
+<p>小結一下, 如果要用命令列來看<br>:k 是用來查看等號左邊的 type contructor (例如 Bool)<br>:t 是用來查看等號右邊的 data contructor (例如 True)</p>
+<h1 id="看看比較複雜的-Maybe-a-類型"><a href="#看看比較複雜的-Maybe-a-類型" class="headerlink" title="看看比較複雜的 Maybe a 類型"></a>看看比較複雜的 Maybe a 類型</h1><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">data</span> <span class="type">Maybe</span> a = <span class="type">Just</span> a | <span class="type">Nothing</span></span></div></pre></td></tr></table></figure>
+<p>這裡的 Maybe a 就如同上面的 Bool 一樣, 由兩個 data contructor 組成<br>但這裡的 a 我們又稱為 type variable<br>用來跟 Maybe 一起組合並回傳一個真正的 type 即為 Maybe a<br>a 用表示他有可能是 Int, String, 甚至可能是另一個 Maybe b (酷吧, 自己的定義自己用)<br>所以, 以類型 Maybe Int 來說<br>他的 data 中可能有 Just 1, Just 2, Just 4 … &amp; Nothing 他們的 type 都是 Maybe Int<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&gt; :t <span class="type">Just</span> <span class="string">"a"</span></div><div class="line"><span class="type">Just</span> <span class="string">"a"</span> :: <span class="type">Maybe</span> <span class="type">String</span></div><div class="line"></div><div class="line">&gt; :t <span class="type">Nothing</span></div><div class="line"><span class="type">Nothing</span> :: <span class="type">Maybe</span> a</div><div class="line"></div><div class="line">&gt; :t <span class="type">Nothing</span> :: <span class="type">Maybe</span> <span class="type">Int</span></div><div class="line"><span class="type">Nothing</span> :: <span class="type">Maybe</span> <span class="type">Int</span> :: <span class="type">Maybe</span> <span class="type">Int</span></div></pre></td></tr></table></figure></p>
+<p>在看 Nothing 的 type 時必須給他一點提示<br>協助他去推斷 Nothing, 否他會只給你一個 Maybe a<br>因為 Nothing 都是所有 Maybe a 會有的值</p>
+<p>再回頭看看這個 type 的 kind<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt; :k <span class="type">Maybe</span> <span class="type">Int</span></div><div class="line"><span class="type">Maybe</span> <span class="type">Int</span> :: *</div><div class="line"></div><div class="line">&gt; :k <span class="type">Maybe</span></div><div class="line"><span class="type">Maybe</span> :: * -&gt; *</div></pre></td></tr></table></figure></p>
+<p>剛剛有說過一個 * 才表示已經是 concrete type 了<br>這裡會出現一個 * -&gt; * 表示他只是 type contructor<br>你必須先傳進一個 concrete type 才會回傳一個 concrete type<br>這就是為什麼只打一個 Maybe 還不夠, 一定要接一個 Int (concrete type)</p>
+<h1 id="注意事項"><a href="#注意事項" class="headerlink" title="注意事項"></a>注意事項</h1><h2 id="1-data-constructor-產生出來的是值-data-可以傳入-function-但-type-不能傳入-function-Data-constructors-as-first-class-values"><a href="#1-data-constructor-產生出來的是值-data-可以傳入-function-但-type-不能傳入-function-Data-constructors-as-first-class-values" class="headerlink" title="1. data constructor 產生出來的是值/data, 可以傳入 function, 但 type 不能傳入 function (Data constructors as first class values)"></a>1. data constructor 產生出來的是值/data, 可以傳入 function, 但 type 不能傳入 function (Data constructors as first class values)</h2><p>例如 f 是某個 function<br>則 f (True) 或是 f (Just 2) 都合法<br>但 f (Maybe) 就不合法了</p>
+<h2 id="2-data-constructor-不是-type-Data-constructors-are-not-types"><a href="#2-data-constructor-不是-type-Data-constructors-are-not-types" class="headerlink" title="2. data constructor 不是 type (Data constructors are not types)"></a>2. data constructor 不是 type (Data constructors are not types)</h2><p>例如我們定義一個<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">data</span> <span class="type">MyMaybe</span> a = <span class="type">Just</span> a | <span class="type">Nothing</span></span></div><div class="line">合法</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">data</span> <span class="type">MyMaybe</span> a = <span class="type">Just</span> (<span class="type">Just</span> <span class="title">a</span>) | <span class="type">Nothing</span></span></div><div class="line">不合法</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">data</span> <span class="type">MyMaybe</span> a = <span class="type">Just</span> (<span class="type">Maybe</span> <span class="title">a</span>) | <span class="type">Nothing</span></span></div><div class="line">合法 </div><div class="line">(<span class="type">Data</span> contrutor 裡面如果要塞參數一定是要塞 <span class="class"><span class="keyword">type</span> 只有 <span class="type">Maybe</span> a 是 <span class="keyword">type</span>, <span class="type">Just</span> a 是值)</span></div></pre></td></tr></table></figure></p>
+<h1 id="更多例子"><a href="#更多例子" class="headerlink" title="更多例子"></a>更多例子</h1><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">data</span> <span class="type">Color</span> = <span class="type">Red</span> | <span class="type">Blue</span> | <span class="type">Green</span> | <span class="type">RGB</span> <span class="type">Int</span> <span class="type">Int</span> <span class="type">Int</span></span></div></pre></td></tr></table></figure>
+<p>Color 是一個 type 而且也是一個不用傳值的 type contructor<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt; :k <span class="type">Color</span></div><div class="line"><span class="type">Color</span> :: *</div></pre></td></tr></table></figure></p>
+<p>Red 跟 RGB 都是 data contructor<br>其中 Red 不用傳參數<br>RGB 要傳三個 Int 才會回傳一個 value, 其 type 是 Color<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&gt; :t <span class="type">Red</span></div><div class="line"><span class="type">Red</span> :: <span class="type">Color</span></div><div class="line">&gt; :t <span class="type">RGB</span></div><div class="line"><span class="type">RGB</span> :: <span class="type">Int</span> -&gt; <span class="type">Int</span> -&gt; <span class="type">Int</span> -&gt; <span class="type">Color</span></div></pre></td></tr></table></figure></p>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><ol>
+<li>haskell wiki</li>
+<li>learn you a haskell</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2018/03/21/applicative-functor/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/21/applicative-functor/" itemprop="url">Applicative Functor</a></h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/tancc/" itemprop="url" rel="index">
+              <span itemprop="name">tancc</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-03-21T15:03:23+08:00">
+                2018-03-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="1-Applicative-TypeClass"><a href="#1-Applicative-TypeClass" class="headerlink" title="1 Applicative TypeClass"></a>1 Applicative TypeClass</h1><p><code>Applicative Functor</code>比起<code>Functor</code>更為強大，以下是其部分typeclass定義<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="type">Functor</span> f =&gt; <span class="type">Applicative</span> f <span class="keyword">where</span></span></div><div class="line">    <span class="meta">&#123;-# MINIMAL pure, ((&lt;*&gt;) | liftA2) #-&#125;</span></div><div class="line">    <span class="comment">-- | Lift a value.</span></div><div class="line">    pure :: a -&gt; f a</div><div class="line">    <span class="comment">-- | Sequential application.</span></div><div class="line">    (&lt;*&gt;) :: f (a -&gt; b) -&gt; f a -&gt; f b</div></pre></td></tr></table></figure></p>
+<p>一個類型如果為<code>Applicative</code>的實例(instance)的話，則他同樣會具有funtoral structure，也就是<code>f a</code> 中的 <code>f</code>。</p>
+<p>而和<code>Functor</code>最主要多的不同在於，多了兩個方法<code>pure</code>和<code>&lt;*&gt;</code></p>
+<p><code>pure</code>：將型別為<code>a</code>的input，包進一個Applicative的結構<code>f</code>中，轉換成型別為<code>f a</code>的output</p>
+<p><code>&lt;*&gt;</code>： 與<code>fmap</code>相似，都是把函數提升(lift)，使其能應用在型別具有額外結構的值中。不同的是<code>&lt;*&gt;</code>所提升的function，本身就被包裹在<code>f</code>裡<code>f (a -&gt; b)</code></p>
+<p>同時比較<code>fmap</code>跟<code>&lt;*&gt;</code>會比較有感：<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="title">fmap</span>  :: <span class="type">Functor</span>     f =&gt;   (a -&gt; b) -&gt; f a -&gt; f b</div><div class="line">(&lt;*&gt;) :: <span class="type">Applicative</span> f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b</div></pre></td></tr></table></figure></p>
+<p>差別只在要lift的函數有沒有<code>f</code>被包裹起來。</p>
+<hr>
+<h1 id="2-Applicative-functor-laws"><a href="#2-Applicative-functor-laws" class="headerlink" title="2 Applicative functor laws"></a>2 Applicative functor laws</h1><p>但一個型別就算其實做了<code>pure</code>以及<code>&lt;*&gt;</code>成為了<code>Applicative</code>的instance了，也還不能夠說是一個<code>Applicative</code></p>
+<p>除了實作<code>pure</code>以及<code>&lt;*&gt;</code>外，還需要滿足4個<code>Applicative functor laws</code><br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 1. Identity</span></div><div class="line"><span class="title">pure</span> id &lt;*&gt; v = v </div><div class="line"></div><div class="line"><span class="number">2.</span> <span class="type">Composition</span></div><div class="line"><span class="title">pure</span> (.) &lt;*&gt; u &lt;*&gt; v &lt;*&gt; w = u &lt;*&gt; (v &lt;*&gt; w)</div><div class="line"></div><div class="line"><span class="number">3.</span> <span class="type">Homomorphisom</span></div><div class="line"><span class="title">pure</span> f &lt;*&gt; pure x = pure (f x)</div><div class="line"></div><div class="line"><span class="number">4.</span> <span class="type">Interchange</span></div><div class="line"><span class="title">u</span> &lt;*&gt; pure y = pure ($ y) &lt;*&gt; u</div></pre></td></tr></table></figure></p>
+<p>因為在Haskell中，你定義完<code>instance Applicative XXX where...</code>後，並不會幫你檢查是否滿足這些<code>Applicative functor laws</code>，因此這部分需要自己去確保。</p>
+<hr>
+<h1 id="3-一些使用情境"><a href="#3-一些使用情境" class="headerlink" title="3 一些使用情境"></a>3 一些使用情境</h1><ul>
+<li>將普通函數<code>(a -&gt; b -&gt; c -&gt;...)</code>，應用在多個有functoral structure/context的值<code>f a, fb, ...</code>時</li>
+</ul>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="title">fmap</span>  :: <span class="type">Functor</span>     f =&gt;   (a -&gt; b) -&gt; f a -&gt; f b</div><div class="line">(&lt;*&gt;) :: <span class="type">Applicative</span> f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b</div></pre></td></tr></table></figure>
+<p>從type signature中可以看到，<code>fmap</code>無法將<code>f (a -&gt; b)</code> 應用於 <code>f a,f b</code><br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="title">x</span> = fmap (+) (<span class="type">Just</span> <span class="number">1</span>)</div><div class="line"><span class="comment">--x = Just (+ 1) 型別為 f (a -&gt; b)</span></div><div class="line"></div><div class="line"><span class="title">fmap</span> x (<span class="type">Just</span> <span class="number">2</span>)</div><div class="line"><span class="comment">-- error</span></div><div class="line"><span class="comment">-- 我們無法用fmap對x進行操作了</span></div><div class="line"><span class="comment">-- fmap的第一個參數型別要為 (a -&gt; b)，不可為 f (a -&gt; b)</span></div></pre></td></tr></table></figure></p>
+<p>這時就可以使用<code>&lt;*&gt;</code>搭配<code>&lt;$&gt;</code>來達成需求了<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">(+) &lt;$&gt; (<span class="type">Just</span> <span class="number">1</span>) &lt;*&gt; (<span class="type">Just</span> <span class="number">2</span>)</div><div class="line">&gt;&gt; <span class="type">Just</span> <span class="number">3</span></div><div class="line">  </div><div class="line">  (+) &lt;$&gt; (<span class="type">Just</span> <span class="number">1</span>) &lt;*&gt; (<span class="type">Just</span> <span class="number">2</span>)</div><div class="line">= <span class="type">Just</span> (+ <span class="number">1</span>) &lt;*&gt; (<span class="type">Just</span> <span class="number">2</span>)</div><div class="line">= <span class="type">Just</span> <span class="number">3</span></div><div class="line"></div><div class="line"><span class="comment">-- 另個例子</span></div><div class="line">(\x y z -&gt; [x*y, y*z, x*z]) &lt;$&gt; (<span class="type">Just</span> <span class="number">1</span>) &lt;*&gt; (<span class="type">Just</span> <span class="number">2</span>) &lt;*&gt; (<span class="type">Just</span> <span class="number">3</span>)</div><div class="line">&gt;&gt; <span class="type">Just</span> [<span class="number">2</span>,<span class="number">6</span>,<span class="number">3</span>]</div><div class="line"></div><div class="line">  (\x y z -&gt; [x*y, y*z, x*z]) &lt;$&gt; (<span class="type">Just</span> <span class="number">1</span>) &lt;*&gt; (<span class="type">Just</span> <span class="number">2</span>) &lt;*&gt; (<span class="type">Just</span> <span class="number">3</span>)</div><div class="line">= <span class="type">Just</span> (\y z -&gt; [<span class="number">1</span>*y, y*z, <span class="number">1</span>*z]) &lt;*&gt; (<span class="type">Just</span> <span class="number">2</span>) &lt;*&gt; (<span class="type">Just</span> <span class="number">3</span>)</div><div class="line">= <span class="type">Just</span> (\z -&gt; [<span class="number">1</span>*<span class="number">2</span>, <span class="number">2</span>*z, <span class="number">1</span>*z]) &lt;*&gt; (<span class="type">Just</span> <span class="number">3</span>)</div><div class="line">= <span class="type">Just</span> ([<span class="number">1</span>*<span class="number">2</span>, <span class="number">2</span>*<span class="number">3</span>, <span class="number">1</span>*<span class="number">3</span>])</div><div class="line">= <span class="type">Just</span> [<span class="number">2</span>,<span class="number">6</span>,<span class="number">3</span>]</div><div class="line"></div><div class="line"><span class="comment">-- 另個例子</span></div><div class="line"><span class="class"><span class="keyword">data</span> <span class="type">User</span> = <span class="type">User</span> &#123; <span class="title">firstName</span> :: <span class="type">String</span></span></div><div class="line"><span class="class">                 , <span class="title">lastName</span>  :: <span class="type">String</span></span></div><div class="line"><span class="class">                 , <span class="title">email</span>     :: <span class="type">String</span></span></div><div class="line"><span class="class">                 &#125; <span class="keyword">deriving</span> (<span class="type">Show</span>)</span></div><div class="line">  </div><div class="line"><span class="title">validate</span> :: <span class="type">String</span> -&gt; <span class="type">Maybe</span> <span class="type">String</span></div><div class="line"><span class="title">validate</span> [] = <span class="type">Nothing</span></div><div class="line"><span class="title">validate</span> s = <span class="type">Just</span> s</div><div class="line"></div><div class="line"><span class="title">makeUser</span> :: <span class="type">String</span> -&gt; <span class="type">String</span> -&gt; <span class="type">String</span> -&gt; <span class="type">Maybe</span> <span class="type">User</span></div><div class="line"><span class="title">makeUser</span> f l e = <span class="type">User</span></div><div class="line">         &lt;$&gt; validate f</div><div class="line">         &lt;*&gt; validate l</div><div class="line">         &lt;*&gt; validate e</div><div class="line"><span class="comment">-- 可以想像makeUser如果不用&lt;*&gt;，勢必就必須寫很多case...of來達成</span></div></pre></td></tr></table></figure></p>
+<ul>
+<li>多個運算間沒有相依關係時<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(&lt;*&gt;) :: <span class="type">Applicative</span> f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b</div><div class="line">(&gt;&gt;=) ::       <span class="type">Monad</span> m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>從type signature中可以看到，<code>&gt;&gt;=</code>所串聯的運算式有相依關係的，下一個運算的依賴上一個運算的結果。</p>
+<p>也就是說Monad <code>&gt;&gt;=</code>的運算其實是相依(Dependency)，但這也是他彈性的部分，因為我們可以針對運算的返回值再進一步的操作。</p>
+<p>而Applicative <code>&lt;*&gt;</code>的運算是不相依(Independency)。因為少了相依性，對比起來使用Applicative可以寫出更乾淨的代碼。</p>
+<hr>
+<h1 id="4"><a href="#4" class="headerlink" title="4"></a>4</h1><p>前面有個例子<code>(+) &lt;$&gt; (Just 1) &lt;*&gt; (Just 2)</code>，不過<code>Control.Applicative</code>有提供我們一些方便的工具來做同樣的事情<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="title">liftA</span>  :: (a -&gt; b)           -&gt; f a -&gt; f b</div><div class="line"><span class="title">liftA2</span> :: (a -&gt; b -&gt; c)      -&gt; f a -&gt; f b -&gt; f c</div><div class="line"><span class="title">liftA3</span> :: (a -&gt; b -&gt; c -&gt; d) -&gt; f a -&gt; f b -&gt; f c -&gt; f d</div></pre></td></tr></table></figure></p>
+<p>因此可改寫成<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="title">liftA2</span> (+) (<span class="type">Just</span> <span class="number">1</span>) (<span class="type">Just</span> <span class="number">2</span>)</div></pre></td></tr></table></figure></p>
+<p>視覺上看起來有比較簡潔了<br>而<code>liftA</code> <code>liftA2</code> <code>lift3</code>的差別只在其所要lift的函數的參數個數而已</p>
+<p>此外，在閱讀或撰寫上，使用<code>&lt;$&gt;..&lt;*&gt;..&lt;*&gt;</code>或許對部分人來說比較不直覺的。</p>
+<p>這部分可以使用ApplicativeDo，使得可以跟以往使用do notation那般由上到下的書寫方式<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&#123;-# LANGUAGE ApplicativeDo #-&#125;</span></div><div class="line"></div><div class="line"><span class="title">run</span> = <span class="keyword">do</span></div><div class="line"> x &lt;- expr1</div><div class="line"> y &lt;- expr1</div><div class="line"> z &lt;- expr1</div><div class="line"> return (f x y z)</div></pre></td></tr></table></figure></p>
+<p>因為expression並不會相互依賴，因此會被轉換成<code>f &lt;$&gt; expr1 &lt;*&gt; expr2 &lt;*&gt; expr3</code>，其實就還是一樣的東西。</p>
+<hr>
+<h1 id="5-參考資料及更詳盡的內容"><a href="#5-參考資料及更詳盡的內容" class="headerlink" title="5 參考資料及更詳盡的內容"></a>5 參考資料及更詳盡的內容</h1><p><a href="https://hackage.haskell.org/package/base-4.11.0.0/docs/src/GHC.Base.html#Applicative" target="_blank" rel="external">GHC.Base#Applicative</a><br><a href="https://en.wikibooks.org/wiki/Haskell/Applicative_functors" target="_blank" rel="external">Haskell/Applicative functors - Wikibooks, open books for an open world</a><br><a href="https://ghc.haskell.org/trac/ghc/wiki/ApplicativeDo" target="_blank" rel="external">ApplicativeDo – GHC</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="https://avatars1.githubusercontent.com/u/31230110"
+              alt="SOVMedCare" />
+          
+            <p class="site-author-name" itemprop="name">SOVMedCare</p>
+            <p class="site-description motion-element" itemprop="description">Full Stack JS #FRP #RxJS #Redux #React</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">文章</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">標籤</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/sovmedcare" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:jackypan1989@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/sovtw" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.instagram.com/sovmedtw/" target="_blank" title="Instagram">
+                  
+                    <i class="fa fa-fw fa-instagram"></i>Instagram</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SOVMedCare</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

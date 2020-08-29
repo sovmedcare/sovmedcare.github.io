@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-tw">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="FP,RxJS," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Rx’Library Observable可大致分為兩種類型 - Hot &amp;amp; Cold在往下介紹前，可以先將Hot想成廣播電台(Radio)，Cold是CDHot Observable的訂閱者，會讀取同樣的source；Cold Observable則每個訂閱者的source都是獨立的  Cold Observable只有當訂閱者訂閱的時候，Cold Observable才會推送資料，且">
+<meta name="keywords" content="FP,RxJS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RxJs Observable - HOT &amp; COLD">
+<meta property="og:url" content="http://sovmedcare.github.io/2017/09/13/Observable-HOT-COLD/index.html">
+<meta property="og:site_name" content="SOVMedCare Tech">
+<meta property="og:description" content="Rx’Library Observable可大致分為兩種類型 - Hot &amp;amp; Cold在往下介紹前，可以先將Hot想成廣播電台(Radio)，Cold是CDHot Observable的訂閱者，會讀取同樣的source；Cold Observable則每個訂閱者的source都是獨立的  Cold Observable只有當訂閱者訂閱的時候，Cold Observable才會推送資料，且">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:image" content="https://image.slidesharecdn.com/untitled-150216041015-conversion-gate02/95/reactive-programming-with-rx-22-638.jpg?cb=1424081878">
+<meta property="og:updated_time" content="2020-07-31T10:42:01.092Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RxJs Observable - HOT &amp; COLD">
+<meta name="twitter:description" content="Rx’Library Observable可大致分為兩種類型 - Hot &amp;amp; Cold在往下介紹前，可以先將Hot想成廣播電台(Radio)，Cold是CDHot Observable的訂閱者，會讀取同樣的source；Cold Observable則每個訂閱者的source都是獨立的  Cold Observable只有當訂閱者訂閱的時候，Cold Observable才會推送資料，且">
+<meta name="twitter:image" content="https://image.slidesharecdn.com/untitled-150216041015-conversion-gate02/95/reactive-programming-with-rx-22-638.jpg?cb=1424081878">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://sovmedcare.github.io/2017/09/13/Observable-HOT-COLD/"/>
+
+
+
+
+
+  <title>RxJs Observable - HOT & COLD | SOVMedCare Tech</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SOVMedCare Tech</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">@sovmedcare</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-authors">
+          <a href="/authors/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            作者群
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2017/09/13/Observable-HOT-COLD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">RxJs Observable - HOT & COLD</h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/Tu-Szu-Chi/" itemprop="url" rel="index">
+              <span itemprop="name">Tu-Szu-Chi</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-09-13T12:15:25+08:00">
+                2017-09-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://image.slidesharecdn.com/untitled-150216041015-conversion-gate02/95/reactive-programming-with-rx-22-638.jpg?cb=1424081878" alt="Observable Hot &amp; Cold" title="截自Google Image"></p>
+<p>Rx’Library Observable可大致分為兩種類型 - <em>Hot</em> &amp; <em>Cold</em><br>在往下介紹前，可以先將<em>Hot</em>想成廣播電台(Radio)，<em>Cold</em>是CD<br>Hot Observable的訂閱者，會讀取同樣的source；Cold Observable則每個訂閱者的source都是獨立的</p>
+<hr>
+<h1 id="Cold-Observable"><a href="#Cold-Observable" class="headerlink" title="Cold Observable"></a>Cold Observable</h1><p>只有當訂閱者訂閱的時候，Cold Observable才會推送資料，且每個訂閱者都是獨立的流，就像是CD只有當你放進去按播放後才會有音樂<br>Observable.interval就是種Cold類型的流</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> source = <span class="keyword">new</span> Observable.interval(<span class="number">100</span>).take(<span class="number">3</span>)</div></pre></td></tr></table></figure>
+<p>可以在這<a href="https://jsbin.com/kiwitozejo/1/edit?js,console" target="_blank" rel="external">JS Bin</a>看到observerA &amp; observerB是各自的數據流</p>
+<h1 id="Hot-Observable"><a href="#Hot-Observable" class="headerlink" title="Hot Observable"></a>Hot Observable</h1><p>不管有沒有被訂閱，只要創建後就開始有數據流，Mouse Click Event就是最清楚的範例<br>Click事件一直在發生，但只有當你訂閱時你才收得到，且收到的是訂閱後的「觸發事件」，之前的不會收到<br>當然，如果你取消訂閱了，數據流依然會持續產生<br>這類的情境像是「股市最新報價」，你只會收到最新的那一個報價，不會收到五分鐘前的那筆<br>Hot Observable原理其實是我們和數據流間還有一個「<strong>中間人</strong>」，會一直監聽數據流，我們再跟他取資訊就好(真是忙碌的傢伙)<br><strong>中間人</strong>會有一份訂閱者的清單，這樣才知道推播時要推送給哪些人</p>
+<h2 id="Subject"><a href="#Subject" class="headerlink" title="Subject"></a>Subject</h2><p>先附上<a href="https://jsbin.com/fumakubupa/1/edit?js,console" target="_blank" rel="external">JS Bin</a>的Code<br>之前有提到訂閱者(Observer)會有三個Method - next、error、complete，理所當然Subject作為中間人他也該具備這些特質<br>並且有一份訂閱者的清單，有興趣的可以看官方的<a href="https://github.com/ReactiveX/rxjs/blob/master/src/Subject.ts#L22" target="_blank" rel="external">Source Code</a><br>Subject可以訂閱也可以被訂閱，他既是Observable也是Observer<br>他還有其他三個變形 - BehaviorSubject、ReplaySubject、AsyncSubject，能在我們訂閱時有不同效果</p>
+<h2 id="Operator"><a href="#Operator" class="headerlink" title="Operator"></a>Operator</h2><p>上一段的Code中，我們先新建Subject，再一一訂閱，這讓程式碼變的冗長，Rx’Library有提供些Operator讓我們寫的更簡潔點</p>
+<h3 id="multicast"><a href="#multicast" class="headerlink" title="multicast"></a>multicast</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> source = <span class="keyword">new</span> Observable</div><div class="line">                    .interval(<span class="number">300</span>)</div><div class="line">                    .take(<span class="number">3</span>)</div><div class="line">                    .multicast(<span class="keyword">new</span> Rx.Subject())</div></pre></td></tr></table></figure>
+<p>multicast會回傳可連結(connect)的Observable，要真的執行connect後，Subject才會去訂閱source，且開始推送數據</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> realObserver = source.connect()</div></pre></td></tr></table></figure>
+<p>connect會回傳subscription，將此unsubscribe才會真正退掉Observable，將observerA/observerB退訂中間人還是會收到數據流</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">realObserver.unsubscribe()</div></pre></td></tr></table></figure>
+<p>以下這種寫法可以更簡潔</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> source = <span class="keyword">new</span> Observable</div><div class="line">                    .interval(<span class="number">300</span>)</div><div class="line">                    .take(<span class="number">3</span>)</div><div class="line">                    .publish()</div></pre></td></tr></table></figure>
+<h3 id="refCount"><a href="#refCount" class="headerlink" title="refCount"></a>refCount</h3><p>但要多寫一段connect也是很麻煩，我們希望一有人訂閱就開始推送(observers.length &gt; 0)，refCount可幫助我們</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> source = <span class="keyword">new</span> Observable</div><div class="line">                    .interval(<span class="number">300</span>)</div><div class="line">                    .take(<span class="number">3</span>)</div><div class="line">                    .publish()</div><div class="line">                    .refCount()</div></pre></td></tr></table></figure>
+<p>要退訂不讓數據流推送的話，只要讓訂閱人數變成0即可(範例中就是讓observerA &amp; observerB unsubscribe即可)</p>
+<p>再給一個簡潔的寫法，refCount + publish</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> source = <span class="keyword">new</span> Observable</div><div class="line">                    .interval(<span class="number">300</span>)</div><div class="line">                    .take(<span class="number">3</span>)</div><div class="line">                    .share()</div></pre></td></tr></table></figure>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>Rx’Library是一個很實用但也相對需要花時間學習的工具，畢竟要去習慣「Everything is stream」的思維<br>在此附上RxJs的核心開發者之一 - <em>Andre Staltz</em>所寫的<a href="http://jsfiddle.net/staltz/8jFJH/48/" target="_blank" rel="external">應用範例</a>，推薦大家去看看</p>
+<hr>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="http://ithelp.ithome.com.tw/articles/10188633" target="_blank" rel="external">30 天精通 RxJS(22): 什麼是 Subject？</a><br><a href="https://medium.com/@benlesh/hot-vs-cold-observables-f8094ed53339" target="_blank" rel="external">Hot vs Cold Observables</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/FP/" rel="tag"># FP</a>
+          
+            <a href="/tags/RxJS/" rel="tag"># RxJS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/13/Rx-js-Observable/" rel="next" title="RxJs Observable 介紹">
+                <i class="fa fa-chevron-left"></i> RxJs Observable 介紹
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/15/rx-js-funny-examples/" rel="prev" title="5個RxJs有趣範例">
+                5個RxJs有趣範例 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="https://avatars1.githubusercontent.com/u/31230110"
+              alt="SOVMedCare" />
+          
+            <p class="site-author-name" itemprop="name">SOVMedCare</p>
+            <p class="site-description motion-element" itemprop="description">Full Stack JS #FRP #RxJS #Redux #React</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">文章</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">標籤</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/sovmedcare" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:jackypan1989@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/sovtw" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.instagram.com/sovmedtw/" target="_blank" title="Instagram">
+                  
+                    <i class="fa fa-fw fa-instagram"></i>Instagram</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Cold-Observable"><span class="nav-number">1.</span> <span class="nav-text">Cold Observable</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hot-Observable"><span class="nav-number">2.</span> <span class="nav-text">Hot Observable</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Subject"><span class="nav-number">2.1.</span> <span class="nav-text">Subject</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Operator"><span class="nav-number">2.2.</span> <span class="nav-text">Operator</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#multicast"><span class="nav-number">2.2.1.</span> <span class="nav-text">multicast</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#refCount"><span class="nav-number">2.2.2.</span> <span class="nav-text">refCount</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#結語"><span class="nav-number">3.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SOVMedCare</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

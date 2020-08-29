@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-tw">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Docker," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="簡介Docker的介紹和教學已有相當多的資源，但當我以為可以快速地建立環境、連上DB，卻不盡然許多資源很棒，寫得很詳細，但正因對每一項解釋太詳細以致我無法很快找到我要的知識點，故在此提供這一回摸索後，我認為能較快建立環境的流程。 環境因一直想寫寫爬蟲，較著名的Framework是基於Python的 - Scrapy，但其實Scrapy之外還要安裝蠻多東西的，故能用Docker幫我們整合當然再好不過">
+<meta name="keywords" content="Docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker基礎架設(以Python Scrapy為例)">
+<meta property="og:url" content="http://sovmedcare.github.io/2017/11/15/docker-example/index.html">
+<meta property="og:site_name" content="SOVMedCare Tech">
+<meta property="og:description" content="簡介Docker的介紹和教學已有相當多的資源，但當我以為可以快速地建立環境、連上DB，卻不盡然許多資源很棒，寫得很詳細，但正因對每一項解釋太詳細以致我無法很快找到我要的知識點，故在此提供這一回摸索後，我認為能較快建立環境的流程。 環境因一直想寫寫爬蟲，較著名的Framework是基於Python的 - Scrapy，但其實Scrapy之外還要安裝蠻多東西的，故能用Docker幫我們整合當然再好不過">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:image" content="https://i.imgur.com/gDOrbxO.png">
+<meta property="og:image" content="https://i.imgur.com/pGDA7hC.png">
+<meta property="og:image" content="https://i.imgur.com/w9GqGCC.png">
+<meta property="og:image" content="https://i.imgur.com/RgZtEIa.png">
+<meta property="og:image" content="https://i.imgur.com/W4H8f0t.png">
+<meta property="og:image" content="https://i.imgur.com/hFO32iA.png">
+<meta property="og:updated_time" content="2020-07-31T10:42:01.095Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Docker基礎架設(以Python Scrapy為例)">
+<meta name="twitter:description" content="簡介Docker的介紹和教學已有相當多的資源，但當我以為可以快速地建立環境、連上DB，卻不盡然許多資源很棒，寫得很詳細，但正因對每一項解釋太詳細以致我無法很快找到我要的知識點，故在此提供這一回摸索後，我認為能較快建立環境的流程。 環境因一直想寫寫爬蟲，較著名的Framework是基於Python的 - Scrapy，但其實Scrapy之外還要安裝蠻多東西的，故能用Docker幫我們整合當然再好不過">
+<meta name="twitter:image" content="https://i.imgur.com/gDOrbxO.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://sovmedcare.github.io/2017/11/15/docker-example/"/>
+
+
+
+
+
+  <title>Docker基礎架設(以Python Scrapy為例) | SOVMedCare Tech</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SOVMedCare Tech</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">@sovmedcare</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-authors">
+          <a href="/authors/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            作者群
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2017/11/15/docker-example/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Docker基礎架設(以Python Scrapy為例)</h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/Tu-Szu-Chi/" itemprop="url" rel="index">
+              <span itemprop="name">Tu-Szu-Chi</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-11-15T17:00:00+08:00">
+                2017-11-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="簡介"><a href="#簡介" class="headerlink" title="簡介"></a>簡介</h1><p><strong>Docker</strong>的介紹和教學已有相當多的資源，但當我以為可以快速地建立環境、連上DB，卻不盡然<br>許多資源很棒，寫得很詳細，但正因對每一項解釋太詳細以致我無法很快找到我要的知識點，故在此提供這一回摸索後，我認為能較快建立環境的流程。</p>
+<h1 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h1><p>因一直想寫寫爬蟲，較著名的Framework是基於Python的 - <strong>Scrapy</strong>，但其實Scrapy之外還要安裝蠻多東西的，故能用Docker幫我們整合當然再好不過</p>
+<h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><ol>
+<li>Docker<ul>
+<li><a href="https://store.docker.com/editions/community/docker-ce-desktop-mac" target="_blank" rel="external">Mac</a></li>
+<li><a href="https://store.docker.com/editions/community/docker-ce-desktop-windows" target="_blank" rel="external">Windows</a></li>
+</ul>
+</li>
+<li><a href="https://kitematic.com/" target="_blank" rel="external">Kitematic</a><br>這是一個Docker的GUI工具，個人很推薦剛入門者使用</li>
+</ol>
+<p>都安裝好後記得確認下Docker是否正常運行著，並打開Kitematic，會要求輸入Docker帳號密碼，沒有的可以申請一組</p>
+<blockquote>
+<p>Mac使用者可看上方工具列小鯨魚點開，會亮綠燈且<em>Docker is running</em></p>
+</blockquote>
+<h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><p>總共會有三個Container來做示範，Scrapy/Postgres/Adminer</p>
+<h3 id="Scrapy"><a href="#Scrapy" class="headerlink" title="Scrapy"></a>Scrapy</h3><p>接著要建立Scrapy的Container，在搜尋框輸入「Scrapy」第一個就會是了(<em>from scrapinghub</em>)<br>點一下三個點點的<em>More button</em>會看到可以選擇Tag/Network，先選擇<code>1.1-py3-latest</code>的Tag讓後續我們的版本一致，選好後就按下<strong>Create</strong>即可</p>
+<blockquote>
+<p>因我在run流程第二遍時有發生HTTP 500 error在這步驟，可以參考<a href="https://github.com/docker/kitematic/issues/3260" target="_blank" rel="external">這篇</a>，登出Kitematic的Docker Account</p>
+</blockquote>
+<p>載好後Kitematic就會自動run這個Container，可以在Setting看到些資訊<br><img src="https://i.imgur.com/gDOrbxO.png" alt="Index"></p>
+<p>接著點擊上方的<strong>EXEC</strong>會將Container啟動在我們的終端機上，輸入<code>scrapy</code>並按下Enter確認Container正常運作</p>
+<blockquote>
+<p>可以先點左下方齒輪(設定)，將<em>Exec command shell</em>選擇bash會比較習慣</p>
+</blockquote>
+<h3 id="Postgres"><a href="#Postgres" class="headerlink" title="Postgres"></a>Postgres</h3><p>再來按<strong>New</strong>去搜尋<code>Postgres</code>並選擇第一個官方的Image(在此是用10.1版本)，一樣好了後利用<strong>EXEC</strong>在終端機上開啟並輸入<code>psql</code><br>會有以下錯誤訊息</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">psql: FATAL:  role "root" does not exist</div></pre></td></tr></table></figure>
+<p>改成輸入預設的帳號就可以了</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">psql -h localhost -U postgres</div></pre></td></tr></table></figure>
+<p>要離開psql就輸入<code>\q</code></p>
+<h3 id="Adminer"><a href="#Adminer" class="headerlink" title="Adminer"></a>Adminer</h3><p>接著<strong>New</strong>一個adminer的Container(官方的Image)，選擇latest版，方便我們之後檢查是否有連上DB<br>好了後可以到Settings -&gt; Hostname/Ports 確認下這Container的Published IP (<em>有可能顯示的是localhost</em>)<br><img src="https://i.imgur.com/pGDA7hC.png" alt="Adminer"><br>直接點藍色IP字段就會將Adminer打開在瀏覽器了<br>再來要輸入Server位置，我們要在Postgres的command line輸入</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ip address</div></pre></td></tr></table></figure>
+<p>會得到類似以下資訊<br><img src="https://i.imgur.com/w9GqGCC.png" alt="Ip address"><br>第二段的<code>172.17.0.3</code>就是Postgres在Docker內網的位置<br>為了要管理Container的Network，可以到Settings -&gt; Network檢查該Container是屬於哪一組網路(<em>預設是bridge</em>)<br>要在同一組網路下連內網IP才有用<br>所以我們的三個Container都是在bridge情況下，要連對方用內網IP即可<br>故在Adminer介面只要輸入剛剛得到的Postgres內網IP &amp; Username，按下Login就會連上了<br><img src="https://i.imgur.com/RgZtEIa.png" alt="Adminer"><br>環境架設就先到這裡！</p>
+<h1 id="專案"><a href="#專案" class="headerlink" title="專案"></a>專案</h1><p>再來就拿實際專案來做示範，可以先clone我個人抓證交所資料的<a href="https://github.com/Tu-Szu-Chi/stockParser/tree/docker-test" target="_blank" rel="external">專案</a>來測試</p>
+<blockquote>
+<p>branch 選擇 docker-test</p>
+</blockquote>
+<p>要讓Container讀取本機端的檔案，要設定<code>Volumes</code>，而在Kitematic上不是每個Image都可以直接到Settings -&gt; Volumes 去設定</p>
+<blockquote>
+<p>本次的Scrapy就不行，Postgres可以</p>
+</blockquote>
+<p>所以要教大家利用指令來啟動Container &amp; 指定Volumes(原有的Scrapy Container不需要了)</p>
+<h2 id="Step-1"><a href="#Step-1" class="headerlink" title="Step 1"></a>Step 1</h2><p>先在終端機上輸入指令，找到我們的<code>scrapinghub/scrapinghub-stack-scrapy</code> Image，並記住Image ID</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker images</div></pre></td></tr></table></figure>
+<h2 id="Step-2"><a href="#Step-2" class="headerlink" title="Step 2"></a>Step 2</h2><p>在終端機輸入</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker run -it -v ~/stockParser/twse/:/twse [Image ID] bash</div></pre></td></tr></table></figure>
+<p><code>-i</code>是讓Container的標準輸入保持打開；<code>-t</code>是讓Docker分配一個虛擬終端(pseudo-tty)並綁定到Container標準輸入上<br><code>-v</code>即是Volumes的設定，冒號左邊是本機端位置，要用絕對路徑，冒號右邊是Container內的路徑<br>按下Enter後我們就建立了一個新的Container，並可在Docker內讀取到我們的專案，於Kitematic中可以重整Containers List看我們剛剛建立的容器(Mac就按 <strong>Cmd+R</strong>)</p>
+<blockquote>
+<p>這裡也有個插曲，當按重整沒有任何新的容器出現時，我要用管理員權限打開Kitematic才看得到剛剛建立的Container，但Postgres/Adminer就看不到了<br><img src="https://i.imgur.com/W4H8f0t.png" alt="New Container"></p>
+</blockquote>
+<h2 id="Step-3"><a href="#Step-3" class="headerlink" title="Step 3"></a>Step 3</h2><p>接著在Scrapy的Container輸入<code>ls</code>就看得到twse資料夾，我們先<code>cd</code>進去，然後先安裝要用的Module<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install -r requirements.txt</div></pre></td></tr></table></figure></p>
+<p>再到專案底下的/twse/twse/settings.py 底部的DATABASE填入我們<code>Postgres</code>的設定</p>
+<blockquote>
+<p>如果發現你的DB和Scrapy是不同的Published IP<br>那你Scrapy要連DB就輸入Postgres的Published IP:Port<br>如果都一樣者只要先用<code>ip address</code>找Postgres內網ip再輸入即可<br><img src="https://i.imgur.com/hFO32iA.png" alt="IP:Port"></p>
+</blockquote>
+<p>記得到adminer去新建一個<strong>database</strong>，在此預設名字為<em>twse</em></p>
+<h2 id="Step-4"><a href="#Step-4" class="headerlink" title="Step 4"></a>Step 4</h2><p>最後輸入以下指令，就會開始抓2017/10/18 電子工業的資料了<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scrapy crawl stock</div></pre></td></tr></table></figure></p>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>以上是個人認為剛開始用Docker會想嘗試的地方，Docker還有很多強大的用途直得我們去學習<br>也歡迎有興趣的人可以一起完成這twse專案</p>
+<h1 id="參考連結"><a href="#參考連結" class="headerlink" title="參考連結"></a>參考連結</h1><p><a href="https://philipzheng.gitbooks.io/docker_practice/content/" target="_blank" rel="external">Docker Gitbook</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Docker/" rel="tag"># Docker</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/24/husky/" rel="next" title="husky + git hook">
+                <i class="fa fa-chevron-left"></i> husky + git hook
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/19/learn-youa-haskell/" rel="prev" title="初識Haskell">
+                初識Haskell <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="https://avatars1.githubusercontent.com/u/31230110"
+              alt="SOVMedCare" />
+          
+            <p class="site-author-name" itemprop="name">SOVMedCare</p>
+            <p class="site-description motion-element" itemprop="description">Full Stack JS #FRP #RxJS #Redux #React</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">文章</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">標籤</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/sovmedcare" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:jackypan1989@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/sovtw" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.instagram.com/sovmedtw/" target="_blank" title="Instagram">
+                  
+                    <i class="fa fa-fw fa-instagram"></i>Instagram</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#簡介"><span class="nav-number">1.</span> <span class="nav-text">簡介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#環境"><span class="nav-number">2.</span> <span class="nav-text">環境</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安裝"><span class="nav-number">2.1.</span> <span class="nav-text">安裝</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部署"><span class="nav-number">2.2.</span> <span class="nav-text">部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Scrapy"><span class="nav-number">2.2.1.</span> <span class="nav-text">Scrapy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Postgres"><span class="nav-number">2.2.2.</span> <span class="nav-text">Postgres</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Adminer"><span class="nav-number">2.2.3.</span> <span class="nav-text">Adminer</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#專案"><span class="nav-number">3.</span> <span class="nav-text">專案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-1"><span class="nav-number">3.1.</span> <span class="nav-text">Step 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-2"><span class="nav-number">3.2.</span> <span class="nav-text">Step 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-3"><span class="nav-number">3.3.</span> <span class="nav-text">Step 3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-4"><span class="nav-number">3.4.</span> <span class="nav-text">Step 4</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#結語"><span class="nav-number">4.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#參考連結"><span class="nav-number">5.</span> <span class="nav-text">參考連結</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SOVMedCare</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

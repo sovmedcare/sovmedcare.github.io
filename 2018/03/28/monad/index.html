@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-tw">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Haskell," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Monad對工程師而言，如果沒牽扯到數學相關的範疇其實不是那麼可怕難懂的東西。 1fmap :: (a -&amp;gt; b) -&amp;gt; f a -&amp;gt; f b Functor實作了fmap，使得可將普通函數(a -&amp;gt; b)lift到f a -&amp;gt; f b； 1(&amp;lt;*&amp;gt;) :: f (a -&amp;gt; b) -&amp;gt; f a -&amp;gt; f b Applicative實作了&amp;">
+<meta name="keywords" content="Haskell">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Monad">
+<meta property="og:url" content="http://sovmedcare.github.io/2018/03/28/monad/index.html">
+<meta property="og:site_name" content="SOVMedCare Tech">
+<meta property="og:description" content="Monad對工程師而言，如果沒牽扯到數學相關的範疇其實不是那麼可怕難懂的東西。 1fmap :: (a -&amp;gt; b) -&amp;gt; f a -&amp;gt; f b Functor實作了fmap，使得可將普通函數(a -&amp;gt; b)lift到f a -&amp;gt; f b； 1(&amp;lt;*&amp;gt;) :: f (a -&amp;gt; b) -&amp;gt; f a -&amp;gt; f b Applicative實作了&amp;">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:updated_time" content="2020-07-31T10:42:01.099Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Monad">
+<meta name="twitter:description" content="Monad對工程師而言，如果沒牽扯到數學相關的範疇其實不是那麼可怕難懂的東西。 1fmap :: (a -&amp;gt; b) -&amp;gt; f a -&amp;gt; f b Functor實作了fmap，使得可將普通函數(a -&amp;gt; b)lift到f a -&amp;gt; f b； 1(&amp;lt;*&amp;gt;) :: f (a -&amp;gt; b) -&amp;gt; f a -&amp;gt; f b Applicative實作了&amp;">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://sovmedcare.github.io/2018/03/28/monad/"/>
+
+
+
+
+
+  <title>Monad | SOVMedCare Tech</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SOVMedCare Tech</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">@sovmedcare</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-authors">
+          <a href="/authors/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            作者群
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2018/03/28/monad/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Monad</h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/tancc/" itemprop="url" rel="index">
+              <span itemprop="name">tancc</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-03-28T17:39:04+08:00">
+                2018-03-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><code>Monad</code>對工程師而言，如果沒牽扯到數學相關的範疇其實不是那麼可怕難懂的東西。</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="title">fmap</span> :: (a -&gt; b) -&gt; f a -&gt; f b</div></pre></td></tr></table></figure>
+<p><code>Functor</code>實作了<code>fmap</code>，使得可將普通函數<code>(a -&gt; b)</code>lift到<code>f a -&gt; f b</code>；</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(&lt;*&gt;) :: f (a -&gt; b) -&gt; f a -&gt; f b</div></pre></td></tr></table></figure>
+<p><code>Applicative</code>實作了<code>&lt;*&gt;</code>，讓我們可以將保裹在某 structure 中的函數<code>f (a -&gt; b)</code>，apply 到同樣含有相同結構的數值中<code>f a -&gt; f b</code></p>
+<p>他們做的事情其實都是 function application，只是應用的情境不同而已。而從工程面來看，Monad 其實也是一樣的，也為我們做了某情境下的函數調用的抽象。</p>
+<hr>
+<h1 id="Monad-TypeClass"><a href="#Monad-TypeClass" class="headerlink" title="Monad TypeClass"></a>Monad TypeClass</h1><p>Monad typeClass 的部分定義如下<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="type">Applicative</span> m =&gt; <span class="type">Monad</span> m <span class="keyword">where</span></span></div><div class="line">    <span class="meta">&#123;-# MINIMAL (&gt;&gt;=) #-&#125;</span></div><div class="line">    return :: a -&gt; m a</div><div class="line">    return = pure</div><div class="line">    (&gt;&gt;=)  :: m a -&gt; (a -&gt; m b) -&gt; m b</div><div class="line">    join   :: m m a -&gt; m a</div></pre></td></tr></table></figure></p>
+<p>其中可以看到 Monad 必須是 Applicative，所以<code>return</code>的預設定義就是<code>pure</code>，將一個數值包進 monadic structure <code>m</code>。</p>
+<p><code>&gt;&gt;=</code>(bind)，是使用monad進行操作時十分常看到的東西。<br>從他的 type signature 不難發現，他要做的事也是 function application，只是這次要應用的函數是<code>(a -&gt; m b)</code>，而這函數會所 return 的值是將 input 包上一個額外的結構<code>m</code>，而最終<code>&gt;&gt;=</code>所返回值<code>m b</code>會跟輸入<code>m a</code>是具有相同結構的。</p>
+<hr>
+<h1 id="Monad-laws"><a href="#Monad-laws" class="headerlink" title="Monad laws"></a>Monad laws</h1><p>如同<code>Applicative Functor</code>，就算一個型別實作了<code>&gt;&gt;=</code>成為了 Monad 的instance了，也還不能夠說是一個<code>Monad</code>。</p>
+<p>必須還要在滿足三個 Monad laws<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 1. right identity</span></div><div class="line"><span class="title">m</span> &gt;&gt;= return    = m</div><div class="line"><span class="comment">-- 2. left identity</span></div><div class="line"><span class="title">return</span> x &gt;&gt;= f  = f x</div><div class="line"><span class="comment">-- 3. associativity</span></div><div class="line">(m &gt;&gt;= f) &gt;&gt;= g = m &gt;&gt;= (\x -&gt; f x &gt;&gt;= g)</div></pre></td></tr></table></figure></p>
+<p>這部分可以自行拿一些已知的Monad去驗證(List, Maybe, Either Monad)，而這在自行定義 Monad 時也是要自己去確保滿足的，Haskell compiler 並不會跟你說符不符合。</p>
+<hr>
+<h1 id="Maybe-Monad"><a href="#Maybe-Monad" class="headerlink" title="Maybe Monad"></a>Maybe Monad</h1><p>當在做除法運算的時候，會不希望除數為 0，否則後續運算可能會出現非預期的結果，因此定義了一個<code>safeDivide</code><br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="title">safeDivide</span> :: <span class="type">Double</span> -&gt; <span class="type">Double</span> -&gt; <span class="type">Maybe</span> <span class="type">Double</span></div><div class="line"><span class="title">safeDivide</span> _ <span class="number">0</span> = <span class="type">Nothing</span></div><div class="line"><span class="title">safeDivide</span> a b = <span class="type">Just</span> (a / b)</div></pre></td></tr></table></figure></p>
+<p><code>safeDivide</code>會回傳<code>Maybe Double</code>，這樣子的話做其他的運算或者說在做函數組合時，其他函數 input 型別都也要改成<code>Maybe</code>型別，才可以拿其結果作為輸入來使用。<br>所以在其他函數內部，都需根據 Maybe 的兩種可能性<code>Just a</code>與<code>Nothing</code>做不同的運算。</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="title">maybeFunc1</span> ::<span class="type">Num</span> a =&gt; <span class="type">Maybe</span> a -&gt; <span class="type">Maybe</span> a</div><div class="line"><span class="title">maybeFunc1</span> n =</div><div class="line">  <span class="keyword">case</span> <span class="keyword">of</span> n <span class="keyword">of</span></div><div class="line">    <span class="type">Nothing</span> -&gt; <span class="type">Nothing</span></div><div class="line">    <span class="type">Just</span> a -&gt; ...</div></pre></td></tr></table></figure>
+<p>可以想像，每個 maybeFunc 都要去做這些判斷是會非常麻煩，要寫很多重複的程式碼。</p>
+<p>Maybe Monad 就可以幫我們將判斷這些<code>case ... of</code>的工作抽象出來</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Monad</span> <span class="type">Maybe</span> <span class="keyword">where</span></span></div><div class="line">  return = pure</div><div class="line">  <span class="comment">-- &gt;&gt;= ::  Maybe a -&gt; (a -&gt; Maybe b) -&gt; Maybe b</span></div><div class="line">  (<span class="type">Just</span> x) &gt;&gt;= k = k x</div><div class="line">  <span class="type">Nothing</span>  &gt;&gt;= _ = <span class="type">Nothing</span></div></pre></td></tr></table></figure>
+<p>其<code>&gt;&gt;=</code>的定義，幫我們做掉判斷<code>Nothing</code>跟<code>Just</code>然後做不同任務的工作。<br>當是 Nothing 時，就不理會後續的函數<code>k</code>，直接返回 Nothing。<br>若是 Just 時，則將其中的值<code>a</code>，傳進後續要執行的函數<code>k</code>中。</p>
+<p>也可以看到，以<code>Maybe</code>而言，使用<code>&gt;&gt;=</code>我們就可以不斷串接有這種<code>a -&gt; Maybe b</code>型別的函式，因為<code>(Just x) &gt;&gt;= k</code>回傳的也還是<code>Maybe</code>型別的數值，可以繼續用<code>&gt;&gt;=</code>串接下一步的運算。</p>
+<p>事實上就是，如果我們有一系列的函數<code>a -&gt; m b</code>，我們可以藉由<code>&gt;&gt;=</code>將這些相依的運算做序列組合。</p>
+<p>所以原本的函數組合就很容易可以這樣寫<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="title">safeDivide</span> &gt;&gt;= maybeFunc1 &gt;&gt;= maybeFunc2...</div><div class="line"></div><div class="line"><span class="comment">--  (safeDivide 10 0) &gt;&gt;=...</span></div><div class="line"><span class="comment">-- = Nothing &gt;&gt;= ...</span></div><div class="line"><span class="comment">-- = Nothing</span></div></pre></td></tr></table></figure></p>
+<p>同樣類似的行為，如<code>Either Monad</code> 也能幫助我們省下判斷<code>Left</code>和<code>Right</code>的<a href="https://hackage.haskell.org/package/base-4.10.1.0/docs/src/Data.Either.html#line-141" target="_blank" rel="external">程式碼</a></p>
+<hr>
+<h1 id="List-Monad"><a href="#List-Monad" class="headerlink" title="List Monad"></a>List Monad</h1><p>首先看一下如何定義 List Monad 內容<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Monad</span> [] <span class="keyword">where</span></span></div><div class="line">  return = pure</div><div class="line">  <span class="comment">-- &gt;&gt;= :: [a] -&gt; (a -&gt; [b]) -&gt; [b]</span></div><div class="line">  m  &gt;&gt;= f  =  concat (map f m)</div></pre></td></tr></table></figure></p>
+<p><code>return</code>和其在<code>Applicative</code>中<a href="https://hackage.haskell.org/package/base-4.10.1.0/docs/src/GHC.Base.html#line-807" target="_blank" rel="external">定義</a>的<code>pure</code>一樣，就是把值丟進一個 List 中。<br><code>&gt;&gt;=</code> 的行為是將<code>f</code> map 到 List 中，然後concat最終結果。</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="title">a</span> = [<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>]</div><div class="line"></div><div class="line"><span class="title">f</span> :: a -&gt; [a]</div><div class="line"><span class="title">f</span> = \x -&gt; [x, x]</div><div class="line"></div><div class="line"><span class="title">a</span> &gt;&gt;= f</div><div class="line">= [<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>] &gt;&gt;= \x -&gt; [x, x]</div><div class="line">= concat (map (\x -&gt; [x, x]) [<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>])</div><div class="line">= concat [[<span class="number">1</span>,<span class="number">1</span>],[<span class="number">3</span>,<span class="number">3</span>],[<span class="number">5</span>,<span class="number">5</span>],[<span class="number">7</span>,<span class="number">7</span>]]</div><div class="line">= [<span class="number">1</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">7</span>]</div></pre></td></tr></table></figure>
+<p>其實上面 List Monad 的bind<code>&gt;&gt;=</code>所做的事情，可以用List comprehension達到。<br>而實際上，<a href="https://hackage.haskell.org/package/base-4.10.1.0/docs/src/GHC.Base.html#line-820" target="_blank" rel="external">原始碼</a>中，List Monad 的<code>&gt;&gt;=</code>就是用 List comprehensions 實作的。</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Monad</span> []  <span class="keyword">where</span></span></div><div class="line">  xs &gt;&gt;= f = [y | x &lt;- xs, y &lt;- f x]</div><div class="line"></div><div class="line"><span class="title">a</span> &gt;&gt;= f</div><div class="line">= [y | x &lt;- [<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>], y &lt;- (\x -&gt; [x, x]) x]</div><div class="line">= [<span class="number">1</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">7</span>]</div></pre></td></tr></table></figure>
+<p>所以從List Monad來看，因為兩者行為的等價，也比較能明白為何有人會說 Monad 做的事情，其實就是 flatmap 或 concatmap。</p>
+<hr>
+<h1 id="Do-notation"><a href="#Do-notation" class="headerlink" title="Do notation"></a>Do notation</h1><p>如果只用<code>&gt;&gt;=</code>的話有可能會發生程式碼巢狀結構太深的問題<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="title">f</span> &gt;&gt;= \a -&gt;</div><div class="line">   (g a) &gt;&gt;= \b -&gt;</div><div class="line">     (h b) &gt;&gt;= \c -&gt;</div><div class="line">       return (a, b, c)</div></pre></td></tr></table></figure></p>
+<p>這時候可以使用do notation這個語法糖，來幫助用imperative programming的形式由上至下撰寫代碼，增加可讀性<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="title">do</span></div><div class="line">  a &lt;- f</div><div class="line">  b &lt;- g a</div><div class="line">  c &lt;- h b</div><div class="line">  return (a, b, c)</div></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="Type-signature"><a href="#Type-signature" class="headerlink" title="Type signature"></a>Type signature</h1><p>這段希望能從type signature來得到一些操作上的直覺</p>
+<h2 id="Function-Application"><a href="#Function-Application" class="headerlink" title="Function Application"></a>Function Application</h2><p>從 TypeClass 知道，若一個東西是 Monad，那他必然是 Applicative 亦即也必然是 Functor。</p>
+<p>所以Functor、Applicative、Monad在應用的行為上肯定有一定程度的一致性。<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;$&gt;        ::   (a -&gt; b) -&gt; f a -&gt; f b</div><div class="line">&lt;*&gt;        :: f (a -&gt; b) -&gt; f a -&gt; f b</div><div class="line"><span class="comment">-- 將 &gt;&gt;= 做flip</span></div><div class="line"><span class="comment">-- (&gt;&gt;=)  :: m a -&gt; (a -&gt; m b) -&gt; m b</span></div><div class="line"><span class="title">flip</span> . &gt;&gt;= :: (a -&gt; m b) -&gt; m a -&gt; m b</div></pre></td></tr></table></figure></p>
+<p>三者從 type signature 來比較，更有一開始所說的，都是將 function application 做不同應用情境的抽象。</p>
+<h2 id="Dependent-computation"><a href="#Dependent-computation" class="headerlink" title="Dependent computation"></a>Dependent computation</h2><p>同樣從<code>&gt;&gt;=</code>的型別去看<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(&gt;&gt;=)  :: m a -&gt; (a -&gt; m b) -&gt; m b</div></pre></td></tr></table></figure></p>
+<p><code>&gt;&gt;=</code>接受了<code>m a</code>，而第二個參數是個函數<code>(a -&gt; m b)</code>，其中的<code>a</code>從哪來，就是從<code>m a</code>的運算結果而來。</p>
+<p>因此<code>&gt;&gt;=</code>所做的事情，就是將一個 monadic structure 所包裹的 computation <code>m a</code>，傳遞到串接的函數中 <code>(a -&gt; m b)</code>，讓此函數根據傳遞進來的參數去做某些運算，最後再返回<code>m b</code>。而此<code>m b</code>又可搭配其他 monadic function <code>(a -&gt; m b)</code>，繼續根據函數返回值操作下去。</p>
+<p>而這種相依關係也是 Monad 較靈活的原因之一，因為它可以根據函數返回的值再去後續的運算。而這是 Applicative 無法做到的，<code>&lt;*&gt;</code>所串接的函數彼此是不相依的。</p>
+<h2 id="General-concatenation"><a href="#General-concatenation" class="headerlink" title="General concatenation"></a>General concatenation</h2><p>如果都是去 lift 普通函數並且 apply 到有額外結構的值中，如<code>f a</code>, <code>m a</code>，那麼用 fmap 就行了。<br>但如果這個函數<code>a -&gt; m b</code>，是返回一個有 monadic structure 的值時，使用fmap會發生什麼事情呢？<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 將 f 用 m 來表示</span></div><div class="line">&lt;$&gt; :: (a -&gt; b) -&gt; m a -&gt; m b</div><div class="line"><span class="comment">-- 將 b 代換成 m b</span></div><div class="line">&lt;$&gt; :: (a -&gt; m b) -&gt; m a -&gt; m (m b)</div><div class="line"></div><div class="line"><span class="comment">-- ex</span></div><div class="line"><span class="title">fmap</span> (\x -&gt; [x]) [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</div><div class="line">= [[<span class="number">1</span>], [<span class="number">2</span>], [<span class="number">3</span>]]</div></pre></td></tr></table></figure></p>
+<p>可以看到最終返回的結果是<code>m (m b)</code>，但我們並不想要有改變原有的架構，變成巢狀的結構，如巢狀的 List。所以要想辦法將 <code>m (m b)</code> 轉換成 <code>m b</code>，也就是去 flattern 或是 concate 這個雙層的結構。</p>
+<p>而這就是 Monad 的一個特色所在，<code>join</code>。<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="title">join</span> :: <span class="type">Monadm</span> m =&gt; m (m a) -&gt; m a</div></pre></td></tr></table></figure></p>
+<p>可以看到，<code>join</code>所做的事情就是去concate這兩層<code>m m</code>為一個<code>m</code>。因此也可以看出 Monad 其實提供了更 general 的 concat 方法。</p>
+<p>所以我們用<code>join</code>和<code>fmap</code>其實就可以構造出<code>&gt;&gt;=</code></p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(&gt;&gt;=) : m a -&gt; (a -&gt; m b) -&gt; m b</div><div class="line"><span class="title">m</span> &gt;&gt;= f = join $ fmap f m</div></pre></td></tr></table></figure>
+<p>因此可以看出，其實 Monad 就是提供一個方法，讓我們去 map 函數，最後再將其結果join起來。</p>
+<hr>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p><code>Monoid</code>, <code>Funtor</code>, <code>Applicative</code>, <code>Monad</code> … 這些 typeclass，都代表著某些行為的抽象。</p>
+<p>所以這些東西真的有存在的必要嗎？個人認為就工程的角度而言都沒有。<br>今天就算把名稱換成<code>Apple</code>, <code>Orange</code>, <code>Banana</code>, <code>Pineapple</code>也是可以(並且比較不會讓人畏懼？)，叫什麼名字都不是重點。並不是因為他是<code>Monad</code>我們才可以做到什麼什麼，一樣可以用其他方式來達成一樣的目的。<br>我們需要是程式行為上的抽象或是本質上的改變，使得程式碼的重用性和表達能力能夠提升，而這也正是 functional programming language 的強項。</p>
+<p>而因為這些被抽象的行為產生出來的輪廓 (type signature)，可以跟範疇論 (category theory) 去結合，所以拿範疇論的專有名詞作為 typeclass 的名稱，較能將數學與程式結合的意圖反應出來。</p>
+<p>除此之外我們可以看到，不同型別(Maybe, List, …)，在不同 typeclass instance 的定義中，儘管都有做<code>fmap</code>,<code>&lt;*&gt;</code>, <code>&gt;&gt;=</code>等等的函數存在，但他們所做的事情、邏輯是獨立的，但最終他們所具有的結構是一致的。</p>
+<p>我們其實也可以將其命名為<code>listFmap</code>, <code>maybeFmap</code> … 等等，但因為統一了 interface 大家的名稱保持一致，並且具有相同的結構，這帶來的好處就是能再更近一步的去重用這些代碼，建構更高層次的抽象方法。</p>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><p><a href="http://dev.stephendiehl.com/hask/" target="_blank" rel="external">What I Wish I Knew When Learning Haskell 2.3 ( Stephen Diehl )</a></p>
+<p><a href="https://wiki.haskell.org/Monad" target="_blank" rel="external">Monad - HaskellWiki</a></p>
+<p><a href="http://learnyouahaskell.com/" target="_blank" rel="external">Learn You a Haskell for Great Good!</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Haskell/" rel="tag"># Haskell</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/27/haskell-typeclass/" rel="next" title="Haskell 系列 - typeclass (類型類)">
+                <i class="fa fa-chevron-left"></i> Haskell 系列 - typeclass (類型類)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/28/haskell-monoid/" rel="prev" title="Haskell 系列 - Monoid (ㄠ半群)">
+                Haskell 系列 - Monoid (ㄠ半群) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="https://avatars1.githubusercontent.com/u/31230110"
+              alt="SOVMedCare" />
+          
+            <p class="site-author-name" itemprop="name">SOVMedCare</p>
+            <p class="site-description motion-element" itemprop="description">Full Stack JS #FRP #RxJS #Redux #React</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">文章</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">標籤</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/sovmedcare" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:jackypan1989@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/sovtw" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.instagram.com/sovmedtw/" target="_blank" title="Instagram">
+                  
+                    <i class="fa fa-fw fa-instagram"></i>Instagram</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Monad-TypeClass"><span class="nav-number">1.</span> <span class="nav-text">Monad TypeClass</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Monad-laws"><span class="nav-number">2.</span> <span class="nav-text">Monad laws</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Maybe-Monad"><span class="nav-number">3.</span> <span class="nav-text">Maybe Monad</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#List-Monad"><span class="nav-number">4.</span> <span class="nav-text">List Monad</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Do-notation"><span class="nav-number">5.</span> <span class="nav-text">Do notation</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Type-signature"><span class="nav-number">6.</span> <span class="nav-text">Type signature</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Function-Application"><span class="nav-number">6.1.</span> <span class="nav-text">Function Application</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dependent-computation"><span class="nav-number">6.2.</span> <span class="nav-text">Dependent computation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#General-concatenation"><span class="nav-number">6.3.</span> <span class="nav-text">General concatenation</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#結語"><span class="nav-number">7.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#參考資料"><span class="nav-number">8.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SOVMedCare</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

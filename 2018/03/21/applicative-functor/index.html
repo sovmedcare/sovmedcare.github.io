@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-tw">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="haskell," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="1 Applicative TypeClassApplicative Functor比起Functor更為強大，以下是其部分typeclass定義123456class Functor f =&amp;gt; Applicative f where    &amp;#123;-# MINIMAL pure, ((&amp;lt;*&amp;gt;) | liftA2) #-&amp;#125;    -- | Lift a value.">
+<meta name="keywords" content="haskell">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Applicative Functor">
+<meta property="og:url" content="http://sovmedcare.github.io/2018/03/21/applicative-functor/index.html">
+<meta property="og:site_name" content="SOVMedCare Tech">
+<meta property="og:description" content="1 Applicative TypeClassApplicative Functor比起Functor更為強大，以下是其部分typeclass定義123456class Functor f =&amp;gt; Applicative f where    &amp;#123;-# MINIMAL pure, ((&amp;lt;*&amp;gt;) | liftA2) #-&amp;#125;    -- | Lift a value.">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:updated_time" content="2020-07-31T10:42:01.094Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Applicative Functor">
+<meta name="twitter:description" content="1 Applicative TypeClassApplicative Functor比起Functor更為強大，以下是其部分typeclass定義123456class Functor f =&amp;gt; Applicative f where    &amp;#123;-# MINIMAL pure, ((&amp;lt;*&amp;gt;) | liftA2) #-&amp;#125;    -- | Lift a value.">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://sovmedcare.github.io/2018/03/21/applicative-functor/"/>
+
+
+
+
+
+  <title>Applicative Functor | SOVMedCare Tech</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SOVMedCare Tech</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">@sovmedcare</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-authors">
+          <a href="/authors/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            作者群
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2018/03/21/applicative-functor/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Applicative Functor</h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/tancc/" itemprop="url" rel="index">
+              <span itemprop="name">tancc</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-03-21T15:03:23+08:00">
+                2018-03-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="1-Applicative-TypeClass"><a href="#1-Applicative-TypeClass" class="headerlink" title="1 Applicative TypeClass"></a>1 Applicative TypeClass</h1><p><code>Applicative Functor</code>比起<code>Functor</code>更為強大，以下是其部分typeclass定義<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="type">Functor</span> f =&gt; <span class="type">Applicative</span> f <span class="keyword">where</span></span></div><div class="line">    <span class="meta">&#123;-# MINIMAL pure, ((&lt;*&gt;) | liftA2) #-&#125;</span></div><div class="line">    <span class="comment">-- | Lift a value.</span></div><div class="line">    pure :: a -&gt; f a</div><div class="line">    <span class="comment">-- | Sequential application.</span></div><div class="line">    (&lt;*&gt;) :: f (a -&gt; b) -&gt; f a -&gt; f b</div></pre></td></tr></table></figure></p>
+<p>一個類型如果為<code>Applicative</code>的實例(instance)的話，則他同樣會具有funtoral structure，也就是<code>f a</code> 中的 <code>f</code>。</p>
+<p>而和<code>Functor</code>最主要多的不同在於，多了兩個方法<code>pure</code>和<code>&lt;*&gt;</code></p>
+<p><code>pure</code>：將型別為<code>a</code>的input，包進一個Applicative的結構<code>f</code>中，轉換成型別為<code>f a</code>的output</p>
+<p><code>&lt;*&gt;</code>： 與<code>fmap</code>相似，都是把函數提升(lift)，使其能應用在型別具有額外結構的值中。不同的是<code>&lt;*&gt;</code>所提升的function，本身就被包裹在<code>f</code>裡<code>f (a -&gt; b)</code></p>
+<p>同時比較<code>fmap</code>跟<code>&lt;*&gt;</code>會比較有感：<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="title">fmap</span>  :: <span class="type">Functor</span>     f =&gt;   (a -&gt; b) -&gt; f a -&gt; f b</div><div class="line">(&lt;*&gt;) :: <span class="type">Applicative</span> f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b</div></pre></td></tr></table></figure></p>
+<p>差別只在要lift的函數有沒有<code>f</code>被包裹起來。</p>
+<hr>
+<h1 id="2-Applicative-functor-laws"><a href="#2-Applicative-functor-laws" class="headerlink" title="2 Applicative functor laws"></a>2 Applicative functor laws</h1><p>但一個型別就算其實做了<code>pure</code>以及<code>&lt;*&gt;</code>成為了<code>Applicative</code>的instance了，也還不能夠說是一個<code>Applicative</code></p>
+<p>除了實作<code>pure</code>以及<code>&lt;*&gt;</code>外，還需要滿足4個<code>Applicative functor laws</code><br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 1. Identity</span></div><div class="line"><span class="title">pure</span> id &lt;*&gt; v = v </div><div class="line"></div><div class="line"><span class="number">2.</span> <span class="type">Composition</span></div><div class="line"><span class="title">pure</span> (.) &lt;*&gt; u &lt;*&gt; v &lt;*&gt; w = u &lt;*&gt; (v &lt;*&gt; w)</div><div class="line"></div><div class="line"><span class="number">3.</span> <span class="type">Homomorphisom</span></div><div class="line"><span class="title">pure</span> f &lt;*&gt; pure x = pure (f x)</div><div class="line"></div><div class="line"><span class="number">4.</span> <span class="type">Interchange</span></div><div class="line"><span class="title">u</span> &lt;*&gt; pure y = pure ($ y) &lt;*&gt; u</div></pre></td></tr></table></figure></p>
+<p>因為在Haskell中，你定義完<code>instance Applicative XXX where...</code>後，並不會幫你檢查是否滿足這些<code>Applicative functor laws</code>，因此這部分需要自己去確保。</p>
+<hr>
+<h1 id="3-一些使用情境"><a href="#3-一些使用情境" class="headerlink" title="3 一些使用情境"></a>3 一些使用情境</h1><ul>
+<li>將普通函數<code>(a -&gt; b -&gt; c -&gt;...)</code>，應用在多個有functoral structure/context的值<code>f a, fb, ...</code>時</li>
+</ul>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="title">fmap</span>  :: <span class="type">Functor</span>     f =&gt;   (a -&gt; b) -&gt; f a -&gt; f b</div><div class="line">(&lt;*&gt;) :: <span class="type">Applicative</span> f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b</div></pre></td></tr></table></figure>
+<p>從type signature中可以看到，<code>fmap</code>無法將<code>f (a -&gt; b)</code> 應用於 <code>f a,f b</code><br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="title">x</span> = fmap (+) (<span class="type">Just</span> <span class="number">1</span>)</div><div class="line"><span class="comment">--x = Just (+ 1) 型別為 f (a -&gt; b)</span></div><div class="line"></div><div class="line"><span class="title">fmap</span> x (<span class="type">Just</span> <span class="number">2</span>)</div><div class="line"><span class="comment">-- error</span></div><div class="line"><span class="comment">-- 我們無法用fmap對x進行操作了</span></div><div class="line"><span class="comment">-- fmap的第一個參數型別要為 (a -&gt; b)，不可為 f (a -&gt; b)</span></div></pre></td></tr></table></figure></p>
+<p>這時就可以使用<code>&lt;*&gt;</code>搭配<code>&lt;$&gt;</code>來達成需求了<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">(+) &lt;$&gt; (<span class="type">Just</span> <span class="number">1</span>) &lt;*&gt; (<span class="type">Just</span> <span class="number">2</span>)</div><div class="line">&gt;&gt; <span class="type">Just</span> <span class="number">3</span></div><div class="line">  </div><div class="line">  (+) &lt;$&gt; (<span class="type">Just</span> <span class="number">1</span>) &lt;*&gt; (<span class="type">Just</span> <span class="number">2</span>)</div><div class="line">= <span class="type">Just</span> (+ <span class="number">1</span>) &lt;*&gt; (<span class="type">Just</span> <span class="number">2</span>)</div><div class="line">= <span class="type">Just</span> <span class="number">3</span></div><div class="line"></div><div class="line"><span class="comment">-- 另個例子</span></div><div class="line">(\x y z -&gt; [x*y, y*z, x*z]) &lt;$&gt; (<span class="type">Just</span> <span class="number">1</span>) &lt;*&gt; (<span class="type">Just</span> <span class="number">2</span>) &lt;*&gt; (<span class="type">Just</span> <span class="number">3</span>)</div><div class="line">&gt;&gt; <span class="type">Just</span> [<span class="number">2</span>,<span class="number">6</span>,<span class="number">3</span>]</div><div class="line"></div><div class="line">  (\x y z -&gt; [x*y, y*z, x*z]) &lt;$&gt; (<span class="type">Just</span> <span class="number">1</span>) &lt;*&gt; (<span class="type">Just</span> <span class="number">2</span>) &lt;*&gt; (<span class="type">Just</span> <span class="number">3</span>)</div><div class="line">= <span class="type">Just</span> (\y z -&gt; [<span class="number">1</span>*y, y*z, <span class="number">1</span>*z]) &lt;*&gt; (<span class="type">Just</span> <span class="number">2</span>) &lt;*&gt; (<span class="type">Just</span> <span class="number">3</span>)</div><div class="line">= <span class="type">Just</span> (\z -&gt; [<span class="number">1</span>*<span class="number">2</span>, <span class="number">2</span>*z, <span class="number">1</span>*z]) &lt;*&gt; (<span class="type">Just</span> <span class="number">3</span>)</div><div class="line">= <span class="type">Just</span> ([<span class="number">1</span>*<span class="number">2</span>, <span class="number">2</span>*<span class="number">3</span>, <span class="number">1</span>*<span class="number">3</span>])</div><div class="line">= <span class="type">Just</span> [<span class="number">2</span>,<span class="number">6</span>,<span class="number">3</span>]</div><div class="line"></div><div class="line"><span class="comment">-- 另個例子</span></div><div class="line"><span class="class"><span class="keyword">data</span> <span class="type">User</span> = <span class="type">User</span> &#123; <span class="title">firstName</span> :: <span class="type">String</span></span></div><div class="line"><span class="class">                 , <span class="title">lastName</span>  :: <span class="type">String</span></span></div><div class="line"><span class="class">                 , <span class="title">email</span>     :: <span class="type">String</span></span></div><div class="line"><span class="class">                 &#125; <span class="keyword">deriving</span> (<span class="type">Show</span>)</span></div><div class="line">  </div><div class="line"><span class="title">validate</span> :: <span class="type">String</span> -&gt; <span class="type">Maybe</span> <span class="type">String</span></div><div class="line"><span class="title">validate</span> [] = <span class="type">Nothing</span></div><div class="line"><span class="title">validate</span> s = <span class="type">Just</span> s</div><div class="line"></div><div class="line"><span class="title">makeUser</span> :: <span class="type">String</span> -&gt; <span class="type">String</span> -&gt; <span class="type">String</span> -&gt; <span class="type">Maybe</span> <span class="type">User</span></div><div class="line"><span class="title">makeUser</span> f l e = <span class="type">User</span></div><div class="line">         &lt;$&gt; validate f</div><div class="line">         &lt;*&gt; validate l</div><div class="line">         &lt;*&gt; validate e</div><div class="line"><span class="comment">-- 可以想像makeUser如果不用&lt;*&gt;，勢必就必須寫很多case...of來達成</span></div></pre></td></tr></table></figure></p>
+<ul>
+<li>多個運算間沒有相依關係時<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(&lt;*&gt;) :: <span class="type">Applicative</span> f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b</div><div class="line">(&gt;&gt;=) ::       <span class="type">Monad</span> m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>從type signature中可以看到，<code>&gt;&gt;=</code>所串聯的運算式有相依關係的，下一個運算的依賴上一個運算的結果。</p>
+<p>也就是說Monad <code>&gt;&gt;=</code>的運算其實是相依(Dependency)，但這也是他彈性的部分，因為我們可以針對運算的返回值再進一步的操作。</p>
+<p>而Applicative <code>&lt;*&gt;</code>的運算是不相依(Independency)。因為少了相依性，對比起來使用Applicative可以寫出更乾淨的代碼。</p>
+<hr>
+<h1 id="4"><a href="#4" class="headerlink" title="4"></a>4</h1><p>前面有個例子<code>(+) &lt;$&gt; (Just 1) &lt;*&gt; (Just 2)</code>，不過<code>Control.Applicative</code>有提供我們一些方便的工具來做同樣的事情<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="title">liftA</span>  :: (a -&gt; b)           -&gt; f a -&gt; f b</div><div class="line"><span class="title">liftA2</span> :: (a -&gt; b -&gt; c)      -&gt; f a -&gt; f b -&gt; f c</div><div class="line"><span class="title">liftA3</span> :: (a -&gt; b -&gt; c -&gt; d) -&gt; f a -&gt; f b -&gt; f c -&gt; f d</div></pre></td></tr></table></figure></p>
+<p>因此可改寫成<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="title">liftA2</span> (+) (<span class="type">Just</span> <span class="number">1</span>) (<span class="type">Just</span> <span class="number">2</span>)</div></pre></td></tr></table></figure></p>
+<p>視覺上看起來有比較簡潔了<br>而<code>liftA</code> <code>liftA2</code> <code>lift3</code>的差別只在其所要lift的函數的參數個數而已</p>
+<p>此外，在閱讀或撰寫上，使用<code>&lt;$&gt;..&lt;*&gt;..&lt;*&gt;</code>或許對部分人來說比較不直覺的。</p>
+<p>這部分可以使用ApplicativeDo，使得可以跟以往使用do notation那般由上到下的書寫方式<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&#123;-# LANGUAGE ApplicativeDo #-&#125;</span></div><div class="line"></div><div class="line"><span class="title">run</span> = <span class="keyword">do</span></div><div class="line"> x &lt;- expr1</div><div class="line"> y &lt;- expr1</div><div class="line"> z &lt;- expr1</div><div class="line"> return (f x y z)</div></pre></td></tr></table></figure></p>
+<p>因為expression並不會相互依賴，因此會被轉換成<code>f &lt;$&gt; expr1 &lt;*&gt; expr2 &lt;*&gt; expr3</code>，其實就還是一樣的東西。</p>
+<hr>
+<h1 id="5-參考資料及更詳盡的內容"><a href="#5-參考資料及更詳盡的內容" class="headerlink" title="5 參考資料及更詳盡的內容"></a>5 參考資料及更詳盡的內容</h1><p><a href="https://hackage.haskell.org/package/base-4.11.0.0/docs/src/GHC.Base.html#Applicative" target="_blank" rel="external">GHC.Base#Applicative</a><br><a href="https://en.wikibooks.org/wiki/Haskell/Applicative_functors" target="_blank" rel="external">Haskell/Applicative functors - Wikibooks, open books for an open world</a><br><a href="https://ghc.haskell.org/trac/ghc/wiki/ApplicativeDo" target="_blank" rel="external">ApplicativeDo – GHC</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/haskell/" rel="tag"># haskell</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/19/learn-youa-haskell/" rel="next" title="初識Haskell">
+                <i class="fa fa-chevron-left"></i> 初識Haskell
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/23/haskell-type/" rel="prev" title="Haskell 系列 - type (類型)">
+                Haskell 系列 - type (類型) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="https://avatars1.githubusercontent.com/u/31230110"
+              alt="SOVMedCare" />
+          
+            <p class="site-author-name" itemprop="name">SOVMedCare</p>
+            <p class="site-description motion-element" itemprop="description">Full Stack JS #FRP #RxJS #Redux #React</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">文章</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">標籤</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/sovmedcare" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:jackypan1989@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/sovtw" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.instagram.com/sovmedtw/" target="_blank" title="Instagram">
+                  
+                    <i class="fa fa-fw fa-instagram"></i>Instagram</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Applicative-TypeClass"><span class="nav-number">1.</span> <span class="nav-text">1 Applicative TypeClass</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Applicative-functor-laws"><span class="nav-number">2.</span> <span class="nav-text">2 Applicative functor laws</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-一些使用情境"><span class="nav-number">3.</span> <span class="nav-text">3 一些使用情境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4"><span class="nav-number">4.</span> <span class="nav-text">4</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-參考資料及更詳盡的內容"><span class="nav-number">5.</span> <span class="nav-text">5 參考資料及更詳盡的內容</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SOVMedCare</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

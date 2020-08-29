@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-tw">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="FP,Haskell,type,typeclass," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Type class (類型類)首先看一下 (+) 這個 operator 的 type 12&amp;gt; :t (+)(+) :: Num a =&amp;gt; a -&amp;gt; a -&amp;gt; a 可以發現除了原本的 a -&amp;gt; a -&amp;gt; a 之外還多了一個大箭頭, 這裡的 Num a 代表後面類型 a 一定是 Num 這個 typeclass我們又稱為類型約束, 如果用 oo 講法來看, 他就">
+<meta name="keywords" content="FP,Haskell,type,typeclass">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Haskell 系列 - typeclass (類型類)">
+<meta property="og:url" content="http://sovmedcare.github.io/2018/03/27/haskell-typeclass/index.html">
+<meta property="og:site_name" content="SOVMedCare Tech">
+<meta property="og:description" content="Type class (類型類)首先看一下 (+) 這個 operator 的 type 12&amp;gt; :t (+)(+) :: Num a =&amp;gt; a -&amp;gt; a -&amp;gt; a 可以發現除了原本的 a -&amp;gt; a -&amp;gt; a 之外還多了一個大箭頭, 這裡的 Num a 代表後面類型 a 一定是 Num 這個 typeclass我們又稱為類型約束, 如果用 oo 講法來看, 他就">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:updated_time" content="2020-07-31T10:42:01.097Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Haskell 系列 - typeclass (類型類)">
+<meta name="twitter:description" content="Type class (類型類)首先看一下 (+) 這個 operator 的 type 12&amp;gt; :t (+)(+) :: Num a =&amp;gt; a -&amp;gt; a -&amp;gt; a 可以發現除了原本的 a -&amp;gt; a -&amp;gt; a 之外還多了一個大箭頭, 這裡的 Num a 代表後面類型 a 一定是 Num 這個 typeclass我們又稱為類型約束, 如果用 oo 講法來看, 他就">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://sovmedcare.github.io/2018/03/27/haskell-typeclass/"/>
+
+
+
+
+
+  <title>Haskell 系列 - typeclass (類型類) | SOVMedCare Tech</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SOVMedCare Tech</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">@sovmedcare</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-authors">
+          <a href="/authors/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            作者群
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2018/03/27/haskell-typeclass/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Haskell 系列 - typeclass (類型類)</h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/jackypan1989/" itemprop="url" rel="index">
+              <span itemprop="name">jackypan1989</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-03-27T18:26:55+08:00">
+                2018-03-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Type-class-類型類"><a href="#Type-class-類型類" class="headerlink" title="Type class (類型類)"></a>Type class (類型類)</h1><p>首先看一下 (+) 這個 operator 的 type</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt; :t (+)</div><div class="line">(+) :: <span class="type">Num</span> a =&gt; a -&gt; a -&gt; a</div></pre></td></tr></table></figure>
+<p>可以發現除了原本的 a -&gt; a -&gt; a 之外<br>還多了一個大箭頭, 這裡的 Num a 代表後面類型 a 一定是 Num 這個 typeclass<br>我們又稱為類型約束, 如果用 oo 講法來看, 他就像是 interface<br>你必須實作一些 Num typeclass 的 function 才能屬於 Num</p>
+<p>在看一下 Num 的詳細資訊</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&gt; :i <span class="type">Num</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="type">Num</span> a <span class="keyword">where</span></span></div><div class="line">  (+) :: a -&gt; a -&gt; a</div><div class="line">  (-) :: a -&gt; a -&gt; a</div><div class="line">  (*) :: a -&gt; a -&gt; a</div><div class="line">  negate :: a -&gt; a</div><div class="line">  abs :: a -&gt; a</div><div class="line">  signum :: a -&gt; a</div><div class="line">  fromInteger :: <span class="type">Integer</span> -&gt; a</div><div class="line">  <span class="meta">&#123;-# MINIMAL (+), (*), abs, signum, fromInteger, (negate | (-)) #-&#125;</span></div><div class="line">  <span class="comment">-- Defined in ‘GHC.Num’</span></div><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Num</span> <span class="type">Word</span> <span class="comment">-- Defined in ‘GHC.Num’</span></span></div><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Num</span> <span class="type">Integer</span> <span class="comment">-- Defined in ‘GHC.Num’</span></span></div><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Num</span> <span class="type">Int</span> <span class="comment">-- Defined in ‘GHC.Num’</span></span></div><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Num</span> <span class="type">Float</span> <span class="comment">-- Defined in ‘GHC.Float’</span></span></div><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Num</span> <span class="type">Double</span> <span class="comment">-- Defined in ‘GHC.Float’</span></span></div></pre></td></tr></table></figure>
+<p>這裡表示 Num 這個 typeclass 底下必須<br>實作 (+), (*), abs, signum, fromInteger, (negate | (-)) ( | 代表至少一個要作)<br>目前有 Word, Integer, Int, Float, Double 這幾個 type 是 Num 的 instance</p>
+<h1 id="其他常用的內建-typeclass"><a href="#其他常用的內建-typeclass" class="headerlink" title="其他常用的內建 typeclass"></a>其他常用的內建 typeclass</h1><h2 id="Show"><a href="#Show" class="headerlink" title="Show"></a>Show</h2><p>將 值或是data 轉為String<br>例如</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt; :t show</div><div class="line"><span class="title">show</span> :: <span class="type">Show</span> a =&gt; a -&gt; <span class="type">String</span></div><div class="line"></div><div class="line">&gt; show <span class="number">1</span></div><div class="line"><span class="string">"1"</span></div></pre></td></tr></table></figure>
+<h2 id="Read"><a href="#Read" class="headerlink" title="Read"></a>Read</h2><p>跟 show 相反, 將String轉為對應的值或data<br>例如</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt; :t read</div><div class="line"><span class="title">read</span> :: <span class="type">Read</span> a =&gt; <span class="type">String</span> -&gt; a</div><div class="line"></div><div class="line">&gt; read <span class="string">"3"</span> :: <span class="type">Int</span> <span class="comment">-- 這裡給compile提示</span></div><div class="line"><span class="number">3</span></div></pre></td></tr></table></figure>
+<h2 id="Ord"><a href="#Ord" class="headerlink" title="Ord"></a>Ord</h2><p>實做了 compare 或是比較運算元<br>例如</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&gt; :t (&gt;)</div><div class="line">(&gt;) :: <span class="type">Ord</span> a =&gt; a -&gt; a -&gt; <span class="type">Bool</span></div><div class="line"></div><div class="line">&gt; (&gt;) <span class="number">3</span> <span class="number">4</span></div><div class="line"><span class="type">False</span></div><div class="line"></div><div class="line">&gt; compare <span class="number">3</span> <span class="number">4</span></div><div class="line"><span class="type">LT</span></div></pre></td></tr></table></figure>
+<p>其中 compare 會回傳 Ordering 這個 type</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt; :i <span class="type">Ordering</span></div><div class="line"><span class="class"><span class="keyword">data</span> <span class="type">Ordering</span> = <span class="type">LT</span> | <span class="type">EQ</span> | <span class="type">GT</span></span></div></pre></td></tr></table></figure>
+<p>分別代表小於, 等於, 跟大於</p>
+<h1 id="實作-instance-amp-自動派生-derive"><a href="#實作-instance-amp-自動派生-derive" class="headerlink" title="實作 instance &amp; 自動派生 (derive)"></a>實作 instance &amp; 自動派生 (derive)</h1><p>實作 instance 部分，舉個例子</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&gt; <span class="class"><span class="keyword">data</span> <span class="type">Grade</span> = <span class="type">A</span> | <span class="type">B</span> | <span class="type">C</span> | <span class="type">Fail</span></span></div><div class="line">&gt; show <span class="type">A</span></div><div class="line">&lt;interactive&gt;:<span class="number">32</span>:<span class="number">1</span>: error:</div><div class="line"></div><div class="line">&gt; :&#123;</div><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Show</span> <span class="type">Grade</span> <span class="keyword">where</span></span></div><div class="line">    show <span class="type">A</span> = <span class="string">"A"</span></div><div class="line">    show <span class="type">B</span> = <span class="string">"B"</span></div><div class="line">    show <span class="type">C</span> = <span class="string">"C"</span></div><div class="line">    show <span class="type">Fail</span> = <span class="string">"no grade!"</span></div><div class="line">:&#125;</div><div class="line"></div><div class="line">&gt; show <span class="type">A</span></div><div class="line"><span class="string">"A"</span></div><div class="line"></div><div class="line">&gt; show <span class="type">Fail</span></div><div class="line"><span class="string">"no grade!"</span></div></pre></td></tr></table></figure>
+<p>對於一些簡單的類型，haskell compiler 可以將他自動派生給一些 typeclass<br>像是 Read, Show, Bounded, Enum, Eq, Ord 都可以<br>他就會自己去產生一些行為</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&gt; :&#123;</div><div class="line"><span class="class"><span class="keyword">data</span> <span class="type">Grade</span> = <span class="type">A</span> | <span class="type">B</span> | <span class="type">C</span> | <span class="type">Fail</span></span></div><div class="line">    <span class="keyword">deriving</span> (<span class="type">Read</span>, <span class="type">Show</span>, <span class="type">Eq</span>, <span class="type">Ord</span>)</div><div class="line">:&#125;</div><div class="line"></div><div class="line">&gt; show <span class="type">A</span></div><div class="line"><span class="string">"A"</span></div><div class="line"></div><div class="line">&gt; show <span class="type">Fail</span></div><div class="line"><span class="string">"Fail"</span></div><div class="line"></div><div class="line">&gt; <span class="type">A</span> == <span class="type">C</span></div><div class="line"><span class="type">False</span></div><div class="line"></div><div class="line">&gt; compare <span class="type">A</span> <span class="type">B</span></div><div class="line"><span class="type">LT</span></div></pre></td></tr></table></figure>
+<h1 id="newtype"><a href="#newtype" class="headerlink" title="newtype"></a>newtype</h1><p>之前提到 data 關鍵字 可用來定義一個 type<br>但現在如果只有一個 data constructor (沒有 xx | oo) 又只有一個參數時<br>就可以用 newtype 取代</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">data MyType = MyType Int</div><div class="line">等於</div><div class="line">newtype MyType = MyType Int</div></pre></td></tr></table></figure>
+<p>差別在於編譯期 MyType 都是一個新的 type 編譯器會幫你檢查<br>但實際上執行時由於只有一個 data constructor 且 唯一參數<br>他就直接把 該參數型態 Int 當作 MyType 型態了, 也當然省去了 data constructor 的解構</p>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><ol>
+<li>haskell wiki</li>
+<li>learn you a haskell</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/FP/" rel="tag"># FP</a>
+          
+            <a href="/tags/Haskell/" rel="tag"># Haskell</a>
+          
+            <a href="/tags/type/" rel="tag"># type</a>
+          
+            <a href="/tags/typeclass/" rel="tag"># typeclass</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/27/haskell-with-module/" rel="next" title="在Haskell使用Module">
+                <i class="fa fa-chevron-left"></i> 在Haskell使用Module
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/28/monad/" rel="prev" title="Monad">
+                Monad <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="https://avatars1.githubusercontent.com/u/31230110"
+              alt="SOVMedCare" />
+          
+            <p class="site-author-name" itemprop="name">SOVMedCare</p>
+            <p class="site-description motion-element" itemprop="description">Full Stack JS #FRP #RxJS #Redux #React</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">文章</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">標籤</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/sovmedcare" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:jackypan1989@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/sovtw" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.instagram.com/sovmedtw/" target="_blank" title="Instagram">
+                  
+                    <i class="fa fa-fw fa-instagram"></i>Instagram</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Type-class-類型類"><span class="nav-number">1.</span> <span class="nav-text">Type class (類型類)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他常用的內建-typeclass"><span class="nav-number">2.</span> <span class="nav-text">其他常用的內建 typeclass</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Show"><span class="nav-number">2.1.</span> <span class="nav-text">Show</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Read"><span class="nav-number">2.2.</span> <span class="nav-text">Read</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ord"><span class="nav-number">2.3.</span> <span class="nav-text">Ord</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#實作-instance-amp-自動派生-derive"><span class="nav-number">3.</span> <span class="nav-text">實作 instance & 自動派生 (derive)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#newtype"><span class="nav-number">4.</span> <span class="nav-text">newtype</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#參考資料"><span class="nav-number">5.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SOVMedCare</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

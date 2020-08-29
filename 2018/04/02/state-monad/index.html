@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-tw">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Haskell," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="許多的程式應用情境，是要依賴隨著時間或是運算而不停變換的狀態而進行。Haskell 中沒有變數，數值都是不可變的。 Haskell 要達到這種需求，同樣也是靠函數。藉由傳入 state 作為輸入參數，經過運算後回傳最後的結果以及更新後的 mewState。 原本的 state 並沒有被修改到，而我們也同樣達到了根據 state 做計算並且變換 state 的目的了 而在 Haskell 中，這種需">
+<meta name="keywords" content="Haskell">
+<meta property="og:type" content="article">
+<meta property="og:title" content="state_monad">
+<meta property="og:url" content="http://sovmedcare.github.io/2018/04/02/state-monad/index.html">
+<meta property="og:site_name" content="SOVMedCare Tech">
+<meta property="og:description" content="許多的程式應用情境，是要依賴隨著時間或是運算而不停變換的狀態而進行。Haskell 中沒有變數，數值都是不可變的。 Haskell 要達到這種需求，同樣也是靠函數。藉由傳入 state 作為輸入參數，經過運算後回傳最後的結果以及更新後的 mewState。 原本的 state 並沒有被修改到，而我們也同樣達到了根據 state 做計算並且變換 state 的目的了 而在 Haskell 中，這種需">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:updated_time" content="2020-07-31T10:42:01.100Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="state_monad">
+<meta name="twitter:description" content="許多的程式應用情境，是要依賴隨著時間或是運算而不停變換的狀態而進行。Haskell 中沒有變數，數值都是不可變的。 Haskell 要達到這種需求，同樣也是靠函數。藉由傳入 state 作為輸入參數，經過運算後回傳最後的結果以及更新後的 mewState。 原本的 state 並沒有被修改到，而我們也同樣達到了根據 state 做計算並且變換 state 的目的了 而在 Haskell 中，這種需">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://sovmedcare.github.io/2018/04/02/state-monad/"/>
+
+
+
+
+
+  <title>state_monad | SOVMedCare Tech</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SOVMedCare Tech</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">@sovmedcare</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-authors">
+          <a href="/authors/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            作者群
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2018/04/02/state-monad/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">state_monad</h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/tancc/" itemprop="url" rel="index">
+              <span itemprop="name">tancc</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-04-02T15:28:10+08:00">
+                2018-04-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>許多的程式應用情境，是要依賴隨著時間或是運算而不停變換的狀態而進行。Haskell 中沒有變數，數值都是不可變的。</p>
+<p>Haskell 要達到這種需求，同樣也是靠函數。藉由傳入 state 作為輸入參數，經過運算後回傳最後的結果以及更新後的 mewState。</p>
+<p>原本的 state 並沒有被修改到，而我們也同樣達到了根據 state 做計算並且變換 state 的目的了</p>
+<p>而在 Haskell 中，這種需要處理狀態性問題時，常用到的工具就是 State monad。</p>
+<hr>
+<h1 id="範例"><a href="#範例" class="headerlink" title="範例"></a>範例</h1><p>一般會用躑骰子當範例</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> System.Random</div><div class="line"></div><div class="line"><span class="title">rollDie5Times</span> :: <span class="type">StdGen</span> -&gt; (<span class="type">Int</span>, <span class="type">Int</span>, <span class="type">Int</span>, <span class="type">Int</span>, <span class="type">Int</span>)</div><div class="line"><span class="title">rollDie5Times</span> g =</div><div class="line">  <span class="keyword">let</span></div><div class="line">    (one, g1) = randomR (<span class="number">1</span>, <span class="number">6</span>) g</div><div class="line">    (two, g2) = randomR (<span class="number">1</span>, <span class="number">6</span>) g1</div><div class="line">    (three, g3) = randomR (<span class="number">1</span>, <span class="number">6</span>) g2</div><div class="line">    (four, g4) = randomR (<span class="number">1</span>, <span class="number">6</span>) g3</div><div class="line">    (five, _) = randomR (<span class="number">1</span>, <span class="number">6</span>) g4</div><div class="line">  <span class="keyword">in</span></div><div class="line">    (one, two, three, four, five)</div></pre></td></tr></table></figure>
+<p>目前這種模擬躑五次骰子的方法看起來很不舒服，原因在於 generator 他必須手動取出和傳入，多了很多重複的步驟。</p>
+<p>如果使用了 State monad，我們就可以將 generator 作為 state 來改善目前的範例。</p>
+<hr>
+<h1 id="定義-State-monad"><a href="#定義-State-monad" class="headerlink" title="定義 State monad"></a>定義 State monad</h1><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">newtype</span> <span class="type">State</span> s a = <span class="type">State</span> &#123;<span class="title">runState</span> :: <span class="title">s</span> -&gt; (<span class="title">a</span>, <span class="title">s</span>)&#125;</span></div></pre></td></tr></table></figure>
+<p><code>State</code> 包裹著一個函數型別為<code>s -&gt; (a, s)</code>。其意義就是如一開始所說的，傳入 state，經過運算回傳結果以及新的 state。</p>
+<p>State monad 的<code>Functor</code> <code>Applicative</code> <code>Monad</code> instance 我們可以如此定義</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Functor</span> (<span class="type">State</span> <span class="title">s</span>) <span class="keyword">where</span></span></div><div class="line">  fmap f (<span class="type">State</span> g) = <span class="type">State</span> $ \s -&gt; <span class="keyword">let</span> (a, s1) = g s</div><div class="line">                                   <span class="keyword">in</span>  (f a, s1)</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Applicative</span> (<span class="type">State</span> <span class="title">s</span>) <span class="keyword">where</span></span></div><div class="line">  pure a = <span class="type">State</span> $ \s -&gt; (a, s)</div><div class="line">  (<span class="type">State</span> fab) &lt;*&gt; (<span class="type">State</span> fa) = <span class="type">State</span> $ \s -&gt; <span class="keyword">let</span> (a, s1) = fa s</div><div class="line">                                                 (ab, s2) = fab s1</div><div class="line">                                             <span class="keyword">in</span>  (ab a, s2)</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Monad</span> (<span class="type">State</span> <span class="title">s</span>) <span class="keyword">where</span></span></div><div class="line">  return = pure</div><div class="line">  <span class="type">State</span> f &gt;&gt;= k = <span class="type">State</span> $ \s -&gt; <span class="keyword">let</span> (a, s1) = f s</div><div class="line">                                <span class="keyword">in</span> runState (k a) s1</div></pre></td></tr></table></figure>
+<p>從實作中可以看到 state 會不斷的更新然後傳遞下去。</p>
+<hr>
+<h1 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h1><p>一般的 State monad 還會提供幾個方便的 method</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 將函數包進 State 中，變為 State monad</span></div><div class="line"><span class="title">state</span> :: (s -&gt; (a, s)) -&gt; <span class="type">State</span> s a</div><div class="line"><span class="title">state</span> = <span class="type">State</span></div><div class="line"></div><div class="line"><span class="comment">-- 取的當前的 state</span></div><div class="line"><span class="title">get</span> :: <span class="type">State</span> s s</div><div class="line"><span class="title">get</span> = <span class="type">State</span> $ \s -&gt; (s, s)</div><div class="line"></div><div class="line"><span class="comment">-- 更新 state</span></div><div class="line"><span class="title">put</span> :: s -&gt; <span class="type">State</span> s ()</div><div class="line"><span class="title">put</span> x = <span class="type">State</span> $ const ((), x)</div><div class="line"></div><div class="line"><span class="comment">-- 傳入 state 執行 State monad 並回傳最後的 state</span></div><div class="line"><span class="title">execState</span> :: <span class="type">State</span> s a -&gt; s -&gt; s</div><div class="line"><span class="title">execState</span> (<span class="type">State</span> sa) s = snd $ sa s</div><div class="line"></div><div class="line"><span class="comment">-- 傳入 state 執行 State monad 並回傳最後的運算結果 a</span></div><div class="line"><span class="title">evalState</span> :: <span class="type">State</span> s a -&gt; s -&gt; a</div><div class="line"><span class="title">evalState</span> (<span class="type">State</span> sa) s = fst $ sa s</div><div class="line"></div><div class="line"><span class="comment">-- 對 state 做轉換</span></div><div class="line"><span class="title">modify</span> :: (s -&gt; s) -&gt; <span class="type">State</span> s ()</div><div class="line"><span class="title">modify</span> f = <span class="type">State</span> $ \s -&gt; ((), f s)</div></pre></td></tr></table></figure>
+<hr>
+<h1 id="範例改寫"><a href="#範例改寫" class="headerlink" title="範例改寫"></a>範例改寫</h1><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="title">rollDie</span> :: <span class="type">State</span> <span class="type">StdGen</span> <span class="type">Int</span></div><div class="line"><span class="title">rollDie</span> = state $ randomR (<span class="number">1</span>, <span class="number">6</span>)</div><div class="line"></div><div class="line"><span class="title">rollDieNTimes</span> :: <span class="type">Int</span> -&gt; <span class="type">State</span> <span class="type">StdGen</span> [<span class="type">Int</span>]</div><div class="line"><span class="title">rollDieNTimes</span> n = replicateM n rollDie</div><div class="line"></div><div class="line">&gt; evalState (rollDieNTimes <span class="number">5</span>) (mkStdGen <span class="number">0</span>)</div><div class="line">[<span class="number">5</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">6</span>]</div></pre></td></tr></table></figure>
+<p>如此一來可以定義“躑 n 次骰子”的函數，而且看起來還比原先範例更為精簡。</p>
+<hr>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>如同 Reader monad，一般在使用時，同樣會直接使用現成的 library 像 <a href="https://hackage.haskell.org/package/mtl" target="_blank" rel="external"><code>mtl</code></a>或<a href="https://hackage.haskell.org/package/transformers" target="_blank" rel="external"><code>transformers</code></a>。</p>
+<p>可以去看看這些 library 是如何實作的，藉此來學習。</p>
+<p>此外通常看到或是使用時，因為會需搭配其他的 Monad 一起使用，並不會用<code>State</code>而是使用<code>StateT</code>。而去看原始碼可以發現 <code>State s a</code> 其實也就是<code>StateT s Identity a</code>的type alias。</p>
+<hr>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><ol>
+<li><a href="https://en.wikibooks.org/wiki/Haskell/Understanding_monads/State" target="_blank" rel="external">Haskell/Understanding monads/State - Wikibooks, open books for an open world</a></li>
+<li><a href="http://learnyouahaskell.com/" target="_blank" rel="external">Learn You a Haskell for Great Good!</a></li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Haskell/" rel="tag"># Haskell</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/30/reader-monad/" rel="next" title="Reader monad">
+                <i class="fa fa-chevron-left"></i> Reader monad
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/08/25/basic-website-layout/" rel="prev" title="用 CSS 完成常見網頁版型">
+                用 CSS 完成常見網頁版型 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="https://avatars1.githubusercontent.com/u/31230110"
+              alt="SOVMedCare" />
+          
+            <p class="site-author-name" itemprop="name">SOVMedCare</p>
+            <p class="site-description motion-element" itemprop="description">Full Stack JS #FRP #RxJS #Redux #React</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">文章</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">標籤</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/sovmedcare" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:jackypan1989@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/sovtw" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.instagram.com/sovmedtw/" target="_blank" title="Instagram">
+                  
+                    <i class="fa fa-fw fa-instagram"></i>Instagram</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#範例"><span class="nav-number">1.</span> <span class="nav-text">範例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#定義-State-monad"><span class="nav-number">2.</span> <span class="nav-text">定義 State monad</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Methods"><span class="nav-number">3.</span> <span class="nav-text">Methods</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#範例改寫"><span class="nav-number">4.</span> <span class="nav-text">範例改寫</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#結語"><span class="nav-number">5.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#參考資料"><span class="nav-number">6.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SOVMedCare</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

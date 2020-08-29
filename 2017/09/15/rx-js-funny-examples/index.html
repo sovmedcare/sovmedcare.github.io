@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-tw">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="FP,RxJS," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="之前提到過RxJs，這篇文章主要是從Rx’Library官方的練習題挑出5個來介紹，都蠻好理解的有興趣的朋友也可以直接試試看，run起來對了才能解鎖下一題，挺有趣的  Retrieve id, title, and a 150x200 box art url for every video首先要先介紹一下Function Programming編程精神，data的結構大概是以下這樣的Array 1">
+<meta name="keywords" content="FP,RxJS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="5個RxJs有趣範例">
+<meta property="og:url" content="http://sovmedcare.github.io/2017/09/15/rx-js-funny-examples/index.html">
+<meta property="og:site_name" content="SOVMedCare Tech">
+<meta property="og:description" content="之前提到過RxJs，這篇文章主要是從Rx’Library官方的練習題挑出5個來介紹，都蠻好理解的有興趣的朋友也可以直接試試看，run起來對了才能解鎖下一題，挺有趣的  Retrieve id, title, and a 150x200 box art url for every video首先要先介紹一下Function Programming編程精神，data的結構大概是以下這樣的Array 1">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:updated_time" content="2020-07-31T10:42:01.100Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="5個RxJs有趣範例">
+<meta name="twitter:description" content="之前提到過RxJs，這篇文章主要是從Rx’Library官方的練習題挑出5個來介紹，都蠻好理解的有興趣的朋友也可以直接試試看，run起來對了才能解鎖下一題，挺有趣的  Retrieve id, title, and a 150x200 box art url for every video首先要先介紹一下Function Programming編程精神，data的結構大概是以下這樣的Array 1">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://sovmedcare.github.io/2017/09/15/rx-js-funny-examples/"/>
+
+
+
+
+
+  <title>5個RxJs有趣範例 | SOVMedCare Tech</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SOVMedCare Tech</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">@sovmedcare</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-authors">
+          <a href="/authors/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            作者群
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sovmedcare.github.io/2017/09/15/rx-js-funny-examples/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SOVMedCare">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/31230110">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOVMedCare Tech">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">5個RxJs有趣範例</h1>
+        
+
+        <div class="post-meta">
+          <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+            <a href="/authors/Tu-Szu-Chi/" itemprop="url" rel="index">
+              <span itemprop="name">Tu-Szu-Chi</span>
+            </a>
+          </span>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-09-15T11:24:30+08:00">
+                2017-09-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>之前提到過RxJs，這篇文章主要是從Rx’Library官方的練習題挑出5個來介紹，都蠻好理解的<br>有興趣的朋友也可以直接<a href="http://reactivex.io/learnrx/" target="_blank" rel="external">試試看</a>，run起來對了才能解鎖下一題，挺有趣的</p>
+<hr>
+<h1 id="Retrieve-id-title-and-a-150x200-box-art-url-for-every-video"><a href="#Retrieve-id-title-and-a-150x200-box-art-url-for-every-video" class="headerlink" title="Retrieve id, title, and a 150x200 box art url for every video"></a>Retrieve id, title, and a 150x200 box art url for every video</h1><p>首先要先介紹一下Function Programming編程精神，data的結構大概是以下這樣的Array</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> movieLists = [</div><div class="line">  &#123;</div><div class="line">    name: <span class="string">"Instant Queue"</span>,</div><div class="line">    videos: [</div><div class="line">      &#123;</div><div class="line">        <span class="string">"id"</span>: <span class="number">70111470</span>,</div><div class="line">        <span class="string">"title"</span>: <span class="string">"Die Hard"</span>,</div><div class="line">        <span class="string">"boxarts"</span>: [</div><div class="line">          &#123; <span class="attr">width</span>: <span class="number">150</span>, <span class="attr">height</span>: <span class="number">200</span>, <span class="attr">url</span>: <span class="string">"http://cdn-0.nflximg.com/images/2891/DieHard150.jpg"</span> &#125;,</div><div class="line">          &#123; <span class="attr">width</span>: <span class="number">200</span>, <span class="attr">height</span>: <span class="number">200</span>, <span class="attr">url</span>: <span class="string">"http://cdn-0.nflximg.com/images/2891/DieHard200.jpg"</span> &#125;</div><div class="line">        ],</div><div class="line">        <span class="string">"url"</span>: <span class="string">"http://api.netflix.com/catalog/titles/movies/70111470"</span>,</div><div class="line">        <span class="string">"rating"</span>: <span class="number">4.0</span>,</div><div class="line">        <span class="string">"bookmark"</span>: []</div><div class="line">      &#125;,</div><div class="line">    &#123;</div><div class="line">      <span class="string">"id"</span>: <span class="number">654356453</span>,</div><div class="line">      <span class="string">"title"</span>: <span class="string">"Bad Boys"</span>,</div><div class="line">      <span class="string">"boxarts"</span>: [</div><div class="line">        &#123; <span class="attr">width</span>: <span class="number">200</span>, <span class="attr">height</span>: <span class="number">200</span>, <span class="attr">url</span>: <span class="string">"http://cdn-0.nflximg.com/images/2891/BadBoys200.jpg"</span> &#125;,</div><div class="line">        &#123; <span class="attr">width</span>: <span class="number">150</span>, <span class="attr">height</span>: <span class="number">200</span>, <span class="attr">url</span>: <span class="string">"http://cdn-0.nflximg.com/images/2891/BadBoys150.jpg"</span> &#125;</div><div class="line">      ],</div><div class="line">      <span class="string">"url"</span>: <span class="string">"http://api.netflix.com/catalog/titles/movies/70111470"</span>,</div><div class="line">      <span class="string">"rating"</span>: <span class="number">5.0</span>,</div><div class="line">      <span class="string">"bookmark"</span>: [&#123; <span class="attr">id</span>: <span class="number">432534</span>, <span class="attr">time</span>: <span class="number">65876586</span> &#125;]</div><div class="line">    &#125;</div><div class="line">    ]</div><div class="line">  &#125;</div><div class="line">  <span class="comment">// ...</span></div></pre></td></tr></table></figure>
+<p>因要針對每一筆videos做檢索，所以先</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">movieLists.map(<span class="function"><span class="params">obj</span> =&gt;</span></div><div class="line">  obj.videos.map(<span class="function"><span class="params">video</span> =&gt;</span></div><div class="line">    <span class="comment">// ...</span></div><div class="line">  )</div><div class="line">)</div></pre></td></tr></table></figure>
+<p>到這一部已經可以拿到id,title了，接著要過濾width !== 150的boxarts</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">movieLists.map(<span class="function"><span class="params">obj</span> =&gt;</span></div><div class="line">  obj.videos.map(<span class="function"><span class="params">video</span> =&gt;</span></div><div class="line">    video.boxarts.filter(<span class="function"><span class="params">image</span> =&gt;</span> image.width === <span class="number">150</span>)</div><div class="line">    <span class="comment">// ...</span></div><div class="line">  )</div><div class="line">)</div></pre></td></tr></table></figure>
+<p>最後直接回傳我們要的Object形式</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">movieLists.map(<span class="function"><span class="params">obj</span> =&gt;</span></div><div class="line">  obj.videos.map(<span class="function"><span class="params">video</span> =&gt;</span></div><div class="line">    video.boxarts</div><div class="line">          .filter(<span class="function"><span class="params">image</span> =&gt;</span> image.width === <span class="number">150</span>)</div><div class="line">          .map(<span class="function"><span class="params">boxart</span> =&gt;</span> &#123; <span class="keyword">return</span> &#123;<span class="attr">id</span>:video.id, <span class="attr">title</span>:video.title, <span class="attr">boxart</span>:boxart.url&#125;&#125;)</div><div class="line">  )</div><div class="line">)</div></pre></td></tr></table></figure>
+<p>到此階段回傳的Array會多了兩層</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[[&#123;<span class="string">"boxart"</span>: <span class="string">'...'</span>, <span class="string">"id"</span>: <span class="number">70111470</span>, <span class="string">"title"</span>: <span class="string">"Die Hard"</span>&#125;], ...]]]</div></pre></td></tr></table></figure>
+<p>可以在外層兩個map各補上降維的Method</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">movieLists.map(<span class="function"><span class="params">obj</span> =&gt;</span></div><div class="line">  obj.videos.map(<span class="function"><span class="params">video</span> =&gt;</span></div><div class="line">    video.boxarts</div><div class="line">          .filter(<span class="function"><span class="params">image</span> =&gt;</span> image.width === <span class="number">150</span>)</div><div class="line">          .map(<span class="function"><span class="params">boxart</span> =&gt;</span> &#123; <span class="keyword">return</span> &#123;<span class="attr">id</span>:video.id, <span class="attr">title</span>:video.title, <span class="attr">boxart</span>:boxart.url&#125;&#125;)</div><div class="line">  ).concatAll()</div><div class="line">).concatAll()</div></pre></td></tr></table></figure>
+<p>雖然這是個簡單的FP範例，但可以感受出每個步驟都具有語意化</p>
+<h1 id="Retrieve-url-of-the-largest-boxart"><a href="#Retrieve-url-of-the-largest-boxart" class="headerlink" title="Retrieve url of the largest boxart"></a>Retrieve url of the largest boxart</h1><p>再來也是要介紹FP核心之一的<strong>reduce</strong><br>data結構如下，要做比較的動作，找出Size最大的圖片<em>(width * height)</em></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> boxarts = [</div><div class="line">  &#123; <span class="attr">width</span>: <span class="number">200</span>, <span class="attr">height</span>: <span class="number">200</span>, <span class="attr">url</span>: <span class="string">"http://cdn-0.nflximg.com/images/2891/Fracture200.jpg"</span> &#125;,</div><div class="line">  &#123; <span class="attr">width</span>: <span class="number">150</span>, <span class="attr">height</span>: <span class="number">200</span>, <span class="attr">url</span>: <span class="string">"http://cdn-0.nflximg.com/images/2891/Fracture150.jpg"</span> &#125;,</div><div class="line">  &#123; <span class="attr">width</span>: <span class="number">300</span>, <span class="attr">height</span>: <span class="number">200</span>, <span class="attr">url</span>: <span class="string">"http://cdn-0.nflximg.com/images/2891/Fracture300.jpg"</span> &#125;,</div><div class="line">  &#123; <span class="attr">width</span>: <span class="number">425</span>, <span class="attr">height</span>: <span class="number">150</span>, <span class="attr">url</span>: <span class="string">"http://cdn-0.nflximg.com/images/2891/Fracture425.jpg"</span> &#125;</div><div class="line">]</div></pre></td></tr></table></figure>
+<p>reduce第一個參數要傳入處理動作的Function，第二個參數是初始值，預設為Array中第一個元素，所以我們不用特別傳入</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">boxarts.reduce(<span class="function">(<span class="params">currentImg, current</span>) =&gt;</span></div><div class="line">  (currentImg.width * currentImg.height &gt; current)</div><div class="line">  ? currentImg.width * currentImg.height &gt; current</div><div class="line">  : current)</div><div class="line">  .map(<span class="function"><span class="params">item</span> =&gt;</span> item.url)</div></pre></td></tr></table></figure>
+<p>以上為簡單的「比較」邏輯，reduce第一個參數中的Function會帶有兩個參數，第一個為當前的元素，第二個為當前的值<br>因reduce會回傳一個Array，而在這裡我們的Array中只會有一個元素，即Size最大的boxart<br>map同樣會回傳一個Array，裡面也只有一個url字串</p>
+<h1 id="Completing-sequences-with-takeUntil"><a href="#Completing-sequences-with-takeUntil" class="headerlink" title="Completing sequences with takeUntil()"></a>Completing sequences with takeUntil()</h1><p><strong>takeUntil()</strong> 我覺得是個很好用的功能，可以預先註冊好什麼時候停止取資料</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> stopButtonClicks = Observable.fromEvent(stopButton,<span class="string">'click'</span>)</div><div class="line">  microsoftPrices = pricesNASDAQ</div><div class="line">    .filter(<span class="function"><span class="params">priceRecord</span> =&gt;</span> priceRecord.name === <span class="string">"MSFT"</span>)</div><div class="line">    .takeUntil(stopButtonClicks)</div></pre></td></tr></table></figure>
+<p>我們假設pricesNASDAQ是一個NASDAQ股市報價的stream，而我們想從中取得微軟的報價所以利用了<strong>filter</strong><br>並註冊了當<strong>stopButton</strong>按下時就停止取stream資料，可以在這<a href="https://jsbin.com/zuvavetuno/1/edit?js,console,output" target="_blank" rel="external">JS Bin</a>試試<br>會發現當stopButton按下後，會觸發Observer中的complete，其餘還有<strong>takeLast</strong>、<strong>takeWhile</strong>可以試試</p>
+<h1 id="Throttle-Input"><a href="#Throttle-Input" class="headerlink" title="Throttle Input"></a>Throttle Input</h1><p>接下來要介紹Rx’Library中非常實用的功能之一 - <strong>throttleTime</strong><br>我們可以設定一段時間，例如<em>throttleTime(1000)</em>，表示一秒內所有的數據，我們只截取第一筆<br>這剛好可以解決我們針對某些API或DOM Event要避免短時間內重複觸發的問題，最典型的就是搜尋框(search box)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> input = Rx.Observable</div><div class="line">  .fromEvent(<span class="built_in">document</span>.getElementById(<span class="string">'input'</span>),<span class="string">'keydown'</span>)</div><div class="line">  .throttleTime(<span class="number">1000</span>)</div></pre></td></tr></table></figure>
+<p>與之相對的是<strong>debounceTime</strong>，可以在<a href="https://jsbin.com/zuvavetuno/1/edit?js,console,output" target="_blank" rel="external">JS Bin</a>試試</p>
+<h1 id="Distinct-Until-Changed-Input"><a href="#Distinct-Until-Changed-Input" class="headerlink" title="Distinct Until Changed Input"></a>Distinct Until Changed Input</h1><p>這是最後一個要介紹的Method，只取和前一個相比有變化的值，這概念是否有點熟悉？<br>在React中我們也是希望Component要有改變到state才render，故有了<em>shouldcomponentupdate</em>這生命週期<br>那如果有方法能幫我們確保拿到的一定是有變化的數據，是否就能少寫這<em>shouldcomponentupdate</em>了呢<br>一樣附上<a href="https://jsbin.com/zuvavetuno/1/edit?js,console,output" target="_blank" rel="external">JS Bin</a>給大家試試</p>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>Rx’Library是個功能很實用的工具，也因為功能很多，所以需要花時間去摸索，當碰到問題時才會發現可以用幾個Method輕鬆的解決<br>Rx實做多了，也會發現自己Function Programming精進了不少</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/FP/" rel="tag"># FP</a>
+          
+            <a href="/tags/RxJS/" rel="tag"># RxJS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/13/Observable-HOT-COLD/" rel="next" title="RxJs Observable - HOT & COLD">
+                <i class="fa fa-chevron-left"></i> RxJs Observable - HOT & COLD
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/21/redux-single-line-of-rxjs/" rel="prev" title="RxJs實現Redux功能">
+                RxJs實現Redux功能 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="https://avatars1.githubusercontent.com/u/31230110"
+              alt="SOVMedCare" />
+          
+            <p class="site-author-name" itemprop="name">SOVMedCare</p>
+            <p class="site-description motion-element" itemprop="description">Full Stack JS #FRP #RxJS #Redux #React</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">文章</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">標籤</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/sovmedcare" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:jackypan1989@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/sovtw" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.instagram.com/sovmedtw/" target="_blank" title="Instagram">
+                  
+                    <i class="fa fa-fw fa-instagram"></i>Instagram</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Retrieve-id-title-and-a-150x200-box-art-url-for-every-video"><span class="nav-number">1.</span> <span class="nav-text">Retrieve id, title, and a 150x200 box art url for every video</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Retrieve-url-of-the-largest-boxart"><span class="nav-number">2.</span> <span class="nav-text">Retrieve url of the largest boxart</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Completing-sequences-with-takeUntil"><span class="nav-number">3.</span> <span class="nav-text">Completing sequences with takeUntil()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Throttle-Input"><span class="nav-number">4.</span> <span class="nav-text">Throttle Input</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Distinct-Until-Changed-Input"><span class="nav-number">5.</span> <span class="nav-text">Distinct Until Changed Input</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#結語"><span class="nav-number">6.</span> <span class="nav-text">結語</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SOVMedCare</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
